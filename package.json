@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev-start": "npm run dev & node db/index.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
