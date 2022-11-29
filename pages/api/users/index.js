@@ -20,11 +20,11 @@ export default async function userHandler(req, res) {
 
   switch (method) {
     case "GET":
-      const users = await User.findAll()
+      const users = await User.findAll();
       res.status(200).json(users);
       break;
     case "POST":
-      const user = await User.create({ username, password })
+      const user = await User.create({ username, password });
       res.status(201).json(user);
       break;
     default:

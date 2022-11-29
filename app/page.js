@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+// import { useSelector } from "react-redux";
 
-const page = () => {
+const HomePage = () => {
+//   const { user, isLoggedIn } = useSelector((store) => store.user);
   return (
-    <div>page</div>
-  )
-}
+    <div>
+      <div>hello</div>
+      {/* <div>{isLoggedIn}</div> */}
+    </div>
+  );
+};
 
-export default page
+export default HomePage;

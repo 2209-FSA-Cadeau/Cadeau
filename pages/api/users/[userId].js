@@ -15,7 +15,6 @@ export default async function userIdHandler(req, res) {
 
   const {
     query: { userId },
-    //body: {username, password},
     method,
   } = req;
 
