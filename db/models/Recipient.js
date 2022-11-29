@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-const User = db.define("user", {
+const Recipient = db.define("recipient", {
   firstName: {
     type: Sequelize.STRING,
     unique: true,
@@ -18,31 +18,26 @@ const User = db.define("user", {
       notEmpty: true
     }
   },
-  username: {
-    type: Sequelize.STRING,
-    unique: true,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
-  },
-  password: {
-    type: Sequelize.STRING,
-    unique: true,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
-  },
   email: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false,
     validate: {
       notEmpty: true,
       isEmail: true
     }
   },
+  birthday: {
+    type: Sequelize.DATEONLY,
+    validate: {
+        notEmpty: true,
+      }
+  },
+  occupation: {
+    type: Sequelize.STRING,
+    validate: {
+        notEmpty: true
+    }
+  }
 });
 
-module.exports = User;
+module.exports = Recipient;

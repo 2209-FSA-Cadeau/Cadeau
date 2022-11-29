@@ -2,7 +2,6 @@ const {
   db,
   models: { User },
 } = require("../../../db");
-db.sync();
 
 export default async function userHandler(req, res) {
   try {
