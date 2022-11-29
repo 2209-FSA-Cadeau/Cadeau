@@ -1,6 +1,9 @@
 const db = require('./db')
 
 const User = require('./models/User')
+const Comment = require('./models/Comment')
+const Gift = require('./models/Gift')
+const Holiday = require('./models/Holiday')
 const Recipient = require('./models/Recipient')
 const Preference = require('./models/Preference')
 const Note = require('./models/Note')
@@ -38,6 +41,9 @@ module.exports = {
   db,
   models: {
     User,
+    Comment,
+    Gift,
+    Holiday,
     Recipient,
     Preference,
     Note
