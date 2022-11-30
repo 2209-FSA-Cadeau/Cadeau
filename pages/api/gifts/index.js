@@ -1,6 +1,6 @@
 const {
   db,
-  models: { Gift },
+  models: { Gift, Recipient },
 } = require("../../../db");
 
 export default async function giftHandler(req, res) {
@@ -13,7 +13,7 @@ export default async function giftHandler(req, res) {
   }
 
   const {
-    body: { name, description, imageUrl, price, link, rating },
+    body: { recipientId, name, description, imageUrl, price, link, rating },
     method,
   } = req;
 
@@ -24,6 +24,8 @@ export default async function giftHandler(req, res) {
       break;
     case "POST":
       const gift = await Gift.create({ name, description, imageUrl, price, link, rating });
+      const recipient = await Recipient.findByPk(recipientId);
+      recipient.addGift(gift);
       res.status(201).json(gift);
       break;
     default:
