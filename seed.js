@@ -71,7 +71,9 @@ function createIdentifier(info) {
 const users = []
 for(let i = 0; i < 50; i++){
     users.push({
-        identifier: createIdentifier()
+        identifier: createIdentifier(),
+        firstName: createIdentifier("name"),
+        lastName: createIdentifier("name") 
     })
 }
 

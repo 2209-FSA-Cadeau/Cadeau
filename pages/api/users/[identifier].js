@@ -3,7 +3,7 @@ const {
   models: { User },
 } = require("../../../db");
 
-export default async function userIdHandler(req, res) {
+export default async function userIdentifierHandler(req, res) {
   try {
     await db.authenticate();
   } catch (error) {
@@ -13,22 +13,21 @@ export default async function userIdHandler(req, res) {
   }
 
   const {
-    query: { userId },
+    query: { identifier },
     method,
   } = req;
 
   switch (method) {
     case "GET":
-      // Get data from your database
-      const user = await User.findByPk(userId);
+      // GET single user based on their identifier
+      const user = await User.findOne({
+        where: {identifier: identifier}
+      });
       res.status(200).json(user);
       break;
-    case "PUT":
-      // Update data in your database
-      res.status(200).json({ userId });
-      break;
+
     default:
-      res.setHeader("Allow", ["GET", "PUT"]);
+      res.setHeader("Allow", ["GET"]);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 }

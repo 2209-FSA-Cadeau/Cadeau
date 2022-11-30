@@ -13,6 +13,7 @@
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.9.2",
     "@reduxjs/toolkit": "^1.9.0",
+    "axios": "^1.2.0",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.4",
     "next": "13.0.4",
@@ -22,7 +23,8 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "redux-logger": "^3.0.6",
-    "sequelize": "^6.25.8"
+    "sequelize": "^6.25.8",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
