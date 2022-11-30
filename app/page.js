@@ -1,15 +1,22 @@
 "use client"; // USE CLIENT MUST BE USED TO ACCESS REDUX
 import React from "react";
-import { useSelector } from "react-redux";
+import { useUser } from "@auth0/nextjs-auth0";
+import { redirect } from "next/navigation";
 
-const HomePage = () => {
-  const { user, isLoggedIn } = useSelector((state) => state.user); //example - h1 below to demonstrate functionality
-  return (
-    <div>
-      <div>hello</div>
-      <h1>{`${isLoggedIn}`}</h1>
-    </div>
-  );
+const App = () => {
+  const user = useUser().user;
+  if (user) {
+    redirect("/home");
+  } else {
+    redirect("/landing");
+  }
+
+  //   return (
+  //     <div>
+  //       <h1>Cadeau</h1>
+  //       {!user ? <a href="/api/auth/login/">Login</a> : redirect("/home/")}
+  //     </div>
+  //   );
 };
 
-export default HomePage;
+export default App;
