@@ -12,7 +12,7 @@ const Gift = db.define("gift", {
     type: Sequelize.STRING,
   },
   price: {
-    type: Sequelize.DECIMAL,
+    type: Sequelize.DECIMAL(10, 2),
   },
   link: {
     type: Sequelize.STRING,
