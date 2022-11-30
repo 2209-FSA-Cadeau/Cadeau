@@ -27,10 +27,6 @@ export default async function noteHandler(req, res) {
       });
       res.status(200).json(note);
       break;
-    case "POST":
-      const createdNote = await Note.create({ userId, recipientId, content });
-      res.status(201).json(createdNote);
-      break;
     case "PUT":
       const foundNote = await Note.findOne({
         where: {
@@ -40,8 +36,9 @@ export default async function noteHandler(req, res) {
       });
       await foundNote.update({ content: content });
       res.status(201).json(foundNote);
+      break;
     default:
-      res.setHeader("Allow", ["GET", "POST"]);
+      res.setHeader("Allow", ["GET", "PUT"]);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 };
