@@ -145,6 +145,20 @@ async function seed(){
     }
     await Promise.all(userRecipJoinTable)
 
+    //Join recipients and preferences -> each recipient has two preferences
+    const allPreferences = await Preference.findAll()
+    index = 1
+    counter = 0
+    const setPrefToRecip = []
+    for(let i = 0; i < allPreferences.length; i++){
+        setPrefToRecip.push(allPreferences[i].setRecipient(index))
+        counter++
+        if(counter % 2 === 0){
+            index++
+        }
+    }
+    await Promise.all(setPrefToRecip)
+
     //Join recipients and gifts -> each recipient has two gifts
     await Promise.all(allRecipients.map(recipient => {
         const id = Math.floor(Math.random() * (50 - 1 + 1) + 1)
