@@ -32,16 +32,16 @@ export default async function noteHandler(req, res) {
       res.status(201).json(createdNote);
       break;
     case "PUT":
-      const foundNote = await Note.findeOne({
+      const foundNote = await Note.findOne({
         where: {
           userId: userId,
           recipientId: recipientId
         }
-      })
-      await foundNote.update({ content: content })
-      res.status(201).json(foundNote)
+      });
+      await foundNote.update({ content: content });
+      res.status(201).json(foundNote);
     default:
       res.setHeader("Allow", ["GET", "POST"]);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
-}
+};
