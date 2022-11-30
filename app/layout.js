@@ -1,6 +1,7 @@
+"use client";
 import "./globals.css";
-import Navbar from "./Navbar";
 import Providers from "./providers";
+import Navbar from "./Navbar";
 
 function RootLayout({ children }) {
   return (
@@ -11,7 +12,10 @@ function RootLayout({ children }) {
       */}
       <head />
       <Providers>
-        <body>{children}</body>
+        <body>
+          <Navbar />
+          {children}
+        </body>
       </Providers>
     </html>
   );
