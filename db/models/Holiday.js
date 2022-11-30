@@ -4,11 +4,17 @@ const db = require("../db");
 const Holiday = db.define("holiday", {
   name: {
     type: Sequelize.STRING,
-    unique: true,
     allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   date: {
-    type: Sequelize.DATE
+    type: Sequelize.DATEONLY,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
 });
 

@@ -2,15 +2,7 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 
 const Recipient = db.define("recipient", {
-  firstName: {
-    type: Sequelize.STRING,
-    unique: true,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
-  },
-  lastName: {
+  name: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,

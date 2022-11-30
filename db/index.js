@@ -16,20 +16,25 @@ Recipient.belongsToMany(User, {through: Note})
 Recipient.hasMany(Preference)
 Preference.belongsTo(Recipient)
 
+Recipient.hasMany(Holiday)
+Holiday.belongsTo(Recipient)
+
 User.hasMany(Note)
 Note.belongsTo(User)
 
 Recipient.hasMany(Note)
 Note.belongsTo(Recipient)
 
+Recipient.belongsToMany(Gift, {through: "giftHistory"})
+Gift.belongsToMany(Recipient, {through: "giftHistory"})
 
-async function syncDb(){
-  await db.sync()
-  console.log("DATABASE HAS BEEN SYNCED")
-}
+// async function syncDb(){
+//   await db.sync()
+//   console.log("DATABASE HAS BEEN SYNCED")
+// }
 
 
-syncDb()
+// syncDb()
 
 // if(process.env.seed === true){
   
