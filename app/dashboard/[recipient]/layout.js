@@ -4,7 +4,7 @@ import NavigationTabs from "./NavigationTabs";
 
 function RecipientLayout({ children }) {
   return (
-    <section>
+    <section className="fixed left-[25%]">
         <UserInfo />
         <NavigationTabs />
         {children}

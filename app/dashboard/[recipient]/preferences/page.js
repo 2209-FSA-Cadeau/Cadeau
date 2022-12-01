@@ -5,7 +5,7 @@ import makeAnimated from "react-select/animated";
 import PreferenceContainer from "./PreferenceContainer";
 import { categories } from "./picklistChoices";
 
-const page = () => {
+const Page = ({ params }) => {
   const [likes, setLikes] = useState([]);
   const [dislikes, setDislikes] = useState([]);
   const [options, setOptions] = useState([]);
@@ -47,7 +47,7 @@ const page = () => {
       <b>Recipient Preferences</b>
       <br />
       <span>
-        <h3>Things Johnny Likes</h3>
+        <h3>Things {params.recipient} Likes</h3>
         <PreferenceContainer choices={likes} />
         <br />
         <div>
@@ -63,7 +63,7 @@ const page = () => {
       </span>
       <br />
       <span>
-        <h3>Things Johnny Hates</h3>
+        <h3>Things {params.recipient} Hates</h3>
         <PreferenceContainer choices={dislikes} />
         <br />
         <div>
@@ -82,4 +82,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

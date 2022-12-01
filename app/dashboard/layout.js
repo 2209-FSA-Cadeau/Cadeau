@@ -1,4 +1,3 @@
-"use client"
 import Sidebar from "./Sidebar";
 
 function DashboardLayout({ children }) {
