@@ -1,10 +1,13 @@
-"use client"
-import React from 'react'
+import React from "react";
+import Editor from "./Editor";
 
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div>
+      <div>Notes</div>
+      <Editor />
+    </div>
+  );
+};
 
-export default page
+export default page;
