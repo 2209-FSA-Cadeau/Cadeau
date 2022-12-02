@@ -10,7 +10,7 @@ const UserInfo = ({ params }) => {
     <div className="flex justify-between items-center">
       <h1>{`${singleRecipient.name}`}</h1>
       <Link href={`/dashboard/${singleRecipient.name}/edit`}>
-        <FiEdit2 className="h-[30px] w-auto" />
+        <FiEdit2 className="h-[28px] w-auto hover:scale-110 ease-in duration-150" />
       </Link>
     </div>
   );

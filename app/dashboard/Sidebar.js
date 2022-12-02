@@ -18,9 +18,9 @@ function Sidebar() {
   }, [dispatch, user]);
 
   return (
-    <div className="flex flex-col justify-between w-full h-full rounded-md border-2 border-black bg-neutral-100/80 shadow-2xl">
+    <div className="flex flex-col justify-between w-full h-full rounded-sm bg-neutral-100/80 shadow-xl shadow-gray-400">
       <div className="w-full text-center">
-        <div className="border-b-2 border-black bg-[#5460e7] text-white rounded-t-md">
+        <div className="flex justify-center items-center h-[40px] bg-[#5460e7] text-white rounded-t-md shadow-md shadow-gray-400">
           <h3>Gift Recipients</h3>
         </div>
         <div className="">
@@ -32,7 +32,7 @@ function Sidebar() {
         </div>
       </div>
       <div className="m-4 h-[10%] bg-green-50">
-        <button className="text-center w-full h-full border-2 border-black rounded-md hover:scale-105 ease-in duration-150 shadow-lg ">
+        <button className="text-center w-full h-full rounded-sm hover:scale-105 ease-in duration-150 shadow-lg shadow-gray-400 ">
           <h3>Add Recipient +</h3>
         </button>
       </div>
