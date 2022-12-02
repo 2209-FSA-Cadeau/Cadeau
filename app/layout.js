@@ -1,9 +1,12 @@
 "use client";
 import "./globals.css";
+
 import Providers from "./providers";
 import Navbar from "./Navbar";
 
 function RootLayout({ children }) {
+  
+
   return (
     <html lang="en">
       {/*
@@ -14,7 +17,9 @@ function RootLayout({ children }) {
       <Providers>
         <body>
           <Navbar />
-          <div className="w-fill h-screen pt-[104px] pb-6 px-6 ">{children}</div>
+          <div className="w-fill h-screen pt-[104px] pb-6 px-6 ">
+            {children}
+          </div>
         </body>
       </Providers>
     </html>
