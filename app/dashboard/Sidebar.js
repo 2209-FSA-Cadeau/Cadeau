@@ -9,7 +9,7 @@ import { fetchRecipients } from "../../store/recipientSlice";
 //const recipients = []
 
 function Sidebar() {
-  const { user, error, isLoading } = useUser();
+  const {user, isLoadingRedux} = useSelector((store) => store.user);
   const { recipients } = useSelector((store) => store.recipients);
   const dispatch = useDispatch();
 
@@ -17,7 +17,6 @@ function Sidebar() {
     dispatch(fetchRecipients(user));
   }, [dispatch, user]);
 
-  if (error) return <div>{error.message}</div>;
   return (
     <div className="flex flex-col justify-between w-full h-full rounded-md border-2 border-black bg-neutral-100/80 shadow-2xl">
       <div className="w-full text-center">
@@ -25,7 +24,7 @@ function Sidebar() {
           <h3>Gift Recipients</h3>
         </div>
         <div className="">
-          {isLoading
+          {isLoadingRedux
             ? "Loading Recipients.."
             : recipients.map((recipient) => {
                 return <Recipient recipient={recipient} key={recipient.id} />;
