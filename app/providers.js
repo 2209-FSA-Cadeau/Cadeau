@@ -7,7 +7,7 @@ import store from '../store'
 function Providers({ children }) {
   return (
     <Provider store={store}>
-        <UserProvider>
+        <UserProvider >
             {children}
         </UserProvider>
       </Provider>

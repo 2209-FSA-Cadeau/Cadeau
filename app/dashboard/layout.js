@@ -1,12 +1,13 @@
-"use client"
 import Sidebar from "./Sidebar";
 
 function DashboardLayout({ children }) {
   return (
-    <section>
+    <div className="flex w-full h-full">
+      <div className="basis-1/4">
         <Sidebar />
-        {children}
-    </section>
+      </div>
+      <div className="basis-3/4 ml-6">{children}</div>
+    </div>
   );
 }
 

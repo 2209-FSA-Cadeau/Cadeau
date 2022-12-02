@@ -10,13 +10,6 @@ const App = () => {
   } else {
     redirect("/landing");
   }
-
-  //   return (
-  //     <div>
-  //       <h1>Cadeau</h1>
-  //       {!user ? <a href="/api/auth/login/">Login</a> : redirect("/home/")}
-  //     </div>
-  //   );
 };
 
 export default App;

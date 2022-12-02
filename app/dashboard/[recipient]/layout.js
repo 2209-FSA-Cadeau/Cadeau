@@ -2,13 +2,13 @@
 import UserInfo from "./UserInfo";
 import NavigationTabs from "./NavigationTabs";
 
-function RecipientLayout({ children }) {
+function RecipientLayout({ children, params }) {
   return (
-    <section>
+    <div className="">
         <UserInfo />
-        <NavigationTabs />
+        <NavigationTabs params={params} />
         {children}
-    </section>
+    </div>
   );
 }
 

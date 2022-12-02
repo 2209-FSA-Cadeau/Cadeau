@@ -14,7 +14,7 @@ function RootLayout({ children }) {
       <Providers>
         <body>
           <Navbar />
-          {children}
+          <div className="w-fill h-screen pt-[104px] pb-6 px-6 ">{children}</div>
         </body>
       </Providers>
     </html>

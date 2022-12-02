@@ -16,7 +16,7 @@ const {
       query: {userId},
       method,
     } = req;
-  
+    
     switch (method) {
       case "GET":
         // GET all recipients based on user
