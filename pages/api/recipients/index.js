@@ -2,6 +2,8 @@ const {
     db,
     models: { Recipient, Note, User },
   } = require("../../../db");
+
+const Sequelize = require("sequelize")
   
   export default async function recipientHandler(req, res) {
     try {
@@ -20,6 +22,9 @@ const {
     switch (method) {
       case "POST":
         //ADD NEW RECIPIENT
+        const originalLength = await Recipient.findAll()
+        updateInfo.id = originalLength.length + 1
+        // updateInfo.individualHooks = true
         const newRecipient = await Recipient.create(updateInfo)
         await newRecipient.addUser(userId)
         res.status(201).json(newRecipient)
@@ -35,8 +40,10 @@ const {
       case "DELETE":
         //DELETE SINGLE RECIPIENT
         await Recipient.destroy({
-            where: {id: recipientId}
+            where: {id: recipientId},
+            individualHooks: true
         })
+        
         res.status(204).end()
         break;
 
