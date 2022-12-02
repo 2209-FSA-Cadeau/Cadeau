@@ -16,7 +16,9 @@ export const userSlice = createSlice({
       state.isLoadingRedux = false;
     },
     auth0logout: (state, action) => {
-      state = initialState;
+      state.user = {};
+      state.isLoggedIn = false;
+      state.isLoadingRedux = false;
     },
   },
 });

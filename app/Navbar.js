@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect } from "react";
 import Link from "next/link";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/navigation";
-import { auth0login } from "../store/userSlice";
+import { auth0login, auth0logout } from "../store/userSlice";
 
 const Navbar = () => {
   const router = useRouter();
-  const { user, error, isLoading } = useUser();
+  const { user, isLoading } = useUser();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,6 +42,11 @@ const Navbar = () => {
                 Dashboard
               </li>
             </Link>
+            <a href="/api/auth/logout/" onClick={() => {dispatch(auth0logout())}} >
+              <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-black">
+                Logout
+              </li>
+            </a>
           </ul>
         </div>
       </div>
