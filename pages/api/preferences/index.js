@@ -19,7 +19,7 @@ const {
   
     switch (method) {
       case "POST":
-        //ADD NEW PREFERENCE
+        //ADD NEW PREFERENCE 
         const newPreference = await Preference.create(updateInfo)
         await newPreference.setRecipient(recipientId)
         res.status(201).json(newPreference)
@@ -35,8 +35,10 @@ const {
       case "DELETE":
         //DELETE SINGLE RECIPIENT
         await Preference.destroy({
-            where: {id: preferenceId}
+            where: {id: preferenceId},
+            individualHooks: true
         })
+
         res.status(204).end()
         break;
 
