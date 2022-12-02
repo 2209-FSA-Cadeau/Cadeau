@@ -17,26 +17,25 @@ function Sidebar() {
     dispatch(fetchRecipients(user));
   }, [dispatch, user]);
 
-  //if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
   return (
-    <div className="fixed left-[1%] h-[96vh] w-[20%] p-4">
-      <div className="flex flex-col justify-between w-full h-full rounded-md border-2 border-black bg-blue-50">
-        <div className="w-full text-center">
-          <h3 className="border-b-2 border-black">Gift Recipients</h3>
-          <div className="">
-            {isLoading
-              ? "Loading Recipients.."
-              : recipients.map((recipient) => {
-                  return <Recipient recipient={recipient} key={recipient.id} />;
-                })}
-          </div>
+    <div className="flex flex-col justify-between w-full h-full rounded-md border-2 border-black bg-neutral-100/80 shadow-2xl">
+      <div className="w-full text-center">
+        <div className="border-b-2 border-black bg-[#5460e7] text-white rounded-t-md">
+          <h3>Gift Recipients</h3>
         </div>
-        <div className="m-4 h-[10%] bg-green-50">
-          <button className="text-center w-full h-full border-2 border-black rounded-md ">
-            <h3>Add Recipient +</h3>
-          </button>
+        <div className="">
+          {isLoading
+            ? "Loading Recipients.."
+            : recipients.map((recipient) => {
+                return <Recipient recipient={recipient} key={recipient.id} />;
+              })}
         </div>
+      </div>
+      <div className="m-4 h-[10%] bg-green-50">
+        <button className="text-center w-full h-full border-2 border-black rounded-md hover:scale-105 ease-in duration-150 shadow-lg ">
+          <h3>Add Recipient +</h3>
+        </button>
       </div>
     </div>
   );

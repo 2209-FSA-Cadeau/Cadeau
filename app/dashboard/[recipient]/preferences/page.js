@@ -4,11 +4,13 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import PreferenceContainer from "./PreferenceContainer";
 import { categories } from "./picklistChoices";
+import { useSelector } from 'react-redux'
 
 const Page = ({ params }) => {
   const [likes, setLikes] = useState([]);
   const [dislikes, setDislikes] = useState([]);
   const [options, setOptions] = useState([]);
+  const { singleRecipient } = useSelector(store => store.recipients)
 
   useEffect(() => {
     let newOptions = [];
@@ -47,7 +49,7 @@ const Page = ({ params }) => {
       <b>Recipient Preferences</b>
       <br />
       <span>
-        <h3>Things {params.recipient} Likes</h3>
+        <h3>Things {singleRecipient.name} Likes</h3>
         <PreferenceContainer choices={likes} />
         <br />
         <div>
@@ -63,7 +65,7 @@ const Page = ({ params }) => {
       </span>
       <br />
       <span>
-        <h3>Things {params.recipient} Hates</h3>
+        <h3>Things {singleRecipient.name} Hates</h3>
         <PreferenceContainer choices={dislikes} />
         <br />
         <div>
