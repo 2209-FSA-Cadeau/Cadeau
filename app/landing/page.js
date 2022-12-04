@@ -2,13 +2,14 @@
 import React from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 import { redirect } from "next/navigation";
+import { useSelector } from "react-redux";
 
 const LandingPage = () => {
-  const user = useUser().user;
+  const { isLoggedIn } = useSelector(store => store.user)
   return (
     <div>
       <h1>Welcome to Cadeau!</h1>
-      {!user ? <a href="/api/auth/login/">Login</a> : redirect("/home/")}
+      {!isLoggedIn ? <a href="/api/auth/login/">Login</a> : redirect("/home/")}
     </div>
   );
 };
