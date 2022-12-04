@@ -10,7 +10,7 @@ const Holiday = db.define("holiday", {
     }
   },
   date: {
-    type: Sequelize.DATEONLY,
+    type: Sequelize.STRING,
     allowNull: false,
     validate: {
       notEmpty: true

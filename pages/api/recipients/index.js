@@ -13,12 +13,12 @@ const Sequelize = require("sequelize")
         .status(400)
         .json({ message: "Unable to connect to the database:", error });
     }
-  
+
     const {
-      body: {userId, recipientId, updateInfo},
+      body,
       method,
     } = req;
-  
+
     switch (method) {
       case "POST":
         //ADD NEW RECIPIENT
@@ -36,7 +36,7 @@ const Sequelize = require("sequelize")
         const updatedRecipient = await recipient.update(updateInfo)
         res.status(200).json(updatedRecipient);
         break;
-    
+
       case "DELETE":
         //DELETE SINGLE RECIPIENT
         await Recipient.destroy({
@@ -52,4 +52,3 @@ const Sequelize = require("sequelize")
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   }
-  

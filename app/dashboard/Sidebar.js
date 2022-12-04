@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
+import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0";
 import Recipient from "./Recipient";
 //import axios from "axios";
@@ -9,7 +10,7 @@ import { fetchRecipients } from "../../store/recipientSlice";
 //const recipients = []
 
 function Sidebar() {
-  const {user, isLoadingRedux} = useSelector((store) => store.user);
+  const { user, isLoadingRedux } = useSelector((store) => store.user);
   const { recipients } = useSelector((store) => store.recipients);
   const dispatch = useDispatch();
 
@@ -26,14 +27,16 @@ function Sidebar() {
         <div className="">
           {isLoadingRedux
             ? "Loading Recipients.."
-            : recipients.map((recipient) => {
-                return <Recipient recipient={recipient} key={recipient.id} />;
+            : recipients.map((recipient, index) => {
+                return <Recipient recipient={recipient} key={index} />;
               })}
         </div>
       </div>
       <div className="m-4 h-[10%] bg-green-50">
         <button className="text-center w-full h-full rounded-sm hover:scale-105 ease-in duration-150 shadow-lg shadow-gray-400 ">
-          <h3>Add Recipient +</h3>
+          <Link href={"/dashboard/addnew"}>
+            <h3>Add Recipient +</h3>
+          </Link>
         </button>
       </div>
     </div>
