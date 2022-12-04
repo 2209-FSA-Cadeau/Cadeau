@@ -4,7 +4,6 @@ const db = require("../db");
 const Recipient = db.define("recipient", {
   name: {
     type: Sequelize.STRING,
-    unique: true,
     allowNull: false,
     validate: {
       notEmpty: true
@@ -12,14 +11,13 @@ const Recipient = db.define("recipient", {
   },
   email: {
     type: Sequelize.STRING,
-    unique: true,
     validate: {
       notEmpty: true,
       isEmail: true
     }
   },
   birthday: {
-    type: Sequelize.DATEONLY,
+    type: Sequelize.STRING,
     validate: {
         notEmpty: true,
       }

@@ -2,7 +2,7 @@ const {
     db,
     models: { Preference },
   } = require("../../../db");
-  
+
   export default async function preferenceHandler(req, res) {
     try {
       await db.authenticate();
@@ -11,17 +11,16 @@ const {
         .status(400)
         .json({ message: "Unable to connect to the database:", error });
     }
-  
+
     const {
-      body: {recipientId, preferenceId, updateInfo},
+      body,
       method,
     } = req;
-  
+
     switch (method) {
       case "POST":
         //ADD NEW PREFERENCE
-        const newPreference = await Preference.create(updateInfo)
-        await newPreference.setRecipient(recipientId)
+        const newPreference = await Preference.create(body)
         res.status(201).json(newPreference)
         break;
 
@@ -31,7 +30,7 @@ const {
         const updatedPreference = await preference.update(updateInfo)
         res.status(200).json(updatedPreference);
         break;
-    
+
       case "DELETE":
         //DELETE SINGLE RECIPIENT
         await Preference.destroy({
@@ -45,4 +44,3 @@ const {
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   }
-  
