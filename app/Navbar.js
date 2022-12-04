@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/navigation";
 import { auth0login, auth0logout } from "../store/userSlice";
+import { setTab } from "../store/recipientSlice";
 
 const Navbar = () => {
   const router = useRouter();
@@ -25,7 +26,9 @@ const Navbar = () => {
   return (
     <div className="fixed w-full h-20 shadow-xl z-[100] bg-inherit">
       <div className="flex justify-between items-center w-full h-full px-2">
-        <h2>Cadeau!</h2>
+        <Link href="/home">
+          <h2>Cadeau!</h2>
+        </Link>
         <div>
           <ul className="flex">
             {isLoggedIn ? (
@@ -40,7 +43,10 @@ const Navbar = () => {
                     Shop Products
                   </li>
                 </Link>
-                <Link href="/dashboard/">
+                <Link
+                  href="/dashboard/"
+                  onClick={() => dispatch(setTab("preferences"))}
+                >
                   <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-black">
                     Dashboard
                   </li>
