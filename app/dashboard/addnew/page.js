@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Start from "./Start";
 import Name from "./Name";
 import Demographics from "./Demographics";
@@ -10,6 +10,7 @@ import Likes from "./Likes";
 import Dislikes from "./Dislikes";
 import Complete from "./Complete";
 import { addRecipient } from "../../../store/recipientSlice";
+
 
 const page = () => {
   const [step, setStep] = useState(0);
@@ -25,6 +26,7 @@ const page = () => {
   });
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const prevClickHandler = () => {
     setStep(step - 1);
@@ -34,10 +36,10 @@ const page = () => {
     setStep(step + 1);
   };
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
-    dispatch(addRecipient(newRecipient));
-    redirect("/dashboard/");
+    await dispatch(addRecipient(newRecipient));
+    router.push(`/dashboard/${newRecipient.name}/preferences`);
   };
 
   const conditionalComponent = () => {

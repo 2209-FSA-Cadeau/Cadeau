@@ -15,7 +15,7 @@ const Sequelize = require("sequelize")
     }
 
     const {
-      body,
+      body: {userId, recipientId, updateInfo},
       method,
     } = req;
 
