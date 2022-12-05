@@ -11,6 +11,7 @@ import Dislikes from "./Dislikes";
 import Complete from "./Complete";
 import { addRecipient } from "../../../store/recipientSlice";
 
+
 const page = () => {
   const [step, setStep] = useState(0);
   const [newRecipient, setNewRecipient] = useState({
@@ -35,10 +36,10 @@ const page = () => {
     setStep(step + 1);
   };
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
-    dispatch(addRecipient(newRecipient));
-    router.push("/dashboard/");
+    await dispatch(addRecipient(newRecipient));
+    router.push(`/dashboard/${newRecipient.name}/preferences`);
   };
 
   const conditionalComponent = () => {

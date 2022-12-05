@@ -1,11 +1,24 @@
+import e from "express";
+
 const axios = require("axios") 
 const zlib = require("zlib");
 
   export default async function searchHandler(req, res) {
     const {
-      query,
+      query: {searchQuery},
       method,
     } = req;
+
+    let searchItem
+    if(typeof searchQuery === "string" || searchQuery.category === "all"){
+      searchItem = searchQuery
+    } else {
+      for(let keys in searchQuery){
+        searchItem = []
+        searchItem.push(searchQuery[keys])
+        searchItem.join(" ")
+      }
+    }
   
     switch (method) {
       case "GET":
@@ -16,7 +29,7 @@ const zlib = require("zlib");
           responseType: "arraybuffer", //Important
           params: {
             api_key: process.env.API_KEY,
-            q: query.category,
+            q: searchItem,
             search_type: "shopping",
             location: "United States",
             sort_by: "review_score",

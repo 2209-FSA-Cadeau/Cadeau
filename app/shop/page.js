@@ -1,10 +1,14 @@
 
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
+
+
 
 const ShopPage = () => {
   return (
-    <div>Shopping Page</div>
+    <div>
+      Welcome to the new page with new stuff on it 
+    </div>
   )
 }
 

@@ -19,7 +19,7 @@ const {
   
     switch (method) {
       case "GET":
-        // GET all recipients based on user
+        // GET all preferences based on recipient
         const recipWithPref  = await Recipient.findOne({
             include: {
                 model: Preference

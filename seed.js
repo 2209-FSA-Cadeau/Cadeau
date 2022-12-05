@@ -1,6 +1,27 @@
 const { db, models: {User, Recipient, Preference, Gift, Note, Holiday, Comment} } = require('./db')
 
 function createIdentifier(info) {
+    if(info === "category"){
+        const categoriesArr = [];
+        const categories = ["Books", "Electronics", "Cooking", 
+        "Sports", "Outdoors", "Clothing", 
+        "Music", "Movies", "Technology",
+        "Games", "Pets", "Home", "Art" ]
+
+        while(categoriesArr.length < 5){
+            const num = Math.floor(Math.random() * (12 - 0 + 1) + 0)
+            const randomCategory = categories[num]
+            if(!categoriesArr.includes(randomCategory)){
+                categoriesArr.push(randomCategory)
+            }
+        }
+
+        return categoriesArr
+    }
+
+
+
+
     if(info === "date"){
         return "2012-11-29"
     }
@@ -69,7 +90,7 @@ function createIdentifier(info) {
 }
 
 const users = []
-for(let i = 0; i < 50; i++){
+for(let i = 0; i < 10; i++){
     users.push({
         identifier: createIdentifier(),
         firstName: createIdentifier("name"),
@@ -78,7 +99,7 @@ for(let i = 0; i < 50; i++){
 }
 
 const recipients = []
-for(let i = 0; i < 100; i++){
+for(let i = 0; i < 20; i++){
     recipients.push({
         name: createIdentifier("name"),
         email: createIdentifier("email"),
@@ -96,14 +117,6 @@ for(let i = 0; i < 50; i++){
         price: createIdentifier("decimal"),
         link: createIdentifier(),
         rating: createIdentifier("number"),
-    })
-}
-
-const preferences = []
-for(let i = 0; i < 200; i++){
-    preferences.push({
-        preference: createIdentifier("preference"), 
-        category: createIdentifier("name")
     })
 }
 
@@ -127,9 +140,6 @@ async function seed(){
     //Create dummy gifts
     await Promise.all(gifts.map(gift => Gift.create(gift)))
 
-    //Create dummy preferences
-    await Promise.all(preferences.map(preference => Preference.create(preference)))
-
     //Create dummy holidays
     await Promise.all(holidays.map(holiday => Holiday.create(holiday)))
 
@@ -147,19 +157,19 @@ async function seed(){
     }
     await Promise.all(userRecipJoinTable)
 
-    //Join recipients and preferences -> each recipient has two preferences
-    const allPreferences = await Preference.findAll()
-    index = 1
-    counter = 0
-    const setPrefToRecip = []
-    for(let i = 0; i < allPreferences.length; i++){
-        setPrefToRecip.push(allPreferences[i].setRecipient(index))
-        counter++
-        if(counter % 2 === 0){
-            index++
-        }
+    //Join recipients and preferences -> each recipient has five preferences
+    for(let i = 0; i < 20; i++){
+        const onlyCategories = createIdentifier("category")
+        const preferences = await Promise.all(onlyCategories.map(category => {
+                                const preferenceObj = {
+                                                        preference: createIdentifier("preference"),
+                                                        category
+                                                      }
+                                return Preference.create(preferenceObj)
+        }))
+        preferences.forEach(preference => preference.setRecipient(i + 1))
     }
-    await Promise.all(setPrefToRecip)
+
 
     //Join recipients and gifts -> each recipient has two gifts
     await Promise.all(allRecipients.map(recipient => {

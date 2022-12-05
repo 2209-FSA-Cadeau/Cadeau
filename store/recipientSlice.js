@@ -9,23 +9,13 @@ export const fetchRecipients = createAsyncThunk(
   async (userId) => {
     try {
       const response = await axios.get(`/api/recipients/${"2"}`, {
-        //   headers: {
-        //     authorization: token,
-        //   },
+        //NEED TO UPDATE WITH REAL USERID WHEN AVAILABLE
       });
       return response.data;
     } catch (err) {
       console.log(err);
     }
   }
-  // {
-  //   condition: () => {
-  //     const token = window.localStorage.getItem("token");
-  //     if (token === null) {
-  //       return false;
-  //     }
-  //   },
-  // }
 );
 
 // Add new recipient
@@ -33,14 +23,16 @@ export const addRecipient = createAsyncThunk(
   "/recipients/addRecipient",
   async (recipient) => {
     try {
-      const recipientRes = await axios.post(`/api/recipients`, recipient);
+      const recipientRes = await axios.post(`/api/recipients`, {
+        userId: 2,
+        updateInfo: recipient,
+      }); //NEED TO UPDATE WITH REAL USERID WHEN AVAILABLE
       await Promise.all(
         recipient.likes.map(async (like) => {
           try {
             await axios.post(`/api/preferences`, {
               recipientId: recipientRes.data.id,
-              preference: "like",
-              category: like.label,
+              updateInfo: { preference: "like", category: like.label },
             });
           } catch (err) {
             console.log(err);
@@ -52,8 +44,7 @@ export const addRecipient = createAsyncThunk(
           try {
             await axios.post(`/api/preferences`, {
               recipientId: recipientRes.data.id,
-              preference: "dislike",
-              category: dislike.label,
+              updateInfo: { preference: "dislike", category: dislike.label },
             });
           } catch (err) {
             console.log(err);
@@ -101,18 +92,14 @@ export const recipientSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      //   .addCase(fetchCartUser.pending, (state, action) => {
-      //     state.isLoading = true;
-      //   })
       .addCase(fetchRecipients.fulfilled, (state, action) => {
         state.recipients = action.payload;
       })
       .addCase(addRecipient.fulfilled, (state, action) => {
         state.recipients = [...state.recipients, action.payload];
+        state.singleRecipient = action.payload;
+
       });
-    //   .addCase(fetchCartUser.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //   })
   },
 });
 
