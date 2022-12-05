@@ -7,25 +7,32 @@ const User = db.define("user", {
     unique: true,
     allowNull: false,
     validate: {
-      notEmpty: true
-    }
+      notEmpty: true,
+    },
   },
   firstName: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
     validate: {
-      notEmpty: true
-    }
+      notEmpty: true,
+    },
   },
   lastName: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
     validate: {
-      notEmpty: true
-    }
-  }
+      notEmpty: true,
+    },
+  },
+  email: {
+    type: Sequelize.STRING,
+    validate: {
+      notEmpty: true,
+      isEmail: true,
+    },
+  },
 });
 
 module.exports = User;

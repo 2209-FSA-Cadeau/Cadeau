@@ -1,9 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import Link from "next/link";
-import { useUser } from "@auth0/nextjs-auth0";
 import Recipient from "./Recipient";
-//import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchRecipients } from "../../store/recipientSlice";
 

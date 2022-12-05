@@ -12,11 +12,10 @@ export default async function userHandler(req, res) {
       .json({ message: "Unable to connect to the database:", error });
   }
 
-
   //add verification with auth0 function
 
   const {
-    body: { identifier, firstName, lastName },
+    body: { identifier, firstName, lastName, email },
     method,
   } = req;
 
@@ -27,7 +26,19 @@ export default async function userHandler(req, res) {
       break;
     case "POST":
       //CREATE a new user
-      const user = await User.create({ identifier, firstName, lastName });
+      const [user, created] = await User.findOrCreate({
+        where: {
+          identifier: identifier,
+        },
+        defaults: {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+        },
+      });
+      if (!created) {
+        user.update({ firstName, lastName, email });
+      }
       res.status(201).json(user);
       break;
     default:
