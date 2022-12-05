@@ -8,8 +8,7 @@ export const fetchRecipients = createAsyncThunk(
   "/recipients/fetchRecipients",
   async (userId) => {
     try {
-      const response = await axios.get(`/api/recipients/${"2"}`, {
-        //NEED TO UPDATE WITH REAL USERID WHEN AVAILABLE
+      const response = await axios.get(`/api/recipients/${userId}`, {
       });
       return response.data;
     } catch (err) {
