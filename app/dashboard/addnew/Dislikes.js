@@ -24,13 +24,6 @@ export default function Likes(props) {
     }
   }, [newRecipient.likes, newRecipient.dislikes]);
 
-  const likesChangeHandler = (selectedOption) => {
-    setNewRecipient({
-      ...newRecipient,
-      likes: selectedOption,
-    });
-  };
-
   const dislikesChangeHandler = (selectedOption) => {
     setNewRecipient({
       ...newRecipient,

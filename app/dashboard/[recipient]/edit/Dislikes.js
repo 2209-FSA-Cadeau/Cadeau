@@ -4,16 +4,16 @@ import makeAnimated from "react-select/animated";
 import { categories } from "../preferences/picklistChoices";
 
 export default function Likes(props) {
-  const { newRecipient, setNewRecipient } = props;
+  const { updateRecipient, setUpdateRecipient } = props;
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
     let newOptions = [];
-    if (newRecipient.likes.length > 0 || newRecipient.dislikes.length > 0) {
+    if (updateRecipient.likes.length > 0 || updateRecipient.dislikes.length > 0) {
       for (let i = 0; i < categories.length; i++) {
         if (
-          newRecipient.likes.indexOf(categories[i]) === -1 &&
-          newRecipient.dislikes.indexOf(categories[i]) === -1
+          updateRecipient.likes.indexOf(categories[i]) === -1 &&
+          updateRecipient.dislikes.indexOf(categories[i]) === -1
         ) {
           newOptions.push(categories[i]);
         }
@@ -22,18 +22,11 @@ export default function Likes(props) {
     } else {
       setOptions(categories);
     }
-  }, [newRecipient.likes, newRecipient.dislikes]);
-
-  const likesChangeHandler = (selectedOption) => {
-    setNewRecipient({
-      ...newRecipient,
-      likes: selectedOption,
-    });
-  };
+  }, [updateRecipient.likes, updateRecipient.dislikes]);
 
   const dislikesChangeHandler = (selectedOption) => {
-    setNewRecipient({
-      ...newRecipient,
+    setUpdateRecipient({
+      ...updateRecipient,
       dislikes: selectedOption,
     });
   };
@@ -42,7 +35,11 @@ export default function Likes(props) {
     <div>
       <h2>What does this person dislike?</h2>
       <Select
-        value={newRecipient.dislikes.map((dislike) => dislike)}
+        value={
+          !updateRecipient.dislikes
+            ? null
+            : updateRecipient.dislikes.map((dislike) => dislike)
+        }
         components={makeAnimated()}
         options={options}
         onChange={dislikesChangeHandler}

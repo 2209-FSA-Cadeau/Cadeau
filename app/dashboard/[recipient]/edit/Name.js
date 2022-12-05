@@ -21,7 +21,7 @@ export default function Name(props) {
       <input
         value={updateRecipient.email}
         onChange={(e) => {
-          setNewRecipient({
+          setUpdateRecipient({
             ...updateRecipient,
             email: e.target.value,
           });

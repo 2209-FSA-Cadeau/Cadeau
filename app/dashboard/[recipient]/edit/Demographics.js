@@ -1,18 +1,18 @@
 import React from "react";
 
 export default function Demographics(props) {
-  const { newRecipient, setNewRecipient } = props;
+  const { updateRecipient, setUpdateRecipient } = props;
 
   return (
     <div>
       <label>Birthday</label>
       <input
         type="text"
-        name="brithday"
-        value={newRecipient.birthday}
+        name="birthday"
+        value={updateRecipient.birthday}
         onChange={(e) => {
-          setNewRecipient({
-            ...newRecipient,
+          setUpdateRecipient({
+            ...updateRecipient,
             birthday: e.target.value,
           });
         }}
@@ -21,10 +21,10 @@ export default function Demographics(props) {
       <label>Occupation</label>
       <input
         name="occupation"
-        value={newRecipient.occupation}
+        value={!updateRecipient.occupation ? "" : updateRecipient.occupation}
         onChange={(e) => {
-          setNewRecipient({
-            ...newRecipient,
+          setUpdateRecipient({
+            ...updateRecipient,
             occupation: e.target.value,
           });
         }}
