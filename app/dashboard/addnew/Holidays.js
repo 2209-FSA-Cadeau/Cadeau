@@ -96,6 +96,7 @@ export default function Holidays(props) {
       <br />
       <label>Holidays Celebrated</label>
       <Select
+        value={newRecipient.holidays.map((holiday) => holiday)}
         components={makeAnimated()}
         options={holidays}
         onChange={holidayChangeHandler}
