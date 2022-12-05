@@ -51,6 +51,19 @@ export const addRecipient = createAsyncThunk(
           }
         })
       );
+      await Promise.all(
+        recipient.occasions.map(async (occasion) => {
+          try {
+            await axios.post(`/api/holidays`, {
+              recipientId: recipientRes.data.id,
+              name: occasion.name,
+              date: occasion.date,
+            });
+          } catch (err) {
+            console.log(err);
+          }
+        })
+      );
       return recipientRes.data;
     } catch (err) {
       console.log(err);

@@ -213,7 +213,7 @@ for(let i = 0; i < recipientArr.length; i++){
     }
 }
 
-//put together final user scores into an array for furher use
+//put together final user scores into an array for further use
 const finalScores = allColumns.map((column, index) => {
     delete column.index
     delete column.similarity

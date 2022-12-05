@@ -13,7 +13,7 @@ export default async function holidayHandler(req, res) {
   }
 
   const {
-    body: { name, date, recipientId },
+    body,
     method,
   } = req;
 
@@ -23,7 +23,7 @@ export default async function holidayHandler(req, res) {
       res.status(200).json(holidays);
       break;
     case "POST":
-      const holiday = await Holiday.create({ name, date, recipientId });
+      const holiday = await Holiday.create(body);
       res.status(201).json(holiday);
       break;
     default:
