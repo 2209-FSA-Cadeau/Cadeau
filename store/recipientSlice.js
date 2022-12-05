@@ -8,8 +8,7 @@ export const fetchRecipients = createAsyncThunk(
   "/recipients/fetchRecipients",
   async (userId) => {
     try {
-      const response = await axios.get(`/api/recipients/${userId}`, {
-      });
+      const response = await axios.get(`/api/recipients/${userId}`, {});
       return response.data;
     } catch (err) {
       console.log(err);
@@ -92,12 +91,15 @@ export const recipientSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchRecipients.fulfilled, (state, action) => {
-        state.recipients = action.payload;
+        if (action.payload) {
+          state.recipients = action.payload;
+        } else {
+          state.recipients = [];
+        }
       })
       .addCase(addRecipient.fulfilled, (state, action) => {
         state.recipients = [...state.recipients, action.payload];
         state.singleRecipient = action.payload;
-
       });
   },
 });
