@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Start from "./Start";
 import Name from "./Name";
 import Demographics from "./Demographics";
@@ -25,6 +25,7 @@ const page = () => {
   });
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const prevClickHandler = () => {
     setStep(step - 1);
@@ -37,7 +38,7 @@ const page = () => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     dispatch(addRecipient(newRecipient));
-    redirect("/dashboard/");
+    router.push("/dashboard/");
   };
 
   const conditionalComponent = () => {
