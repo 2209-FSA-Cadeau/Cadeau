@@ -6,7 +6,11 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'landing': "url('/assets/landingPage.jpeg')",
+      },
+    },
   },
   plugins: [],
 }
