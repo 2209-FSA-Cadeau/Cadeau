@@ -69,6 +69,24 @@ export const addRecipient = createAsyncThunk(
   }
 );
 
+
+// Update Recipient
+export const editRecipient = createAsyncThunk(
+  "/recipients/editRecipient",
+  async (recipient) => {
+    try {
+      console.log(recipient)
+      const { data } = await axios.put(`/api/recipients`, {
+        userId: recipient.id,
+        updateInfo: recipient,
+      });
+      return data
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 const initialState = {
   recipients: [],
   singleRecipient: {},
