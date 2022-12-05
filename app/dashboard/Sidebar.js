@@ -8,13 +8,13 @@ import { fetchRecipients } from "../../store/recipientSlice";
 //const recipients = []
 
 function Sidebar() {
-  const { user, isLoadingRedux } = useSelector((store) => store.user);
+  const { user, userId, isLoadingRedux } = useSelector((store) => store.user);
   const { recipients } = useSelector((store) => store.recipients);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchRecipients(user));
-  }, [dispatch, user]);
+    dispatch(fetchRecipients(userId));
+  }, [dispatch, userId]);
 
   return (
     <div className="flex flex-col justify-between w-full h-full rounded-sm bg-neutral-100/80 shadow-xl shadow-gray-400">
