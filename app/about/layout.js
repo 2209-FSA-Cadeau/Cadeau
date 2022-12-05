@@ -1,6 +1,6 @@
 "use client"
 
-function HomeLayout({ children }) {
+function AboutLayout({ children }) {
   return (
     <section>
         {children}
@@ -8,4 +8,4 @@ function HomeLayout({ children }) {
   );
 }
 
-export default HomeLayout;
+export default AboutLayout;

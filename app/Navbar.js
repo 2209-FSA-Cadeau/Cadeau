@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/navigation";
-import { auth0login, auth0logout } from "../store/userSlice";
+import { auth0login, auth0logout, addOrFindUser } from "../store/userSlice";
 import { setTab } from "../store/recipientSlice";
 
 const Navbar = () => {
@@ -17,6 +17,7 @@ const Navbar = () => {
     if (!isLoading) {
       if (user) {
         dispatch(auth0login(user));
+        dispatch(addOrFindUser(user));
       } else {
         router.push("/landing");
       }
@@ -33,11 +34,6 @@ const Navbar = () => {
           <ul className="flex">
             {isLoggedIn ? (
               <>
-                <Link href="/home/">
-                  <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-black">
-                    Home
-                  </li>
-                </Link>
                 <Link href="/shop/">
                   <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-black ">
                     Shop Products
@@ -49,6 +45,11 @@ const Navbar = () => {
                 >
                   <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-black">
                     Dashboard
+                  </li>
+                </Link>
+                <Link href="/about/">
+                  <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-black">
+                    About
                   </li>
                 </Link>
                 <a

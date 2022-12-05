@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const LandingPage = () => {
   const { isLoggedIn } = useSelector((store) => store.user);
   if (isLoggedIn) {
-    redirect("/home");
+    redirect("/shop");
   }
   return (
     <>
