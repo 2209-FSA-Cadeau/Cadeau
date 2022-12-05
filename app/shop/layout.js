@@ -1,13 +1,12 @@
 import SearchBar from "./SearchBar";
-import ShoppingNav from "./ShoppingNav";
+// import ShoppingNav from "./ShoppingNav";
 import ShoppingSideBar from "./ShoppingSideBar";
 
 function ShopLayout({ children }) {
   return (
-    <div className="flex flex-col text-center">
+    <div className="flex flex-col text-center h-screen">
       <SearchBar />
-      <ShoppingNav />
-      <div className="flex">
+      <div className="flex h-screen">
         <div className="basis-1/4">
           <ShoppingSideBar />
         </div>
