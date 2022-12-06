@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Start from "./Start";
 import Name from "./Name";
@@ -10,7 +10,6 @@ import Likes from "./Likes";
 import Dislikes from "./Dislikes";
 import Complete from "./Complete";
 import { addRecipient } from "../../../store/recipientSlice";
-
 
 const page = () => {
   const [step, setStep] = useState(0);
@@ -23,6 +22,7 @@ const page = () => {
     holidays: [],
     likes: [],
     dislikes: [],
+    userId: useSelector((store) => store.user.userId),
   });
 
   const dispatch = useDispatch();

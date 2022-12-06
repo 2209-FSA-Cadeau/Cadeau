@@ -13,13 +13,13 @@ const {
     }
 
     const {
-      body: {recipientId, preferenceId, updateInfo},
+      body: {recipientId, preferenceId, type, updateInfo},
       method,
     } = req;
 
     switch (method) {
       case "POST":
-        //ADD NEW PREFERENCE 
+        //ADD NEW PREFERENCE
         const newPreference = await Preference.create(updateInfo)
         await newPreference.setRecipient(recipientId)
         res.status(201).json(newPreference)
@@ -35,7 +35,10 @@ const {
       case "DELETE":
         //DELETE SINGLE RECIPIENT
         await Preference.destroy({
-            where: {id: preferenceId},
+            where: {
+              preferenceId,
+              type
+            },
             individualHooks: true
         })
 
