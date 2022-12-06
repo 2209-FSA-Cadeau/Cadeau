@@ -10,7 +10,6 @@ const ProductIdPage = props => {
   const dispatch = useDispatch();
   const product = singleProduct.product_results
   const curRecipient = recipients[0]
-  // const { primary_image, title, highlights, specifications, description } = product
   useEffect(() => {
     dispatch(getSingleItem(props.params.productId))
     return () => {
