@@ -1,7 +1,9 @@
 import React from "react";
+import TeamMember from "./TeamMember";
 
 const AboutPage = () => {
   return (
+    // Header
     <div className="w-full h-full  text-cadeau-900">
       <div className="border-b-2 border-cadeau-900 uppercase tracking-widest mb-4">
         <h1>About</h1>
@@ -50,7 +52,8 @@ const AboutPage = () => {
             </li>
             <div className="w-full border border-cadeau-200/50"></div>
             <li>
-              Save potential items to a recipient's profile and maintain a log of previous gifts
+              Save potential items to a recipient's profile and maintain a log
+              of previous gifts
             </li>
             <div className="w-full border border-cadeau-200/50"></div>
             <li>
@@ -64,18 +67,47 @@ const AboutPage = () => {
             <h2>Gift Recommendations</h2>
           </div>
           <ul className="flex flex-col justify-around px-4 py-2 h-[80%] w-full text-md">
-            <li>
-              filler
-            </li>
+            <li>filler</li>
             <div className="w-full border border-cadeau-200/50"></div>
-            <li>
-              filler
-            </li>
+            <li>filler</li>
           </ul>
         </div>
       </div>
       {/* Team Info */}
-
+      <div className="border-b-2 border-cadeau-900 uppercase tracking-widest mb-6 mt-10">
+        <h1>Our Team</h1>
+      </div>
+      <div className="flex justify-evenly w-full mb-2">
+      <TeamMember
+          name="Peter Rifkind"
+          location="New York"
+          imageSrc="/assets/headshotPR.jpeg"
+          liURL="https://www.linkedin.com/in/prifkind/"
+          ghURL="https://github.com/prifkind"
+        />
+        <TeamMember
+          name="Alex Sun"
+          location="New York City"
+          imageSrc="/assets/headshotAS.jpeg"
+          liURL="https://www.linkedin.com/in/alexsun424/"
+          ghURL="https://github.com/ariadosic"
+        />
+        <TeamMember
+          name="Frank Guillen"
+          location="Lakeland, FL"
+          imageSrc="/assets/headshotFG.jpeg"
+          liURL="https://www.linkedin.com/in/frank-guillen/"
+          ghURL="https://github.com/fguillen1215"
+        />
+        <TeamMember
+          name="Patrick McGrath"
+          location="New York City"
+          imageSrc="/assets/headshotPM.jpeg"
+          liURL="https://www.linkedin.com/in/patrickmcgrath13/"
+          ghURL="https://github.com/p-mcgrath/"
+        />
+      </div>
+      <div className="h-[5%]"></div>
     </div>
   );
 };
