@@ -4,7 +4,7 @@ const {
   } = require("../../../db");
 
 const Sequelize = require("sequelize")
-  
+
   export default async function recipientHandler(req, res) {
     try {
       await db.authenticate();
@@ -32,7 +32,8 @@ const Sequelize = require("sequelize")
 
       case "PUT":
         // UPDATE SINGLE RECIPIENT
-        const recipient = await Recipient.findByPk(recipientId)
+        console.log(req.body)
+        const recipient = await Recipient.findByPk(userId)
         const updatedRecipient = await recipient.update(updateInfo)
         res.status(200).json(updatedRecipient);
         break;
@@ -43,7 +44,7 @@ const Sequelize = require("sequelize")
             where: {id: recipientId},
             individualHooks: true
         })
-        
+
         res.status(204).end()
         break;
 

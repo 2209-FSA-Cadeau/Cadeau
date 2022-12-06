@@ -8,9 +8,7 @@ export const fetchRecipients = createAsyncThunk(
   "/recipients/fetchRecipients",
   async (userId) => {
     try {
-      const response = await axios.get(`/api/recipients/${"2"}`, {
-        //NEED TO UPDATE WITH REAL USERID WHEN AVAILABLE
-      });
+      const response = await axios.get(`/api/recipients/${userId}`);
       return response.data;
     } catch (err) {
       console.log(err);
@@ -51,12 +49,26 @@ export const addRecipient = createAsyncThunk(
           }
         })
       );
+      await Promise.all(
+        recipient.occasions.map(async (occasion) => {
+          try {
+            await axios.post(`/api/holidays`, {
+              recipientId: recipientRes.data.id,
+              name: occasion.name,
+              date: occasion.date,
+            });
+          } catch (err) {
+            console.log(err);
+          }
+        })
+      );
       return recipientRes.data;
     } catch (err) {
       console.log(err);
     }
   }
 );
+
 
 // save item to recipients saved gifts
 export const saveItem = createAsyncThunk(
@@ -77,6 +89,23 @@ export const saveItem = createAsyncThunk(
     }
   }
 )
+
+// Update Recipient
+export const editRecipient = createAsyncThunk(
+  "/recipients/editRecipient",
+  async (recipient) => {
+    try {
+      console.log(recipient)
+      const { data } = await axios.put(`/api/recipients`, {
+        userId: recipient.id,
+        updateInfo: recipient,
+      });
+      return data
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
 
 const initialState = {
   recipients: [],
@@ -100,12 +129,15 @@ export const recipientSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchRecipients.fulfilled, (state, action) => {
-        state.recipients = action.payload;
+        if (action.payload) {
+          state.recipients = action.payload;
+        } else {
+          state.recipients = [];
+        }
       })
       .addCase(addRecipient.fulfilled, (state, action) => {
         state.recipients = [...state.recipients, action.payload];
         state.singleRecipient = action.payload;
-
       });
   },
 });

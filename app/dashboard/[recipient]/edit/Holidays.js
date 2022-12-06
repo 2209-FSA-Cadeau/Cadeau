@@ -3,7 +3,7 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
 export default function Holidays(props) {
-  const { newRecipient, setNewRecipient } = props;
+  const { updateRecipient, setUpdateRecipient } = props;
   const [occasion, setOccasion] = useState({
     name: "",
     date: "",
@@ -30,9 +30,9 @@ export default function Holidays(props) {
   };
 
   const occasionDeleteHandler = (event) => {
-    setNewRecipient({
-      ...newRecipient,
-      occasions: newRecipient.occasions.filter(
+    setUpdateRecipient({
+      ...updateRecipient,
+      occasions: updateRecipient.occasions.filter(
         (e) => e.name != event.target.value
       ),
     });
@@ -40,9 +40,9 @@ export default function Holidays(props) {
 
   const occasionSubmitHandler = (event) => {
     event.preventDefault();
-    setNewRecipient({
-      ...newRecipient,
-      occasions: [...newRecipient.occasions, occasion],
+    setUpdateRecipient({
+      ...updateRecipient,
+      occasions: [...updateRecipient.occasions, occasion],
     });
     setOccasion({
       name: "",
@@ -51,8 +51,8 @@ export default function Holidays(props) {
   };
 
   const holidayChangeHandler = (selectedOption) => {
-    setNewRecipient({
-      ...newRecipient,
+    setUpdateRecipient({
+      ...updateRecipient,
       holidays: selectedOption,
     });
   };
@@ -63,7 +63,7 @@ export default function Holidays(props) {
       <br />
       <h2>Occassions to Remember</h2>
       <ul>
-        {newRecipient.occasions.map((occasion, index) => {
+        {!updateRecipient.occasions ? null : updateRecipient.occasions.map((occasion, index) => {
           return (
             <li key={index}>
               <div>
@@ -96,7 +96,7 @@ export default function Holidays(props) {
       <br />
       <label>Holidays Celebrated</label>
       <Select
-        value={newRecipient.holidays.map((holiday) => holiday)}
+        value={!updateRecipient.holidays ? null : updateRecipient.holidays.map((holiday) => holiday)}
         components={makeAnimated()}
         options={holidays}
         onChange={holidayChangeHandler}

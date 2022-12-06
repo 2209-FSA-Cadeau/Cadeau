@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const LandingPage = () => {
   const { isLoggedIn } = useSelector((store) => store.user);
   if (isLoggedIn) {
-    redirect("/home");
+    redirect("/shop");
   }
   return (
     <>
@@ -21,7 +21,7 @@ const LandingPage = () => {
               </p>
               <a
                 href="/api/auth/login/"
-                className="bg-blue-500/95 text-white text-2xl rounded-lg p-4 shadow-lg shadow-gray-400"
+                className="bg-cadeau-500/95 text-white text-2xl rounded-lg p-4 shadow-lg shadow-gray-400"
               >
                 Login or Sign Up!
               </a>

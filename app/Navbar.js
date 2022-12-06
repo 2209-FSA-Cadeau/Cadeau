@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/navigation";
-import { auth0login, auth0logout } from "../store/userSlice";
+import { auth0login, auth0logout, addOrFindUser } from "../store/userSlice";
 import { setTab } from "../store/recipientSlice";
 
 const Navbar = () => {
@@ -17,6 +17,7 @@ const Navbar = () => {
     if (!isLoading) {
       if (user) {
         dispatch(auth0login(user));
+        dispatch(addOrFindUser(user));
       } else {
         router.push("/landing");
       }
@@ -24,22 +25,17 @@ const Navbar = () => {
   }, [dispatch, user, isLoading, router]);
 
   return (
-    <div className="fixed w-full h-20 shadow-xl z-[100] bg-inherit">
+    <div className="fixed w-full h-20 shadow-md shadow-gray-400 z-[100] bg-gradient-to-br from-cadeau-600 to-cadeau-400 text-white">
       <div className="flex justify-between items-center w-full h-full px-2">
-        <Link href="/home">
+        <Link href="/shop">
           <h2>Cadeau!</h2>
         </Link>
         <div>
           <ul className="flex">
             {isLoggedIn ? (
               <>
-                <Link href="/home/">
-                  <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-black">
-                    Home
-                  </li>
-                </Link>
                 <Link href="/shop/">
-                  <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-black ">
+                  <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-white ">
                     Shop Products
                   </li>
                 </Link>
@@ -47,8 +43,13 @@ const Navbar = () => {
                   href="/dashboard/"
                   onClick={() => dispatch(setTab("preferences"))}
                 >
-                  <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-black">
+                  <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-white">
                     Dashboard
+                  </li>
+                </Link>
+                <Link href="/about/">
+                  <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-white">
+                    About
                   </li>
                 </Link>
                 <a
@@ -57,14 +58,14 @@ const Navbar = () => {
                     dispatch(auth0logout());
                   }}
                 >
-                  <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-black">
+                  <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-white">
                     Logout
                   </li>
                 </a>
               </>
             ) : (
               <a href="/api/auth/login/">
-                <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-black">
+                <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-white">
                   Login
                 </li>
               </a>
