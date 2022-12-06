@@ -23,10 +23,8 @@ export default async function giftHandler(req, res) {
       res.status(200).json(gifts);
       break;
     case "POST":
-      console.log(req.body.name)
       const gift = await Gift.create({ name, description, imageUrl, price, link, rating });
       const recipient = await Recipient.findByPk(recipientId);
-      console.log(recipient)
       recipient.addGift(gift);
       res.status(201).json(gift);
       break;
