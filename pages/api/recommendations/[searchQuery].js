@@ -1,6 +1,4 @@
-import e from "express";
-
-const axios = require("axios") 
+const axios = require("axios")
 const zlib = require("zlib");
 
   export default async function searchHandler(req, res) {
@@ -19,7 +17,7 @@ const zlib = require("zlib");
         searchItem.join(" ")
       }
     }
-  
+
     switch (method) {
       case "GET":
         //GET PRODUCT RESULTS
@@ -46,7 +44,7 @@ const zlib = require("zlib");
           .catch(function (error) {
             console.error(error);
           });
-       
+
         break;
 
       default:
@@ -54,4 +52,3 @@ const zlib = require("zlib");
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   }
-  
