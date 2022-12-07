@@ -138,14 +138,14 @@ const PreferenceContainer = () => {
           return (
             <div key={index}>
               <PreferenceCard type={"like"} choice={like} />
-              <button
+              {/* <button
                 name="like"
                 value={like}
                 onClick={onDeleteHandler}
                 key={`btn-${index}`}
               >
                 X
-              </button>
+              </button> */}
             </div>
           );
         })}
@@ -168,14 +168,14 @@ const PreferenceContainer = () => {
           return (
             <div key={index}>
               <PreferenceCard type={"dislike"} choice={dislike} />
-              <button
+              {/* <button
                 name="dislike"
                 value={dislike}
                 onClick={onDeleteHandler}
                 key={`btn-${index}`}
               >
                 X
-              </button>
+              </button> */}
             </div>
           );
         })}
