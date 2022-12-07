@@ -16,7 +16,7 @@ const CategoryPage = props => {
       if(categories[props.params.category].length === 0){
         if(props.params.category !== "Top%20Choices"){
           dispatch(getSingleCategory(props.params.category))
-        } 
+        }
       }
     } else {
       dispatch(getSearchResults({category: props.searchParams.category, value: props.searchParams.value}))
@@ -53,12 +53,12 @@ if(Object.keys(props.searchParams).length > 0){
                 Next Page
               </div>
         </div>
-      </div> 
+      </div>
     )
 } else {
   return(
     <div>
-      <ProductCards categories={categories[props.params.category]} limit={limit} offset={offset}/>
+      <ProductCards categories={categories[props.params.category]} limit={limit} offset={offset} params={props.params} />
       <div className="flex flex-row justify-center">
             <div id="back" className="mr-7 border-2 border-black rounded-md" onClick={clickHandler}>
               Previous Page
