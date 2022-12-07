@@ -1,5 +1,4 @@
 import React from "react";
-import DeletePreference from "./DeletePreference";
 
 export default function PreferenceCard(props) {
   const { choice } = props;

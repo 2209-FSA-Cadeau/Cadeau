@@ -4,7 +4,6 @@ import makeAnimated from "react-select/animated";
 import { useDispatch, useSelector } from "react-redux";
 import PreferenceCard from "./PreferenceCard";
 import { categories } from "./picklistChoices";
-import DeletePreference from "./DeletePreference";
 
 const PreferenceContainer = () => {
   const { singleRecipient } = useSelector((store) => store.recipients);
@@ -80,7 +79,6 @@ const PreferenceContainer = () => {
                 type={"like"}
                 choice={like}
                 key={index}
-                setLikes={setLikes}
               />
               <button name="like" value={like} onClick={onDeleteHandler}>
                 X
@@ -110,7 +108,6 @@ const PreferenceContainer = () => {
                 type={"dislike"}
                 choice={dislike}
                 key={index}
-                setDislikes={setDislikes}
               />
               <button name="dislike" value={dislike} onClick={onDeleteHandler}>
                 X
