@@ -8,7 +8,6 @@ export default function PreferenceCard(props) {
     <span>
       <h4>
         {choice}
-        <DeletePreference choice={choice} />
       </h4>
     </span>
   );

@@ -4,6 +4,7 @@ import makeAnimated from "react-select/animated";
 import { useDispatch, useSelector } from "react-redux";
 import PreferenceCard from "./PreferenceCard";
 import { categories } from "./picklistChoices";
+import DeletePreference from "./DeletePreference";
 
 const PreferenceContainer = () => {
   const { singleRecipient } = useSelector((store) => store.recipients);
@@ -60,12 +61,32 @@ const PreferenceContainer = () => {
     setDislikes(options);
   };
 
+  const onDeleteHandler = (event) => {
+    event.target.name === "like"
+      ? setLikes(likes.filter((like) => like != event.target.value))
+      : setDislikes(
+          dislikes.filter((dislike) => dislike != event.target.value)
+        );
+  };
+
   return (
     <div>
       <div>
         <h2>Things {singleRecipient.name} Likes</h2>
         {likes.map((like, index) => {
-          return <PreferenceCard choice={like} key={index} />;
+          return (
+            <div>
+              <PreferenceCard
+                type={"like"}
+                choice={like}
+                key={index}
+                setLikes={setLikes}
+              />
+              <button name="like" value={like} onClick={onDeleteHandler}>
+                X
+              </button>
+            </div>
+          );
         })}
         <br />
         <Select
@@ -83,7 +104,19 @@ const PreferenceContainer = () => {
       <div>
         <h2>Things {singleRecipient.name} Hates</h2>
         {dislikes.map((dislike, index) => {
-          return <PreferenceCard choice={dislike} key={index} />;
+          return (
+            <div>
+              <PreferenceCard
+                type={"dislike"}
+                choice={dislike}
+                key={index}
+                setDislikes={setDislikes}
+              />
+              <button name="dislike" value={dislike} onClick={onDeleteHandler}>
+                X
+              </button>
+            </div>
+          );
         })}
         <br />
         <h3>Add Dislikes</h3>
