@@ -116,27 +116,45 @@ export const fetchPreferences = createAsyncThunk(
   }
 );
 
-export const addLikes = createAsyncThunk(
-  "/recipients/addLikes",
-  async (likes, preferenceId, recipientId) => {
+export const addLike = createAsyncThunk("/recipients/addLike", async (obj) => {
+  try {
+    const response = await axios.post(`/api/preferences`, {
+      updateInfo: { category: obj.like, preference: "like" },
+      recipientId: obj.recipientId,
+    });
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+export const addDislike = createAsyncThunk(
+  "/recipients/addDislike",
+  async (obj) => {
     try {
-      await axios.delete(`/api/preferences`, {
-        preferenceId,
-        type: "like",
+      const response = await axios.post(`/api/preferences`, {
+        updateInfo: { category: obj.dislike, preference: "dislike" },
+        recipientId: obj.recipientId,
       });
-      const newLikes = await Promise.all(
-        likes.map(async (like) => {
-          try {
-            await axios.post(`/api/preferences`, {
-              updateInfo: { like, type: "like" },
-              recipientId,
-            });
-          } catch (err) {
-            console.log(err);
-          }
-        })
-      );
-        return newLikes.data
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+export const deleteLike = createAsyncThunk(
+  "/recipients/deleteLike",
+  async (recipientId) => {
+    try {
+      const response = await axios.delete(`/api/preferences`, {
+        data: {
+          type: "like",
+          recipientId: recipientId,
+        },
+      });
+      console.log(response)
+      return response.data;
     } catch (err) {
       console.log(err);
     }
@@ -184,10 +202,24 @@ export const recipientSlice = createSlice({
           preferences: action.payload,
         };
       })
-      .addCase(addLikes.fulfilled, (state, action) => {
+      .addCase(addLike.fulfilled, (state, action) => {
         state.singleRecipient = {
           ...state.singleRecipient,
-          preferences: action.payload,
+          preferences: [...state.singleRecipient.preferences, action.payload],
+        };
+      })
+      .addCase(addDislike.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          preferences: [...state.singleRecipient.preferences, action.payload],
+        };
+      })
+      .addCase(deleteLike.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          preferences: state.singleRecipient.preferences.filter(
+            (preference) => preference.category != action.payload
+          ),
         };
       });
   },

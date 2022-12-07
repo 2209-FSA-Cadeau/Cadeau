@@ -1,5 +1,4 @@
 import React from "react";
-import DeletePreference from "./DeletePreference";
 
 export default function PreferenceCard(props) {
   const { choice } = props;
@@ -8,7 +7,6 @@ export default function PreferenceCard(props) {
     <span>
       <h4>
         {choice}
-        <DeletePreference choice={choice} />
       </h4>
     </span>
   );
