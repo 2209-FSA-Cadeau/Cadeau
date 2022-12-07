@@ -8,6 +8,8 @@ import {
   addDislike,
   addLike,
   deleteLike,
+  deleteDislike,
+  fetchPreferences,
 } from "../../../../store/recipientSlice";
 
 const PreferenceContainer = () => {
@@ -64,114 +66,134 @@ const PreferenceContainer = () => {
       dispatch(
         addLike({ like: selectedLike, recipientId: singleRecipient.id })
       );
-      } else if (
-        selectedOption.length + dislikes.length <
-        singleRecipient.preferences.length
-      ) {
-        dispatch(deleteLike(singleRecipient.id));
-      }
-
-      const options = selectedOption.map((option) => {
-        return option.label;
+    } else if (
+      selectedOption.length + dislikes.length <
+      singleRecipient.preferences.length
+    ) {
+      dispatch(deleteLike(singleRecipient.id));
+      selectedOption.forEach(async (like) => {
+        await dispatch(
+          addLike({ like: like.label, recipientId: singleRecipient.id })
+        );
+        dispatch(fetchPreferences(singleRecipient.id));
       });
-      setLikes(options);
     }
 
-    // Handle changes to the dislikes array
-    const dislikesChangeHandler = (selectedOption) => {
-      if (
-        selectedOption.length + likes.length >
-        singleRecipient.preferences.length
-      ) {
-        const selectedDislike = selectedOption[selectedOption.length - 1].label;
-        dispatch(
+    const options = selectedOption.map((option) => {
+      return option.label;
+    });
+    setLikes(options);
+  };
+
+  // Handle changes to the dislikes array
+  const dislikesChangeHandler = (selectedOption) => {
+    if (
+      selectedOption.length + likes.length >
+      singleRecipient.preferences.length
+    ) {
+      const selectedDislike = selectedOption[selectedOption.length - 1].label;
+      dispatch(
+        addDislike({
+          dislike: selectedDislike,
+          recipientId: singleRecipient.id,
+        })
+      );
+    } else if (
+      selectedOption.length + likes.length <
+      singleRecipient.preferences.length
+    ) {
+      dispatch(deleteDislike(singleRecipient.id));
+      selectedOption.forEach(async (dislike) => {
+        await dispatch(
           addDislike({
-            dislike: selectedDislike,
+            dislike: dislike.label,
             recipientId: singleRecipient.id,
           })
         );
-      }
-      const options = selectedOption.map((option) => {
-        return option.label;
+        dispatch(fetchPreferences(singleRecipient.id));
       });
-      setDislikes(options);
-    };
+    }
 
-    // Handle delete requests for both the likes and dislikes arrays
-    const onDeleteHandler = (event) => {
-      event.target.name === "like"
-        ? setLikes(likes.filter((like) => like != event.target.value))
-        : setDislikes(
-            dislikes.filter((dislike) => dislike != event.target.value)
-          );
-    };
-
-    // Render
-    return (
-      <div>
-        <div>
-          <h2>Things {singleRecipient.name} Likes</h2>
-          {likes.map((like, index) => {
-            return (
-              <div>
-                <PreferenceCard type={"like"} choice={like} key={index} />
-                <button
-                  name="like"
-                  value={like}
-                  onClick={onDeleteHandler}
-                  key={`btn-${index}`}
-                >
-                  X
-                </button>
-              </div>
-            );
-          })}
-          <br />
-          <Select
-            value={likes.map((like) => {
-              return { value: like.toLowerCase(), label: like };
-            })}
-            components={makeAnimated()}
-            options={options}
-            onChange={likesChangeHandler}
-            isMulti
-            instanceId={"likes"}
-          />
-        </div>
-        <br />
-        <div>
-          <h2>Things {singleRecipient.name} Hates</h2>
-          {dislikes.map((dislike, index) => {
-            return (
-              <div>
-                <PreferenceCard type={"dislike"} choice={dislike} key={index} />
-                <button
-                  name="dislike"
-                  value={dislike}
-                  onClick={onDeleteHandler}
-                  key={`btn-${index}`}
-                >
-                  X
-                </button>
-              </div>
-            );
-          })}
-          <br />
-          <h3>Add Dislikes</h3>
-          <Select
-            value={dislikes.map((dislike) => {
-              return { value: dislike.toLowerCase(), label: dislike };
-            })}
-            components={makeAnimated()}
-            options={options}
-            onChange={dislikesChangeHandler}
-            isMulti
-            instanceId={"dislikes"}
-          />
-        </div>
-      </div>
-    );
+    const options = selectedOption.map((option) => {
+      return option.label;
+    });
+    setDislikes(options);
   };
 
+  // Handle delete requests for both the likes and dislikes arrays
+  const onDeleteHandler = (event) => {
+    event.target.name === "like"
+      ? setLikes(likes.filter((like) => like != event.target.value))
+      : setDislikes(
+          dislikes.filter((dislike) => dislike != event.target.value)
+        );
+  };
+
+  // Render
+  return (
+    <div>
+      <div>
+        <h2>Things {singleRecipient.name} Likes</h2>
+        {likes.map((like, index) => {
+          return (
+            <div key={index}>
+              <PreferenceCard type={"like"} choice={like} />
+              {/* <button
+                name="like"
+                value={like}
+                onClick={onDeleteHandler}
+                key={`btn-${index}`}
+              >
+                X
+              </button> */}
+            </div>
+          );
+        })}
+        <br />
+        <Select
+          value={likes.map((like) => {
+            return { value: like.toLowerCase(), label: like };
+          })}
+          components={makeAnimated()}
+          options={options}
+          onChange={likesChangeHandler}
+          isMulti
+          instanceId={"likes"}
+        />
+      </div>
+      <br />
+      <div>
+        <h2>Things {singleRecipient.name} Hates</h2>
+        {dislikes.map((dislike, index) => {
+          return (
+            <div key={index}>
+              <PreferenceCard type={"dislike"} choice={dislike} />
+              {/* <button
+                name="dislike"
+                value={dislike}
+                onClick={onDeleteHandler}
+                key={`btn-${index}`}
+              >
+                X
+              </button> */}
+            </div>
+          );
+        })}
+        <br />
+        <h3>Add Dislikes</h3>
+        <Select
+          value={dislikes.map((dislike) => {
+            return { value: dislike.toLowerCase(), label: dislike };
+          })}
+          components={makeAnimated()}
+          options={options}
+          onChange={dislikesChangeHandler}
+          isMulti
+          instanceId={"dislikes"}
+        />
+      </div>
+    </div>
+  );
+};
 
 export default PreferenceContainer;

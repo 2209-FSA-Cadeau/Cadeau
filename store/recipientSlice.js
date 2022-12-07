@@ -79,13 +79,13 @@ export const saveItem = createAsyncThunk(
         imageUrl,
         price,
         link,
-      })
-      return
+      });
+      return;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
-)
+);
 
 // Update Recipient
 export const editRecipient = createAsyncThunk(
@@ -104,6 +104,7 @@ export const editRecipient = createAsyncThunk(
   }
 );
 
+// Retrieve a single recipient's preferences
 export const fetchPreferences = createAsyncThunk(
   "/recipients/fetchPreferences",
   async (recipientId) => {
@@ -116,6 +117,7 @@ export const fetchPreferences = createAsyncThunk(
   }
 );
 
+// Add a like to single recipient
 export const addLike = createAsyncThunk("/recipients/addLike", async (obj) => {
   try {
     const response = await axios.post(`/api/preferences`, {
@@ -128,6 +130,7 @@ export const addLike = createAsyncThunk("/recipients/addLike", async (obj) => {
   }
 });
 
+// Add a dislike to a single recipient
 export const addDislike = createAsyncThunk(
   "/recipients/addDislike",
   async (obj) => {
@@ -143,6 +146,7 @@ export const addDislike = createAsyncThunk(
   }
 );
 
+// Delete a like for a single recipient
 export const deleteLike = createAsyncThunk(
   "/recipients/deleteLike",
   async (recipientId) => {
@@ -153,6 +157,27 @@ export const deleteLike = createAsyncThunk(
           recipientId: recipientId,
         },
       });
+      console.log(response)
+
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+// Delete a dislike for a single recipient
+export const deleteDislike = createAsyncThunk(
+  "/recipients/deleteDislike",
+  async (recipientId) => {
+    try {
+      const response = await axios.delete(`/api/preferences`, {
+        data: {
+          type: "dislike",
+          recipientId: recipientId,
+        },
+      });
+
       console.log(response)
       return response.data;
     } catch (err) {
@@ -220,6 +245,12 @@ export const recipientSlice = createSlice({
           preferences: state.singleRecipient.preferences.filter(
             (preference) => preference.category != action.payload
           ),
+        };
+      })
+      .addCase(deleteDislike.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          preferences: [],
         };
       });
   },
