@@ -1,37 +1,105 @@
-import React from "react";
-import PreferenceCard from "./PreferenceCard";
+import React, { useEffect, useState } from "react";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 import { useDispatch, useSelector } from "react-redux";
+import PreferenceCard from "./PreferenceCard";
+import { categories } from "./picklistChoices";
 
-const PreferenceContainer = (props) => {
-  const { choices, type } = props;
+const PreferenceContainer = () => {
   const { singleRecipient } = useSelector((store) => store.recipients);
+  const [options, setOptions] = useState([]);
+  const [likes, setLikes] = useState([]);
+  const [dislikes, setDislikes] = useState([]);
 
-    if (singleRecipient.preferences) {
-      return (
-        <div>
-          {singleRecipient.preferences.map((preference, index) => {
-            if (preference.preference === "like" && type === "like") {
-              return <PreferenceCard choice={preference.category} key={index} />;
-            } else if (
-              preference.preference === "dislike" &&
-              type === "dislike"
-            ) {
-              return <PreferenceCard choice={preference.category} key={index} />;
-            }
-          })}
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          {choices.map((choice, index) => {
-            return <PreferenceCard choice={choice} key={index} />;
-          })}
-        </div>
-      );
+  useEffect(() => {
+    const newLikes = [];
+    const newDislikes = [];
+
+    if (!singleRecipient.preferences) {
+      console.log("loading");
+    } else if (likes.length === 0 && dislikes.length === 0) {
+      singleRecipient.preferences.map((preference) => {
+        if (preference.preference === "like") {
+          newLikes.push(preference.category);
+        } else {
+          newDislikes.push(preference.category);
+        }
+      });
+      setLikes(newLikes);
+      setDislikes(newDislikes);
     }
+
+    let newOptions = [];
+
+    if (likes.length > 0 || dislikes.length > 0) {
+      for (let i = 0; i < categories.length; i++) {
+        if (
+          likes.indexOf(categories[i].label) === -1 &&
+          dislikes.indexOf(categories[i].label) === -1
+        ) {
+          newOptions.push(categories[i]);
+        }
+      }
+      setOptions(newOptions);
+    } else {
+      setOptions(categories);
+    }
+  }, [likes, dislikes]);
+
+  const likesChangeHandler = (selectedOption) => {
+    const options = selectedOption.map((option) => {
+      return option.label;
+    });
+    setLikes(options);
   };
 
+  const dislikesChangeHandler = (selectedOption) => {
+    const options = selectedOption.map((option) => {
+      return option.label;
+    });
+    setDislikes(options);
+  };
 
+  return (
+    <div>
+      <div>
+        <h2>Things {singleRecipient.name} Likes</h2>
+        {likes.map((like, index) => {
+          return <PreferenceCard choice={like} key={index} />;
+        })}
+        <br />
+        <Select
+          value={likes.map((like) => {
+            return { value: like.toLowerCase(), label: like };
+          })}
+          components={makeAnimated()}
+          options={options}
+          onChange={likesChangeHandler}
+          isMulti
+          instanceId={"likes"}
+        />
+      </div>
+      <br />
+      <div>
+        <h2>Things {singleRecipient.name} Hates</h2>
+        {dislikes.map((dislike, index) => {
+          return <PreferenceCard choice={dislike} key={index} />;
+        })}
+        <br />
+        <h3>Add Dislikes</h3>
+        <Select
+          value={dislikes.map((dislike) => {
+            return { value: dislike.toLowerCase(), label: dislike };
+          })}
+          components={makeAnimated()}
+          options={options}
+          onChange={dislikesChangeHandler}
+          isMulti
+          instanceId={"dislikes"}
+        />
+      </div>
+    </div>
+  );
+};
 
 export default PreferenceContainer;
