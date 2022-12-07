@@ -64,12 +64,12 @@ const PreferenceContainer = () => {
       dispatch(
         addLike({ like: selectedLike, recipientId: singleRecipient.id })
       );
-      // } else if (
-      //   selectedOption.length + dislikes.length <
-      //   singleRecipient.preferences.length
-      // ) {
-      //   dispatch(deleteLike(singleRecipient.id));
-      // }
+      } else if (
+        selectedOption.length + dislikes.length <
+        singleRecipient.preferences.length
+      ) {
+        dispatch(deleteLike(singleRecipient.id));
+      }
 
       const options = selectedOption.map((option) => {
         return option.label;
@@ -172,6 +172,6 @@ const PreferenceContainer = () => {
       </div>
     );
   };
-};
+
 
 export default PreferenceContainer;
