@@ -96,14 +96,44 @@ export const fetchPreferences = createAsyncThunk(
   }
 );
 
-export const addLikes = createAsyncThunk(
-  "/recipients/addLikes",
+export const addLike = createAsyncThunk("/recipients/addLike", async (obj) => {
+  try {
+    const response = await axios.post(`/api/preferences`, {
+      updateInfo: { category: obj.like, preference: "like" },
+      recipientId: obj.recipientId,
+    });
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+export const addDislike = createAsyncThunk(
+  "/recipients/addDislike",
   async (obj) => {
     try {
       const response = await axios.post(`/api/preferences`, {
-        updateInfo: { category: obj.like, preference: "like" },
+        updateInfo: { category: obj.dislike, preference: "dislike" },
         recipientId: obj.recipientId,
       });
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+export const deleteLike = createAsyncThunk(
+  "/recipients/deleteLike",
+  async (recipientId) => {
+    try {
+      const response = await axios.delete(`/api/preferences`, {
+        data: {
+          type: "like",
+          recipientId: recipientId,
+        },
+      });
+      console.log(response)
       return response.data;
     } catch (err) {
       console.log(err);
@@ -151,17 +181,30 @@ export const recipientSlice = createSlice({
           ...state.singleRecipient,
           preferences: action.payload,
         };
+      })
+      .addCase(addLike.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          preferences: [...state.singleRecipient.preferences, action.payload],
+        };
+      })
+      .addCase(addDislike.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          preferences: [...state.singleRecipient.preferences, action.payload],
+        };
+      })
+      .addCase(deleteLike.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          preferences: state.singleRecipient.preferences.filter(
+            (preference) => preference.category != action.payload
+          ),
+        };
       });
-    // .addCase(addLikes.fulfilled, (state, action) => {
-    //   state.singleRecipient = {
-    //     ...state.singleRecipient,
-    //     preferences: action.payload,
-    //   };
-    // });
   },
 });
 
 export const { setSingleRecipient, setTab } = recipientSlice.actions;
 
 export default recipientSlice.reducer;
-
