@@ -4,9 +4,11 @@ import makeAnimated from "react-select/animated";
 import { useDispatch, useSelector } from "react-redux";
 import PreferenceCard from "./PreferenceCard";
 import { categories } from "./picklistChoices";
+import { addLikes } from "../../../../store/recipientSlice";
 
 const PreferenceContainer = () => {
   const { singleRecipient } = useSelector((store) => store.recipients);
+  const dispatch = useDispatch();
   const [options, setOptions] = useState([]);
   const [likes, setLikes] = useState([]);
   const [dislikes, setDislikes] = useState([]);
@@ -15,6 +17,7 @@ const PreferenceContainer = () => {
     const newLikes = [];
     const newDislikes = [];
 
+    // Logic for conditional rendering of preferences from database
     if (!singleRecipient.preferences) {
       console.log("loading");
     } else if (likes.length === 0 && dislikes.length === 0) {
@@ -29,6 +32,7 @@ const PreferenceContainer = () => {
       setDislikes(newDislikes);
     }
 
+    // Logic for populating only unselected options in the likes/dislikes picklists
     let newOptions = [];
 
     if (likes.length > 0 || dislikes.length > 0) {
@@ -46,13 +50,17 @@ const PreferenceContainer = () => {
     }
   }, [likes, dislikes]);
 
+  // Handle changes to the likes array
   const likesChangeHandler = (selectedOption) => {
+    const selectedLike = selectedOption[selectedOption.length - 1].label;
     const options = selectedOption.map((option) => {
       return option.label;
     });
     setLikes(options);
+    dispatch(addLikes({like: selectedLike, recipientId: singleRecipient.id}));
   };
 
+  // Handle changes to the dislikes array
   const dislikesChangeHandler = (selectedOption) => {
     const options = selectedOption.map((option) => {
       return option.label;
@@ -60,6 +68,7 @@ const PreferenceContainer = () => {
     setDislikes(options);
   };
 
+  // Handle delete requests for both the likes and dislikes arrays
   const onDeleteHandler = (event) => {
     event.target.name === "like"
       ? setLikes(likes.filter((like) => like != event.target.value))
@@ -68,6 +77,7 @@ const PreferenceContainer = () => {
         );
   };
 
+  // Render
   return (
     <div>
       <div>
@@ -75,12 +85,13 @@ const PreferenceContainer = () => {
         {likes.map((like, index) => {
           return (
             <div>
-              <PreferenceCard
-                type={"like"}
-                choice={like}
-                key={index}
-              />
-              <button name="like" value={like} onClick={onDeleteHandler}>
+              <PreferenceCard type={"like"} choice={like} key={index} />
+              <button
+                name="like"
+                value={like}
+                onClick={onDeleteHandler}
+                key={`btn-${index}`}
+              >
                 X
               </button>
             </div>
@@ -104,12 +115,13 @@ const PreferenceContainer = () => {
         {dislikes.map((dislike, index) => {
           return (
             <div>
-              <PreferenceCard
-                type={"dislike"}
-                choice={dislike}
-                key={index}
-              />
-              <button name="dislike" value={dislike} onClick={onDeleteHandler}>
+              <PreferenceCard type={"dislike"} choice={dislike} key={index} />
+              <button
+                name="dislike"
+                value={dislike}
+                onClick={onDeleteHandler}
+                key={`btn-${index}`}
+              >
                 X
               </button>
             </div>

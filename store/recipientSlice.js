@@ -98,25 +98,13 @@ export const fetchPreferences = createAsyncThunk(
 
 export const addLikes = createAsyncThunk(
   "/recipients/addLikes",
-  async (likes, preferenceId, recipientId) => {
+  async (obj) => {
     try {
-      await axios.delete(`/api/preferences`, {
-        preferenceId,
-        type: "like",
+      const response = await axios.post(`/api/preferences`, {
+        updateInfo: { category: obj.like, preference: "like" },
+        recipientId: obj.recipientId,
       });
-      const newLikes = await Promise.all(
-        likes.map(async (like) => {
-          try {
-            await axios.post(`/api/preferences`, {
-              updateInfo: { like, type: "like" },
-              recipientId,
-            });
-          } catch (err) {
-            console.log(err);
-          }
-        })
-      );
-        return newLikes.data
+      return response.data;
     } catch (err) {
       console.log(err);
     }
@@ -163,16 +151,17 @@ export const recipientSlice = createSlice({
           ...state.singleRecipient,
           preferences: action.payload,
         };
-      })
-      .addCase(addLikes.fulfilled, (state, action) => {
-        state.singleRecipient = {
-          ...state.singleRecipient,
-          preferences: action.payload,
-        };
       });
+    // .addCase(addLikes.fulfilled, (state, action) => {
+    //   state.singleRecipient = {
+    //     ...state.singleRecipient,
+    //     preferences: action.payload,
+    //   };
+    // });
   },
 });
 
 export const { setSingleRecipient, setTab } = recipientSlice.actions;
 
 export default recipientSlice.reducer;
+

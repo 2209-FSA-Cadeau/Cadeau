@@ -13,7 +13,7 @@ const {
     }
 
     const {
-      body: {recipientId, preferenceId, type, updateInfo},
+      body: {recipientId, preferenceId, updateInfo},
       method,
     } = req;
 
