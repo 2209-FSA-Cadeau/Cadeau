@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
 import axios from "axios";
-import { requestToBodyStream } from "next/dist/server/body-streams";
 
 // get all recipients for user
 export const fetchRecipients = createAsyncThunk(
@@ -69,7 +67,6 @@ export const addRecipient = createAsyncThunk(
   }
 );
 
-
 // save item to recipients saved gifts
 export const saveItem = createAsyncThunk(
   "/recipients/saveItem",
@@ -95,12 +92,51 @@ export const editRecipient = createAsyncThunk(
   "/recipients/editRecipient",
   async (recipient) => {
     try {
-      console.log(recipient)
+      console.log(recipient);
       const { data } = await axios.put(`/api/recipients`, {
         userId: recipient.id,
         updateInfo: recipient,
       });
-      return data
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+export const fetchPreferences = createAsyncThunk(
+  "/recipients/fetchPreferences",
+  async (recipientId) => {
+    try {
+      const response = await axios.get(`/api/preferences/${recipientId}`);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+export const addLikes = createAsyncThunk(
+  "/recipients/addLikes",
+  async (likes, preferenceId, recipientId) => {
+    try {
+      await axios.delete(`/api/preferences`, {
+        preferenceId,
+        type: "like",
+      });
+      const newLikes = await Promise.all(
+        likes.map(async (like) => {
+          try {
+            await axios.post(`/api/preferences`, {
+              updateInfo: { like, type: "like" },
+              recipientId,
+            });
+          } catch (err) {
+            console.log(err);
+          }
+        })
+      );
+        return newLikes.data
     } catch (err) {
       console.log(err);
     }
@@ -109,7 +145,9 @@ export const editRecipient = createAsyncThunk(
 
 const initialState = {
   recipients: [],
-  singleRecipient: {},
+  singleRecipient: {
+    preferences: [],
+  },
   tab: "preferences",
 };
 
@@ -138,6 +176,19 @@ export const recipientSlice = createSlice({
       .addCase(addRecipient.fulfilled, (state, action) => {
         state.recipients = [...state.recipients, action.payload];
         state.singleRecipient = action.payload;
+      })
+      .addCase(fetchPreferences.fulfilled, (state, action) => {
+        state.recipients = [...state.recipients];
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          preferences: action.payload,
+        };
+      })
+      .addCase(addLikes.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          preferences: action.payload,
+        };
       });
   },
 });
