@@ -5,7 +5,7 @@
 
 @layer base {
   body {
-    @apply bg-white text-[#1f2937] tracking-wide;
+    @apply bg-cwhite-200 text-cblue-700 tracking-wide;
   }
   
   h1,
@@ -34,7 +34,7 @@
   }
   
   button {
-    @apply shadow-xl shadow-gray-400 rounded-lg uppercase bg-gradient-to-br from-cgold-500 to-cgold-400 text-white;
+    @apply shadow-xl rounded-lg uppercase bg-gradient-to-br from-cblue-400 to-cblue-300 text-white;
   }
   
   [data-nextjs-scroll-focus-boundary] {
