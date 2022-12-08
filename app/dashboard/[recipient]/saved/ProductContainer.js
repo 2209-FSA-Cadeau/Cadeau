@@ -1,41 +1,46 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import ProductCard from "./ProductCard";
+import { useDispatch, useSelector } from "react-redux";
+import { getGifts, removeItem } from "../../../../store/recipientSlice";
 
 export default function ProductContainer(props) {
-  const { display, gifts, saved, setGifts, setSaved } = props;
+  const { gifts, setGifts } = props;
   const { singleRecipient } = useSelector((store) => store.recipients);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!singleRecipient.gifts) {
       console.log("loading");
     } else {
-      setGifts(singleRecipient.gifts[0].gifts);
+      setGifts(singleRecipient.gifts);
     }
   }, [gifts]);
+
+  const onClickHandler = async (id) => {
+    await dispatch(removeItem(id));
+    setGifts(singleRecipient.gifts);
+  };
 
   return (
     <div>
       <div>
-        <h2>Gifted</h2>
+        <h2>Saved Gifts</h2>
         {gifts.length > 0
-          ? gifts.map((gift, index) => {
+          ? gifts.map((gift) => {
               return (
-                <li key={index}>
+                <div key={gift.id}>
                   <a href={gift.link}>
-                    {gift.name}
                     <img src={gift.imageUrl} />
                   </a>
-                </li>
+                  <div>Name: {gift.name}</div>
+                  <div>Description: {gift.description}</div>
+                  <b>Purchased?</b>
+                  <button onClick={() => onClickHandler(gift.id)}>
+                    Unsave
+                  </button>
+                </div>
               );
             })
           : "no gifts"}
-      </div>
-      <div>
-        <h2>Saved</h2>
-        {saved.map((save, index) => {
-          <li>Save {index}</li>;
-        })}
       </div>
     </div>
   );

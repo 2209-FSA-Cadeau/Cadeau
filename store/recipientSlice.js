@@ -67,6 +67,19 @@ export const addRecipient = createAsyncThunk(
   }
 );
 
+// Get a recipient's saved items
+export const getGifts = createAsyncThunk(
+  "/recipients/getGifts",
+  async (recipientId) => {
+    try {
+      const response = await axios.get(`/api/gifts/recipients/${recipientId}`);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 // save item to recipients saved gifts
 export const saveItem = createAsyncThunk(
   "/recipients/saveItem",
@@ -81,6 +94,19 @@ export const saveItem = createAsyncThunk(
         link,
       });
       return;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+// remove a recipient's saved gift
+export const removeItem = createAsyncThunk(
+  "/gifts/removeItem",
+  async (giftId) => {
+    try {
+      const response = await axios.delete(`/api/gifts/${giftId}`);
+      return response.data;
     } catch (error) {
       console.log(error);
     }
@@ -186,19 +212,6 @@ export const deleteDislike = createAsyncThunk(
   }
 );
 
-// Get a recipient's saved and gifted items
-export const getGifts = createAsyncThunk(
-  "/recipeints/getGifts",
-  async (recipientId) => {
-    try {
-      const response = await axios.get(`/api/gifts/recipients/${recipientId}`);
-      return response.data;
-    } catch (err) {
-      console.log(err);
-    }
-  }
-);
-
 const initialState = {
   recipients: [],
   singleRecipient: {
@@ -269,7 +282,15 @@ export const recipientSlice = createSlice({
       .addCase(getGifts.fulfilled, (state, action) => {
         state.singleRecipient = {
           ...state.singleRecipient,
-          gifts: action.payload,
+          gifts: action.payload[0].gifts,
+        };
+      })
+      .addCase(removeItem.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          gifts: state.singleRecipient.gifts.filter(
+            (gift) => gift.id != action.payload.id
+          ),
         };
       });
   },

@@ -8,21 +8,15 @@ import SavedFilter from "./SavedFilter";
 const page = () => {
   const [gifts, setGifts] = useState([]);
   const [saved, setSaved] = useState([]);
-  const [filter, setFilter] = useState("saved");
   const { singleRecipient } = useSelector((store) => store.recipients);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getGifts(singleRecipient.id));
-
   }, [singleRecipient.id]);
 
   return (
     <div>
-      <SavedFilter setFilter={setFilter} type={"saved"} />
-
-      <SavedFilter setFilter={setFilter} type={"gifted"} />
-
       <ProductContainer
         gifts={gifts}
         saved={saved}
