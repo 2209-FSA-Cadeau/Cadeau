@@ -10,19 +10,17 @@ const NavigationTabs = ({ params }) => {
   const { tab } = useSelector((store) => store.recipients);
   const dispatch = useDispatch();
   let [tabArray, setTabArray] = useState([
-    {tab: "preferences", css: "bg-cadeau-100"},
-    {tab: "saved", css: "bg-cadeau-100"},
-    {tab: "notes", css: "bg-cadeau-100"}
+    {tab: "preferences", css: "bg-cgold-100"},
+    {tab: "saved", css: "bg-cgold-100"},
+    {tab: "notes", css: "bg-cgold-100"}
   ])
   
   useEffect(() => {
-    console.log("use effect fire", tab)
-
     setTabArray(tabArray.map(elem => {
       if (elem.tab === tab) {
-        return {tab: elem.tab, css:"basis-1/3 h-full flex justify-center items-center rounded-t-2xl bg-cadeau-200 shadow-xl"}
+        return {tab: elem.tab, css:"basis-1/3 h-full flex justify-center items-center rounded-t-2xl bg-cgold-200 shadow-xl"}
       } else {
-        return {tab: elem.tab, css:"basis-1/3 h-full flex justify-center items-center rounded-t-2xl bg-cadeau-100 hover:text-cadeau-500"}
+        return {tab: elem.tab, css:"basis-1/3 h-full flex justify-center items-center rounded-t-2xl bg-cgold-100 hover:text-cgold-500"}
       }
     }))
     console.log(tabArray)

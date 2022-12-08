@@ -22,7 +22,7 @@ const page = () => {
 
   return (
     <div className="flex flex-col justify-start w-full h-full">
-      <div className="flex justify-between h-[50px] border-b-2 border-cadeau-900 my-4">
+      <div className="flex justify-between h-[50px] border-b-2 border-cgold-900 my-4">
         <h1 className="mx-4">Notes</h1>
         <div className="mr-6">
           {!updated ? "Saving..." : null}
@@ -34,7 +34,7 @@ const page = () => {
             value={value}
             onChange={setValue}
             placeholder="Add some ideas!"
-            className="flex flex-col h-full rounded-sm text-cadeau-900"
+            className="flex flex-col h-full rounded-sm text-cgold-900"
           />
         </div>
        

@@ -7,7 +7,7 @@ function RecipientLayout({ children, params }) {
     <div className="flex flex-col justify-start w-full h-full">
       <UserInfo />
       <NavigationTabs params={params} />
-      <div className="flex flex-col justify-start w-full h-full bg-cadeau-50 rounded-b-md shadow-xl">
+      <div className="flex flex-col justify-start w-full h-full bg-cgold-50 rounded-b-md shadow-xl">
         {children}
       </div>
     </div>

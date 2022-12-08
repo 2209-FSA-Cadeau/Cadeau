@@ -34,7 +34,7 @@
   }
   
   button {
-    @apply shadow-xl shadow-gray-400 rounded-lg uppercase bg-gradient-to-br from-cadeau-500 to-cadeau-400 text-white;
+    @apply shadow-xl shadow-gray-400 rounded-lg uppercase bg-gradient-to-br from-cgold-500 to-cgold-400 text-white;
   }
   
   [data-nextjs-scroll-focus-boundary] {

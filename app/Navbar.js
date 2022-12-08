@@ -25,7 +25,7 @@ const Navbar = () => {
   }, [dispatch, user, isLoading, router]);
 
   return (
-    <div className="fixed w-full h-20 shadow-md shadow-gray-400 z-[100] bg-gradient-to-br from-cadeau-600 to-cadeau-400 text-white">
+    <div className="fixed w-full h-20 shadow-md shadow-gray-400 z-[100] bg-gradient-to-br from-cgold-600 to-cgold-400 text-white">
       <div className="flex justify-between items-center w-full h-full px-2">
         <Link href="/shop">
           <h2>Cadeau!</h2>
