@@ -3,19 +3,22 @@ const zlib = require("zlib");
 
   export default async function searchHandler(req, res) {
     const {
-      query: {searchQuery},
+      query, //{pid:, query: query:}
       method,
     } = req;
 
     let searchItem
-    if(typeof searchQuery === "string" || searchQuery.category === "all"){
-      searchItem = searchQuery
-    } else {
-      for(let keys in searchQuery){
-        searchItem = []
-        searchItem.push(searchQuery[keys])
-        searchItem.join(" ")
+    console.log("QUERY", query)
+    if(Object.keys(query).length === 1 || query.category === "all"){
+      if(query.category){
+        searchItem = query.value
+      } else {
+        searchItem = query.searchQuery
       }
+      console.log("HIT NO FILTER", searchItem)
+    } else {
+      searchItem = query.category + " " + query.value
+      console.log("HIT FILTER", searchItem)
     }
 
     switch (method) {
@@ -37,9 +40,12 @@ const zlib = require("zlib");
         axios
           .request(options)
           .then(function (response) {
-            zlib.gunzip(response.data, function (_err, output) {
-              res.send(output);
-            });
+            console.log(response.data)
+            res.send(response.data)
+            // zlib.gunzip(response.data, function (_err, output) {
+            //   console.log("THIS IS THE OUTPUT", output)
+            //   res.send(response.data)
+            // });
           })
           .catch(function (error) {
             console.error(error);
@@ -52,3 +58,4 @@ const zlib = require("zlib");
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   }
+
