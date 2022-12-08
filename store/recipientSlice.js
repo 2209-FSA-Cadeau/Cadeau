@@ -20,7 +20,7 @@ export const addRecipient = createAsyncThunk(
   async (recipient) => {
     try {
       const recipientRes = await axios.post(`/api/recipients`, {
-        userId: 2,
+        userId: recipient.userId,
         updateInfo: recipient,
       }); //NEED TO UPDATE WITH REAL USERID WHEN AVAILABLE
       await Promise.all(
