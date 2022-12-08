@@ -32,29 +32,34 @@ const ProductIdPage = props => {
   }
 
   return (
-    <div className="flex">
+    <div className="flex rounded shadow p-2 bg-white">
       {product === undefined ?
         "Loading Product...":
-      (<div>
+      (<div className="">
         {console.log(product, recipients)}
-        <div className="flex-none w-52 relative">
-          <picture>
+        <div className="flex">
+          <picture className="">
             <img src={product.primary_image} />
           </picture>
         </div>
-        <div>
-          {product.title}
+        <div className="flex flex-col">
+          <div>
+            <h1>
+              {product.title}
+            </h1>
+          </div>
+          <div>
+            <h3>Price:</h3>
+            <p>${product.sellers_online[0].base_price}</p>
+          </div>
+          <div>
+            <h3>Description:</h3>
+            <p>{product.description}</p>
+          </div>
+          <button onClick={handleSaveItem}>Save This Item!</button>
         </div>
-        <div>
-          <h3>Price:</h3>
-          <p>${product.sellers_online[0].base_price}</p>
-        </div>
-        <div>
-          <h3>Description:</h3>
-          <p>{product.description}</p>
-        </div>
-        <button onClick={handleSaveItem}>Save This Item!</button>
-      </div>)}
+      </div>
+      )}
     </div>
   )
 }

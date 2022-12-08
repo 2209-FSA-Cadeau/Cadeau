@@ -12,7 +12,7 @@ const App = () => {
 
   useEffect(() => {
     if (isLoggedIn && !isLoadingRedux) {
-      redirect("/home");
+      redirect("/dashboard");
     } else if (!isLoadingRedux) {
       redirect("/landing");
     }

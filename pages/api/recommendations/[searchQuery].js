@@ -37,7 +37,9 @@ const zlib = require("zlib");
         axios
           .request(options)
           .then(function (response) {
+            console.log(response)
             zlib.gunzip(response.data, function (_err, output) {
+              console.log(response)
               res.send(output);
             });
           })
