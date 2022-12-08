@@ -8,7 +8,7 @@ import { fetchRecipients } from "../../store/recipientSlice";
 //const recipients = []
 
 function Sidebar() {
-  const { user, userId, isLoadingRedux } = useSelector((store) => store.user);
+  const { userId, isLoadingRedux } = useSelector((store) => store.user);
   const { recipients } = useSelector((store) => store.recipients);
   const dispatch = useDispatch();
 
@@ -17,9 +17,9 @@ function Sidebar() {
   }, [dispatch, userId]);
 
   return (
-    <div className="flex flex-col justify-between w-full h-full rounded-sm bg-neutral-100/90 shadow-xl shadow-gray-400">
+    <div className="flex flex-col justify-between w-full h-full rounded-sm bg-cadeau-50 shadow-xl">
       <div className="w-full text-center">
-        <div className="flex justify-center items-center h-[40px] bg-cadeau-500 text-white rounded-t-md shadow-md shadow-gray-400">
+        <div className="flex justify-center items-center h-[40px] bg-cadeau-300 text-cadeau-900 rounded-t-md shadow-md">
           <h3>Gift Recipients</h3>
         </div>
         <div className="">

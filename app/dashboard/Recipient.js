@@ -14,7 +14,7 @@ const Recipient = ({ recipient }) => {
 
   return (
     <Link href={`/dashboard/${recipient.name}/${tab}`} onClick={handleClick}>
-      <div className="h-[45px] rounded-sm m-4 bg-blue-200 hover:scale-105 ease-in duration-150 shadow-lg shadow-gray-400 flex justify-center items-center">
+      <div className="h-[45px] rounded-md m-4 bg-cadeau-200 hover:scale-105 ease-in duration-150 shadow-lg flex justify-center items-center">
         <h3>{recipient.name}</h3>
       </div>
     </Link>
@@ -22,3 +22,4 @@ const Recipient = ({ recipient }) => {
 };
 
 export default Recipient;
+
