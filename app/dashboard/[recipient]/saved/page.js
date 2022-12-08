@@ -14,6 +14,7 @@ const page = () => {
 
   useEffect(() => {
     dispatch(getGifts(singleRecipient.id));
+
   }, [singleRecipient.id]);
 
   return (

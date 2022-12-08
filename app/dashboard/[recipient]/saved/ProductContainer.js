@@ -7,10 +7,11 @@ export default function ProductContainer(props) {
   const { singleRecipient } = useSelector((store) => store.recipients);
 
   useEffect(() => {
-    if (gifts.length === 0) {
+    if (!singleRecipient.gifts) {
+      console.log("loading");
+    } else {
       setGifts(singleRecipient.gifts[0].gifts);
     }
-    console.log(`Gifts length = ${gifts.length}`);
   }, [gifts]);
 
   return (
@@ -18,8 +19,15 @@ export default function ProductContainer(props) {
       <div>
         <h2>Gifted</h2>
         {gifts.length > 0
-          ? gifts.map((gift) => {
-              return <li>{gift.name}</li>;
+          ? gifts.map((gift, index) => {
+              return (
+                <li key={index}>
+                  <a href={gift.link}>
+                    {gift.name}
+                    <img src={gift.imageUrl} />
+                  </a>
+                </li>
+              );
             })
           : "no gifts"}
       </div>
