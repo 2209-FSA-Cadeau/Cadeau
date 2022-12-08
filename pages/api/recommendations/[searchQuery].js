@@ -20,7 +20,7 @@ const zlib = require("zlib");
       searchItem = query.category + " " + query.value
       console.log("HIT FILTER", searchItem)
     }
-    
+
     switch (method) {
       case "GET":
         //GET PRODUCT RESULTS
@@ -40,10 +40,12 @@ const zlib = require("zlib");
         axios
           .request(options)
           .then(function (response) {
-            zlib.gunzip(response.data, function (_err, output) {
-              console.log(output)
-              res.send(output);
-            });
+            console.log(response.data)
+            res.send(response.data)
+            // zlib.gunzip(response.data, function (_err, output) {
+            //   console.log("THIS IS THE OUTPUT", output)
+            //   res.send(response.data)
+            // });
           })
           .catch(function (error) {
             console.error(error);
@@ -56,3 +58,4 @@ const zlib = require("zlib");
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   }
+

@@ -7,7 +7,7 @@ export const getSingleCategory = createAsyncThunk(
         try{
             console.log("CATEGORY", category)
             const response = await axios.get(`/api/recommendations/${category}`)
-            
+            console.log("THE PROPER RESPONSE IS", response)
             const recommendations = response.data
             recommendations.query = category
             return recommendations
@@ -132,10 +132,12 @@ const shopSlice = createSlice({
         resetFilterType: (state)  => {
             state.filterType = ""
         }
+
     },
     extraReducers: (builder) => {
         builder
             .addCase(getSingleCategory.fulfilled, (state, action) => {
+                console.log("THE ACTION PAYLOAD IS:", action.payload)
                 if(state.categories[action.payload.query].length === 0){
                     state.categories[action.payload.query] = action.payload.shopping_results
                 } else {
@@ -155,5 +157,5 @@ const shopSlice = createSlice({
 })
 
 
-export const {searchOff, filterOn, filterOff, addFilter, deleteFilters, deleteSingleFilter, changeFilterType, addChecklist, deleteChecklist, resetChecklist, resetFilterType} = shopSlice.actions
+export const {searchOff, filterOn, filterOff, addFilter, deleteFilters, deleteSingleFilter, changeFilterType, addChecklist, deleteChecklist, resetChecklist, resetFilterType, resetFilterView} = shopSlice.actions
 export default shopSlice.reducer

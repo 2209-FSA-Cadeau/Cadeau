@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {useRouter, usePathname, useSearchParams} from "next/navigation"
-import { addFilter, deleteSingleFilter, changeFilterType, addChecklist, deleteChecklist } from '../../../../store/shopSlice'
+import { addFilter, deleteSingleFilter, changeFilterType, addChecklist, deleteChecklist, filterOff } from '../../../../store/shopSlice'
 
 const ShoppingSideBar = props => {
   const dispatch = useDispatch()
@@ -10,7 +10,7 @@ const ShoppingSideBar = props => {
   let path = usePathname()
   let searchParams = useSearchParams()
 
-  const {checklist, filters, filterType} = useSelector(state => state.shop)
+  const {checklist, filterType} = useSelector(state => state.shop)
 
   const handleFilter = (event) => {
     if(!checklist[event.target.id]){
@@ -36,7 +36,8 @@ const ShoppingSideBar = props => {
           const category = searchParams.get("category")
           const value = searchParams.get("value")
           path += `?category=${category}&value=${value}`
-        } 
+        }
+        dispatch(filterOff()) 
         console.log("three", path)
         router.push(path)
       }

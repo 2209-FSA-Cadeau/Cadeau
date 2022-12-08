@@ -1,7 +1,10 @@
 "use client"
 import React from "react"
+import { useSelector } from "react-redux"
+import Cards from "./Cards"
 
 const ProductCards = props => {
+    const {checklist} = useSelector(state => state.shop)
     let productList = []
     
     if(props.filterView){
@@ -12,46 +15,26 @@ const ProductCards = props => {
       productList = props.categories
     }
 
-    return (
-        <div className="flex flex-col justify-evenly w-full h-100% p-7">
-          <div className="grid grid-cols-3 gap-[3rem] ">
-            {props.filterView ?
-                "" : 
-                productList.length === 0 ?
-                    "Loading Products...":
-                productList.slice(props.offset, props.offset + props.limit).map((product, index) => (
-                  <div key={index} className="border-2 border-black rounded-md w-40% h-40%"> 
-                    <picture className="w-auto h-40%">
-                      <img src={product.image} alt="" />
-                    </picture>
-                    <div>
-                      Title: {product.title}
-                      Link: {product.link}
-                    </div>
-                  </div>
-                ))
-            }
-            {
-               productList.length === 0 && props.filterView ?
-               "No Products Found. Try Another Search!":
-                  productList.slice(props.offset, props.offset + props.limit).map((product, index) => (
-                    <div key={index} className="border-2 border-black rounded-md w-40% h-40%"> 
-                      <picture className="w-auto h-40%">
-                        <img src={product.image} alt="" />
-                      </picture>
-                      <div>
-                        Title: {product.title}
-                        Link: {product.link}
-                      </div>
-             </div>
-           ))
-
-
-
-            }
-          </div>
+    if(checklist.prices || checklist.ratings || checklist.reviews){
+      return(
+        <div>
+          { productList.length === 0 ?
+             "No Products Found. Try Another Search!":
+             <Cards productList={productList} offset={props.offset} limit={props.limit}/>
+          }
+      </div>
+      )
+    } else {
+      return(
+        <div>
+          { productList.length === 0 ?
+              "Loading Products...":
+            <Cards productList={productList} offset={props.offset} limit={props.limit}/>
+          }
         </div>
       )
+      
+    }
 }
 
 export default ProductCards

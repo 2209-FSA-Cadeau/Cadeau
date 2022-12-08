@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchRecipients } from '../../store/recipientSlice'
-import { searchOff, deleteFilters, resetFilterType, resetChecklist } from '../../store/shopSlice'
+import { searchOff, deleteFilters, resetFilterType, resetChecklist, filterOff } from '../../store/shopSlice'
 
 function SearchBar() {
   const recipients = useSelector((state) => state.recipients)
@@ -39,6 +39,7 @@ function SearchBar() {
     dispatch(deleteFilters())
     dispatch(resetChecklist())
     dispatch(resetFilterType())
+    dispatch(filterOff())
     router.push(`/shop/${currentRecipient.name}/search/1?category=${filterCategory}&value=${event.target.searchBar.value}`); 
   };
 
@@ -57,6 +58,7 @@ function SearchBar() {
     dispatch(deleteFilters())
     dispatch(resetChecklist())
     dispatch(resetFilterType())
+    dispatch(filterOff())
     router.push(`/shop/${iterable.name}/TopRecs`)
   }
 
@@ -65,6 +67,7 @@ function SearchBar() {
     dispatch(deleteFilters())
     dispatch(resetChecklist())
     dispatch(resetFilterType())
+    dispatch(filterOff())
     if(event.target.id === "Top Choices") router.push(`shop/${currentRecipient.name}/toprecs`)
     else router.push(`/shop/${currentRecipient.name}/${event.target.id}/1`)
   }
