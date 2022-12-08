@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchRecipients } from '../../store/recipientSlice'
+import { searchOff, deleteFilters, resetFilterType, resetChecklist } from '../../store/shopSlice'
 
 function SearchBar() {
   const recipients = useSelector((state) => state.recipients)
@@ -33,9 +34,12 @@ function SearchBar() {
   const router = useRouter();
 
   const handleSearch = (event) => {
-    console.log(event.target.searchBar.value)
     event.preventDefault();
-    router.push(`/shop/${currentRecipient.name}/search?category=${filterCategory}&value=${event.target.searchBar.value}`); //update this with functionality later
+    dispatch(searchOff())
+    dispatch(deleteFilters())
+    dispatch(resetChecklist())
+    dispatch(resetFilterType())
+    router.push(`/shop/${currentRecipient.name}/search/1?category=${filterCategory}&value=${event.target.searchBar.value}`); 
   };
 
   const handleFilter = (event) => {
@@ -49,18 +53,25 @@ function SearchBar() {
     const score = [...newRecipient.recommendations].sort((a,b) => b.score - a.score).slice(0,5)
     iterable.recommendations = score
     setRecipient(iterable)
-    router.push(`/shop/${iterable.name}/Top%20Choices`)
+    dispatch(searchOff())
+    dispatch(deleteFilters())
+    dispatch(resetChecklist())
+    dispatch(resetFilterType())
+    router.push(`/shop/${iterable.name}/TopRecs`)
   }
 
   const handleCategory = (event) =>{
-    router.push(`/shop/${currentRecipient.name}/${event.target.id}`)
+    dispatch(searchOff())
+    dispatch(deleteFilters())
+    dispatch(resetChecklist())
+    dispatch(resetFilterType())
+    if(event.target.id === "Top Choices") router.push(`shop/${currentRecipient.name}/toprecs`)
+    else router.push(`/shop/${currentRecipient.name}/${event.target.id}/1`)
   }
 
   const categories = ["Books", "Electronics", "Cooking", "Sports", "Outdoors",
                       "Clothing", "Music", "Movies", "Technology", "Games",
                       "Pets", "Home", "Art"]
-
-  console.log(categories.sort())
 
 return (
   <div className="flex flex-col h-36 rounded-lg bg-orange-200 justify-evenly">

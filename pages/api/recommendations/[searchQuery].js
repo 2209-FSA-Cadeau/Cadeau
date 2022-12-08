@@ -1,25 +1,27 @@
-import e from "express";
-
 const axios = require("axios") 
 const zlib = require("zlib");
 
   export default async function searchHandler(req, res) {
     const {
-      query: {searchQuery},
+      query, //{pid:, query: query:}
       method,
     } = req;
 
     let searchItem
-    if(typeof searchQuery === "string" || searchQuery.category === "all"){
-      searchItem = searchQuery
-    } else {
-      for(let keys in searchQuery){
-        searchItem = []
-        searchItem.push(searchQuery[keys])
-        searchItem.join(" ")
+    if(Object.keys(query).length === 1 || query.category === "all"){
+      if(query.category){
+        searchItem = query.value
+      } else {
+        searchItem = query.searchQuery
       }
-    }
+      
+      console.log("HIT NO FILTER", searchItem)
+    } else {
+      searchItem = query.category + " " + query.value
+      console.log("HIT FILTER", searchItem)
   
+    }
+    
     switch (method) {
       case "GET":
         //GET PRODUCT RESULTS

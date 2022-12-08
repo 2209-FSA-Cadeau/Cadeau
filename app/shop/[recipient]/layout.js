@@ -1,9 +1,12 @@
-function recipientLayout({ children }) {
+// import ShoppingSideBar from "./ShoppingSideBar";
+
+function RecipientLayout({ children }) {
   return (
-    <section className="w-full h-full">
+    <section>
+       {/* <div className="z-2 rounded-full border-2 border-black w-12 h-12 absolute right-10"/> */}
         {children}
     </section>
   );
 }
 
-export default recipientLayout;
+export default RecipientLayout;
