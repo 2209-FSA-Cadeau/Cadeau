@@ -14,7 +14,6 @@ const zlib = require("zlib");
       } else {
         searchItem = query.searchQuery
       }
-      
       console.log("HIT NO FILTER", searchItem)
     } else {
       searchItem = query.category + " " + query.value
@@ -48,7 +47,7 @@ const zlib = require("zlib");
           .catch(function (error) {
             console.error(error);
           });
-       
+
         break;
 
       default:
@@ -56,4 +55,3 @@ const zlib = require("zlib");
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   }
-  

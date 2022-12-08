@@ -12,7 +12,7 @@ export const getSingleCategory = createAsyncThunk(
         } catch(error) {
             console.log(error)
         }
-    } 
+    }
 )
 
 export const getSearchResults = createAsyncThunk(
@@ -26,7 +26,32 @@ export const getSearchResults = createAsyncThunk(
         } catch(error) {
             console.log(error)
         }
-    } 
+    }
+)
+
+export const getSingleItem = createAsyncThunk(
+    "shop/getSingleItem",
+    async (productId) => {
+        try {
+            const response = await axios.get(`/api/recommendations/singleitem/${productId}`);
+            const product = response.data;
+            return product
+        } catch (error) {
+            console.log(error)
+        }
+    }
+)
+
+export const clearSingleItem = createAsyncThunk(
+    "shop/clearSingleItem",
+    async () => {
+        try {
+            const product = {};
+            return product
+        } catch (error) {
+            console.log(error)
+        }
+    }
 )
 
 
@@ -116,10 +141,17 @@ const shopSlice = createSlice({
                 }
                 })
             .addCase(getSearchResults.fulfilled, (state, action) => {
-                    state.searchResults = action.payload.shopping_results
+                state.searchResults = action.payload.shopping_results
                 })
+            .addCase(getSingleItem.fulfilled, (state, action) => {
+                state.singleProduct = action.payload
+            })
+            .addCase(clearSingleItem.fulfilled, (state, action) => {
+                state.singleProduct = action.payload
+            })
     }
 })
+
 
 export const {searchOff, filterOn, filterOff, addFilter, deleteFilters, deleteSingleFilter, changeFilterType, addChecklist, deleteChecklist, resetChecklist, resetFilterType} = shopSlice.actions
 export default shopSlice.reducer

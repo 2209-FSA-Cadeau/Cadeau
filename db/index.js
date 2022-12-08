@@ -37,7 +37,7 @@ Gift.belongsToMany(Recipient, {through: "giftHistory"})
 // syncDb()
 
 // if(process.env.seed === true){
-  
+
 // }
 
 

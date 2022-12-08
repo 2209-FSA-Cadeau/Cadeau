@@ -29,6 +29,15 @@ export default function Holidays(props) {
     });
   };
 
+  const occasionDeleteHandler = (event) => {
+    setNewRecipient({
+      ...newRecipient,
+      occasions: newRecipient.occasions.filter(
+        (e) => e.name != event.target.value
+      ),
+    });
+  };
+
   const occasionSubmitHandler = (event) => {
     event.preventDefault();
     setNewRecipient({
@@ -60,6 +69,9 @@ export default function Holidays(props) {
               <div>
                 {occasion.name} - {occasion.date}
               </div>
+              <button value={occasion.name} onClick={occasionDeleteHandler}>
+                X
+              </button>
             </li>
           );
         })}
@@ -84,6 +96,7 @@ export default function Holidays(props) {
       <br />
       <label>Holidays Celebrated</label>
       <Select
+        value={newRecipient.holidays.map((holiday) => holiday)}
         components={makeAnimated()}
         options={holidays}
         onChange={holidayChangeHandler}

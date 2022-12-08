@@ -24,13 +24,6 @@ export default function Likes(props) {
     }
   }, [newRecipient.likes, newRecipient.dislikes]);
 
-  const likesChangeHandler = (selectedOption) => {
-    setNewRecipient({
-      ...newRecipient,
-      likes: selectedOption,
-    });
-  };
-
   const dislikesChangeHandler = (selectedOption) => {
     setNewRecipient({
       ...newRecipient,
@@ -42,6 +35,7 @@ export default function Likes(props) {
     <div>
       <h2>What does this person dislike?</h2>
       <Select
+        value={newRecipient.dislikes.map((dislike) => dislike)}
         components={makeAnimated()}
         options={options}
         onChange={dislikesChangeHandler}
