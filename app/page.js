@@ -5,9 +5,12 @@ import { useSelector } from "react-redux";
 
 const App = () => {
   const { isLoggedIn, isLoadingRedux } = useSelector((store) => store.user);
+  const { recipients } = useSelector((store) => store.recipients)
 
   useEffect(() => {
-    if (isLoggedIn && !isLoadingRedux) {
+    if (isLoggedIn && !isLoadingRedux && recipients.length === 0) {
+      redirect("/dashboard")
+    } else if (isLoggedIn && !isLoadingRedux) {
       redirect("/shop");
     } else if (!isLoadingRedux) {
       redirect("/landing");
