@@ -5,7 +5,9 @@ export const getSingleCategory = createAsyncThunk(
     "shop/getSingleCategory",
     async (category) =>{
         try{
+            console.log("CATEGORY", category)
             const response = await axios.get(`/api/recommendations/${category}`)
+            console.log("THE PROPER RESPONSE IS", response)
             const recommendations = response.data
             recommendations.query = category
             return recommendations
@@ -17,9 +19,10 @@ export const getSingleCategory = createAsyncThunk(
 
 export const getSearchResults = createAsyncThunk(
     "shop/getSearchResults",
-    async (category) =>{
+    async (search) => {
         try{
-            const response = await axios.get(`/api/recommendations/${category}`)
+            const {category, value} = search
+            const response = await axios.get(`/api/recommendations/search?category=${category}&value=${value}`)
             const recommendations = response.data
             return recommendations
         } catch(error) {
@@ -71,16 +74,70 @@ const initialState = {
         Art: []
     },
     searchResults: [],
-    singleProduct: {}
+    singleProduct: {},
+    filterView: [],
+    filters: [],
+    filterType: "",
+    checklist: {ratings: undefined, prices: undefined, reviews: undefined}
 }
 
 
 const shopSlice = createSlice({
     name: "shop",
     initialState,
+    reducers: {
+        searchOff: (state) => {
+            state.searchResults = []
+        },
+        filterOn: (state, action) =>{
+            state.filterView = action.payload
+        },
+        filterOff: (state) => {
+            state.filterView = []
+        },
+        addFilter: (state, action) => {
+            state.filters.push(action.payload)
+        },
+        deleteFilters: (state) => {
+            state.filters = []
+        }, 
+        deleteSingleFilter: (state, action) => {
+            state.filters = state.filters.reduce((preV, currV) => {
+                if(currV !== action.payload){
+                    preV = [...preV, currV]
+                    return preV
+                } else {
+                    return preV
+                }
+            }, [])
+        },
+        changeFilterType: (state, action) => {
+            state.filterType = action.payload
+        },
+        addChecklist: (state, action) => {
+            state.checklist = {...state.checklist, ...action.payload}
+        },
+        deleteChecklist: (state, action) => {
+            for(let keys in state.checklist){
+                if(keys === action.payload){
+                    state.checklist[keys] = undefined
+                }
+            }
+        },
+        resetChecklist: (state) => {
+            for(let keys in state.checklist){
+                state.checklist[keys] = undefined
+            }
+        },
+        resetFilterType: (state)  => {
+            state.filterType = ""
+        }
+
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getSingleCategory.fulfilled, (state, action) => {
+                console.log("THE ACTION PAYLOAD IS:", action.payload)
                 if(state.categories[action.payload.query].length === 0){
                     state.categories[action.payload.query] = action.payload.shopping_results
                 } else {
@@ -99,4 +156,6 @@ const shopSlice = createSlice({
     }
 })
 
+
+export const {searchOff, filterOn, filterOff, addFilter, deleteFilters, deleteSingleFilter, changeFilterType, addChecklist, deleteChecklist, resetChecklist, resetFilterType, resetFilterView} = shopSlice.actions
 export default shopSlice.reducer

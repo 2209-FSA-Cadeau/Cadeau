@@ -20,7 +20,7 @@ export const addRecipient = createAsyncThunk(
   async (recipient) => {
     try {
       const recipientRes = await axios.post(`/api/recipients`, {
-        userId: 2,
+        userId: recipient.userId,
         updateInfo: recipient,
       }); //NEED TO UPDATE WITH REAL USERID WHEN AVAILABLE
       await Promise.all(
@@ -67,6 +67,19 @@ export const addRecipient = createAsyncThunk(
   }
 );
 
+// Get a recipient's saved items
+export const getGifts = createAsyncThunk(
+  "/recipients/getGifts",
+  async (recipientId) => {
+    try {
+      const response = await axios.get(`/api/gifts/recipients/${recipientId}`);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 // save item to recipients saved gifts
 export const saveItem = createAsyncThunk(
   "/recipients/saveItem",
@@ -81,6 +94,19 @@ export const saveItem = createAsyncThunk(
         link,
       });
       return;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+// remove a recipient's saved gift
+export const removeItem = createAsyncThunk(
+  "/gifts/removeItem",
+  async (giftId) => {
+    try {
+      const response = await axios.delete(`/api/gifts/${giftId}`);
+      return response.data;
     } catch (error) {
       console.log(error);
     }
@@ -157,7 +183,7 @@ export const deleteLike = createAsyncThunk(
           recipientId: recipientId,
         },
       });
-      console.log(response)
+      console.log(response);
 
       return response.data;
     } catch (err) {
@@ -178,7 +204,7 @@ export const deleteDislike = createAsyncThunk(
         },
       });
 
-      console.log(response)
+      console.log(response);
       return response.data;
     } catch (err) {
       console.log(err);
@@ -251,6 +277,20 @@ export const recipientSlice = createSlice({
         state.singleRecipient = {
           ...state.singleRecipient,
           preferences: [],
+        };
+      })
+      .addCase(getGifts.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          gifts: action.payload[0].gifts,
+        };
+      })
+      .addCase(removeItem.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          gifts: state.singleRecipient.gifts.filter(
+            (gift) => gift.id != action.payload.id
+          ),
         };
       });
   },
