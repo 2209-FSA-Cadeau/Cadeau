@@ -19,7 +19,6 @@ const zlib = require("zlib");
     } else {
       searchItem = query.category + " " + query.value
       console.log("HIT FILTER", searchItem)
-  
     }
     
     switch (method) {
@@ -42,6 +41,7 @@ const zlib = require("zlib");
           .request(options)
           .then(function (response) {
             zlib.gunzip(response.data, function (_err, output) {
+              console.log(output)
               res.send(output);
             });
           })
