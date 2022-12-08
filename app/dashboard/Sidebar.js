@@ -5,8 +5,6 @@ import Recipient from "./Recipient";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchRecipients } from "../../store/recipientSlice";
 
-//const recipients = []
-
 function Sidebar() {
   const { userId, isLoadingRedux } = useSelector((store) => store.user);
   const { recipients } = useSelector((store) => store.recipients);
@@ -17,9 +15,9 @@ function Sidebar() {
   }, [dispatch, userId]);
 
   return (
-    <div className="flex flex-col justify-between w-full h-full rounded-sm bg-cgold-50 shadow-xl">
+    <div className="flex flex-col justify-between w-full h-full rounded-md bg-white shadow-xl">
       <div className="w-full text-center">
-        <div className="flex justify-center items-center h-[40px] bg-cgold-300 text-cgold-900 rounded-t-md shadow-md">
+        <div className="flex justify-center items-center h-[40px] bg-cblue-700 text-cwhite rounded-t-md shadow-xl">
           <h3>Gift Recipients</h3>
         </div>
         <div className="">

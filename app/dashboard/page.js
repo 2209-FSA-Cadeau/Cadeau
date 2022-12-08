@@ -3,7 +3,9 @@ import React from "react";
 const page = () => {
   return (
     <div className="flex justify-center items-center w-full h-full">
-      <h1>Select a Recipient to get started!</h1>
+      <div className="flex justify-center items-center w-[85%] h-[85%] bg-cgold-200/30 rounded-lg shadow-xl">
+        <h1 className="text-cgold-500 text-center">Select or add a Recipient to get started!</h1>
+      </div>
     </div>
   );
 };

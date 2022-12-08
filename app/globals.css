@@ -34,11 +34,16 @@
   }
   
   button {
-    @apply shadow-xl rounded-lg uppercase bg-gradient-to-br from-cblue-400 to-cblue-300 text-white;
+    @apply shadow-xl rounded-lg uppercase bg-gradient-to-br from-cblue-700 to-cblue-500 text-cwhite;
   }
   
   [data-nextjs-scroll-focus-boundary] {
     display: contents;
   }
   }
+
+  @font-face {
+    font-family: lobster;
+    src: url(/fonts/Lobster/Lobster-Regular.ttf);
+}
   

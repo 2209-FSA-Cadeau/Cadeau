@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        lobster: ['Lobster']
+      },
       backgroundImage: {
         landing: "url('/assets/landing-choice-2.jpeg')",
       },

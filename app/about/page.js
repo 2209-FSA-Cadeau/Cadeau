@@ -13,7 +13,7 @@ const AboutPage = () => {
         <div className="flex justify-start items-center w-full h-full">
           <div className="text-2xl font-semibold">
             <p className="">
-              <span className="text-5xl font-extrabold tracking-wide text-cgold-500">
+              <span className="text-5xl font-extrabold tracking-wider text-cgold-500">
                 cadeau
               </span>{" "}
               <span className="italic">m (plural cadeaux):</span>{" "}
@@ -27,13 +27,13 @@ const AboutPage = () => {
       <div className="mx-auto text-center my-6 p-8 w-[90%]">
         <h1 className="text-4xl">
           The perfect hub to manage gift-giving for the
-          <span className="text-cgold-500 "> people that matter</span>
+          <span className="text-cgold-400 "> people that matter</span>
         </h1>
       </div>
       {/* Features */}
       <div className="flex justify-between w-full h-[35%] p-2">
         <div className="flex flex-col justify-start bg-white h-full w-[49.5%] rounded-md shadow-lg">
-          <div className="flex flex-col justify-center uppercase tracking-widest px-4 py-2 bg-cblue-700 text-neutral-200 rounded-t-md shadow-md basis-[15%]">
+          <div className="flex flex-col justify-center uppercase tracking-widest px-4 py-2 bg-cblue-700 text-cwhite rounded-t-md shadow-md basis-[15%]">
             <h2>Manage your Recipients</h2>
           </div>
           <div className="w-full basis-[85%] mx-auto my-auto">
@@ -66,7 +66,7 @@ const AboutPage = () => {
           </div>
         </div>
         <div className="flex flex-col justify-start bg-white h-full w-[49.5%] rounded-md shadow-lg">
-          <div className="flex flex-col justify-center uppercase tracking-widest px-4 py-2 bg-cblue-700 text-neutral-200 rounded-t-md shadow-md basis-[15%]">
+          <div className="flex flex-col justify-center uppercase tracking-widest px-4 py-2 bg-cblue-700 text-cwhite rounded-t-md shadow-md basis-[15%]">
             <h2>Gift Recommendations</h2>
           </div>
           <div className="w-full basis-[85%] mx-auto my-auto">
