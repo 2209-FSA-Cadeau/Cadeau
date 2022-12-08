@@ -157,7 +157,7 @@ export const deleteLike = createAsyncThunk(
           recipientId: recipientId,
         },
       });
-      console.log(response)
+      console.log(response);
 
       return response.data;
     } catch (err) {
@@ -178,7 +178,20 @@ export const deleteDislike = createAsyncThunk(
         },
       });
 
-      console.log(response)
+      console.log(response);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+// Get a recipient's saved and gifted items
+export const getGifts = createAsyncThunk(
+  "/recipeints/getGifts",
+  async (recipientId) => {
+    try {
+      const response = await axios.get(`/api/gifts/recipients/${recipientId}`);
       return response.data;
     } catch (err) {
       console.log(err);
@@ -251,6 +264,12 @@ export const recipientSlice = createSlice({
         state.singleRecipient = {
           ...state.singleRecipient,
           preferences: [],
+        };
+      })
+      .addCase(getGifts.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          gifts: action.payload,
         };
       });
   },

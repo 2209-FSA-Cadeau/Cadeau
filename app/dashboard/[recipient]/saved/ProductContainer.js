@@ -1,29 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import ProductCard from "./ProductCard";
 
 export default function ProductContainer(props) {
-  const { display, gifted, saved } = props;
-  if (display === "gifted") {
-    return (
+  const { display, gifts, saved, setGifts, setSaved } = props;
+  const { singleRecipient } = useSelector((store) => store.recipients);
+
+  useEffect(() => {
+    if (gifts.length === 0) {
+      setGifts(singleRecipient.gifts[0].gifts);
+    }
+    console.log(`Gifts length = ${gifts.length}`);
+  }, [gifts]);
+
+  return (
+    <div>
       <div>
-        <h1>Gifted</h1>
-        <div>
-          {gifted.map((item) => {
-            return <ProductCard item={item} />;
-          })}
-        </div>
+        <h2>Gifted</h2>
+        {gifts.length > 0
+          ? gifts.map((gift) => {
+              return <li>{gift.name}</li>;
+            })
+          : "no gifts"}
       </div>
-    );
-  } else {
-    return (
       <div>
-        <h1>Saved</h1>
-        <div>
-          {saved.map((item) => {
-            return <ProductCard item={item} />;
-          })}
-        </div>
+        <h2>Saved</h2>
+        {saved.map((save, index) => {
+          <li>Save {index}</li>;
+        })}
       </div>
-    );
-  }
+    </div>
+  );
 }
