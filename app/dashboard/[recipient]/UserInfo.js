@@ -19,7 +19,7 @@ const UserInfo = ({ params }) => {
           <h3>Birthday: {singleRecipient.birthday}</h3>
         </div>
         <div>
-          <h3>Occupation: {singleRecipient.ocupation}</h3>
+          <h3>Occupation: {singleRecipient.occupation}</h3>
         </div>
         <div>
           <h3>Email: {singleRecipient.email}</h3>
