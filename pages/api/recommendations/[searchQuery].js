@@ -8,6 +8,7 @@ const zlib = require("zlib");
     } = req;
 
     let searchItem
+    console.log("QUERY", query)
     if(Object.keys(query).length === 1 || query.category === "all"){
       if(query.category){
         searchItem = query.value

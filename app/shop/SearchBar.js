@@ -12,13 +12,13 @@ function SearchBar() {
   const [currentRecipient, setRecipient] = useState(recipients.singleRecipient)
   
   useEffect(() => {
-    if(Object.keys(recipients.singleRecipient).length === 0 && Object.keys(currentRecipient).length === 0){
+    if(Object.keys(recipients.singleRecipient).length === 1 && Object.keys(currentRecipient).length === 1){
       dispatch(fetchRecipients(2))
     }
   }, [])
 
   useEffect(() => {
-  if(recipients.recipients.length !== 0 && Object.keys(currentRecipient).length === 0){
+  if(recipients.recipients.length !== 0 && Object.keys(currentRecipient).length === 1){
     const currentRecipient = recipients.recipients[0]
     const iterable = {}
     Object.assign(iterable, currentRecipient)
@@ -73,6 +73,7 @@ function SearchBar() {
                       "Clothing", "Music", "Movies", "Technology", "Games",
                       "Pets", "Home", "Art"]
 
+console.log(currentRecipient, Object.keys(currentRecipient).length)
 return (
   <div className="flex flex-col h-36 rounded-lg bg-orange-200 justify-evenly">
     <div className="flex justify-center w-full h-[40px]">
@@ -115,9 +116,7 @@ return (
         Top Choices
        </div>
       </div>
-      { !currentRecipient ?
-          "" :
-          Object.keys(currentRecipient).length !== 0 ? 
+      { Object.keys(currentRecipient).length !== 1 ? 
           currentRecipient.recommendations.map((recommendation, index) => (
               <div key={index} onClick={handleCategory} className="flex flex-col justify-center h-8 w-32 rounded-lg border-2 border-black">
                 <div id={recommendation.columnName} className="text-center"> {recommendation.columnName} </div>

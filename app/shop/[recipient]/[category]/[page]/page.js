@@ -23,62 +23,7 @@ const PagePage = props => {
         } 
     }
     
-    // return ()=> {
-    //   if(props.searchParams.filter){
-    //     dispatch(filterOff())
-    //   }
-    // }
   }, [])
-
-  // useEffect(() => {
-  //   if(props.searchParams.filter){
-  //     if(props.params.category === "search"){
-  //       if(props.searchParams.filter === "under25"){
-  //         dispatch((filterOn(searchResults.filter( result => result.price <= 25))))
-  //       } else if(props.searchParams.filter === "25-50") {
-  //         dispatch((filterOn(searchResults.filter( result => result.price >= 25 && result.price <= 50))))
-  //       } else if(props.searchParams.filter === "50-100") {
-  //         dispatch((filterOn(searchResults.filter( result => result.price >= 50 && result.price <= 100))))
-  //       } else if(props.searchParams.filter === "100-200") {
-  //         dispatch((filterOn(searchResults.filter( result => result.price >= 100 && result.price <= 200))))
-  //       } else if(props.searchParams.filter === "200+") {
-  //         dispatch((filterOn(searchResults.filter( result => result.price >= 200))))
-  //       } else if(props.searchParams.filter === "5stars"){
-  //         dispatch((filterOn(searchResults.filter( result => result.rating === 5))))
-  //       } else if(props.searchParams.filter === "4stars"){
-  //         dispatch((filterOn(searchResults.filter( result => result.rating === 4))))
-  //       } else if(props.searchParams.filter === "3stars"){
-  //         dispatch((filterOn(searchResults.filter( result => result.rating === 3))))
-  //       } else if(props.searchParams.filter === "2stars"){
-  //         dispatch((filterOn(searchResults.filter( result => result.rating === 2))))
-  //       } else if(props.searchParams.filter === "1stars"){
-  //         dispatch((filterOn(searchResults.filter( result => result.rating === 1))))
-  //       }
-  //     } else {
-  //       if(props.searchParams.filter === "under25"){
-  //         dispatch((filterOn(categories[props.params.category].filter( result => result.price <= 25)))) 
-  //       } else if(props.searchParams.filter === "25-50") {
-  //         dispatch((filterOn(categories[props.params.category].filter( result => result.price >= 25 && result.price <= 50))))
-  //       } else if(props.searchParams.filter === "50-100") {
-  //         dispatch((filterOn(categories[props.params.category].filter( result => result.price >= 50 && result.price <= 100))))
-  //       } else if(props.searchParams.filter === "100-200") {
-  //         dispatch((filterOn(categories[props.params.category].filter( result => result.price >= 100 && result.price <= 200))))
-  //       } else if(props.searchParams.filter === "200+") {
-  //         dispatch((filterOn(categories[props.params.category].filter( result => result.price >= 200))))
-  //       } else if(props.searchParams.filter === "5stars"){
-  //         dispatch((filterOn(categories[props.params.category].filter( result => result.rating === 5))))
-  //       } else if(props.searchParams.filter === "4stars"){
-  //         dispatch((filterOn(categories[props.params.category].filter( result => result.rating === 4))))
-  //       } else if(props.searchParams.filter === "3stars"){
-  //         dispatch((filterOn(categories[props.params.category].filter( result => result.rating === 3))))
-  //       } else if(props.searchParams.filter === "2stars"){
-  //         dispatch((filterOn(categories[props.params.category].filter( result => result.rating === 2))))
-  //       } else if(props.searchParams.filter === "1stars"){
-  //         dispatch((filterOn(categories[props.params.category].filter( result => result.rating === 1))))
-  //       }
-  //     }
-  //   }
-  // }, [categories, searchResults])
 
 
   const clickHandler = (event) => {

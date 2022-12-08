@@ -5,7 +5,9 @@ export const getSingleCategory = createAsyncThunk(
     "shop/getSingleCategory",
     async (category) =>{
         try{
+            console.log("CATEGORY", category)
             const response = await axios.get(`/api/recommendations/${category}`)
+            
             const recommendations = response.data
             recommendations.query = category
             return recommendations
