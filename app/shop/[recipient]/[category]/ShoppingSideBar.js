@@ -1,8 +1,8 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {useRouter, usePathname, useSearchParams} from "next/navigation"
-import { addFilter, deleteSingleFilter, changeFilterType, addChecklist, deleteChecklist, filterOff } from '../../../../store/shopSlice'
+import { deleteSingleFilter, changeFilterType, addChecklist, deleteChecklist, filterOff, searchOff, deleteFilters, resetChecklist, resetFilterType } from '../../../../store/shopSlice'
 
 const ShoppingSideBar = props => {
   const dispatch = useDispatch()
@@ -11,6 +11,27 @@ const ShoppingSideBar = props => {
   let searchParams = useSearchParams()
 
   const {checklist, filterType} = useSelector(state => state.shop)
+  
+  
+  const [filterCategory, setFilterCategory] = useState("all");
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    dispatch(searchOff())
+    dispatch(deleteFilters())
+    dispatch(resetChecklist())
+    dispatch(resetFilterType())
+    dispatch(filterOff())
+    path = path.split("/")
+    path[3] = "search"
+    path = path.join("/")
+    path = path += `?category=${filterCategory}&value=${event.target.searchBar.value}`
+    router.push(path); 
+  };
+
+  const handleSearchFilter = (event) => {
+    setFilterCategory(event.target.value);
+  };
 
   const handleFilter = (event) => {
     if(!checklist[event.target.id]){
@@ -104,6 +125,10 @@ const ShoppingSideBar = props => {
     }
 
   }, [checklist])
+
+  const categories = ["Books", "Electronics", "Cooking", "Sports", "Outdoors",
+                      "Clothing", "Music", "Movies", "Technology", "Games",
+                      "Pets", "Home", "Art"]
   
 
   const ratings = ["5 Stars", "4 Stars", "3 Stars", "2 Stars", "1 Star"]
@@ -115,6 +140,35 @@ const ShoppingSideBar = props => {
   
   return (
     <div className="flex flex-col justify-start h-screen mt-10 bg-green-500 rounded-md">
+      <div className="flex justify-center w-full h-[40px]">
+      <form
+        onSubmit={handleSearch}
+        className="flex justify-center w-[100%] h-full"
+      >
+        <span className="basis-1/6 h-full w-full px-2 ">
+          <select className="text-center w-full h-full rounded-sm" onChange={handleFilter}>
+            <option value="all"> All Categories: </option>
+           {categories.map((category, index) => (
+            <option key={index} value={category}> {category} </option>
+           ))}
+          </select>
+        </span>
+        <span className="basis-4/6 w-full h-full ">
+          <input
+            className="w-full h-full rounded-sm"
+            name="searchBar"
+            type="text"
+            placeholder="Search for items..."
+          />
+        </span>
+        <span className="basis-1/6 w-full h-full px-2">
+          <button type="submit" className="w-full h-full rounded-sm bg-blue-400">
+            {" "}
+            Search{" "}
+          </button>
+        </span>
+      </form>
+    </div>
       <div className="flex flex-col h-full justify-around items-center bg-green-400 rounded-md">
         <div className= "flex flex-col justify-center items-start w-1/2 h-10 text-center ">
                 <div id="Rating" className="border-b-2 border-black self-center" onClick={handleFilter}>

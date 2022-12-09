@@ -7,6 +7,7 @@ const zlib = require("zlib");
       method,
     } = req;
   
+    console.log(query)
     switch (method) {
       case "GET":
         //GET PRODUCT RESULTS
@@ -27,9 +28,10 @@ const zlib = require("zlib");
         axios
           .request(options)
           .then(function (response) {
-            zlib.gunzip(response.data, function (_err, output) {
-              res.send(output);
-            });
+            res.send(response.data)
+            // zlib.gunzip(response.data, function (_err, output) {
+            //   res.send(output);
+            // });
           })
           .catch(function (error) {
             console.error(error);
