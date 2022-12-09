@@ -1,13 +1,7 @@
 "use client"; // USE CLIENT MUST BE USED TO ACCESS REDUX
 import React from "react";
-import { redirect } from "next/navigation";
-import { useSelector } from "react-redux";
 
 const LandingPage = () => {
-  const { isLoggedIn } = useSelector((store) => store.user);
-  if (isLoggedIn) {
-    redirect("/shop");
-  }
   return (
     <>
       <div className="absolute inset-0 bg-landing bg-no-repeat bg-cover bg-top bg-local">
