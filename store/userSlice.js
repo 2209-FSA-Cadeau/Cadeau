@@ -2,16 +2,16 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // add user to database
-export const addOrFindUser = createAsyncThunk(
-  "/user/addOrFindUser",
+export const getUser = createAsyncThunk(
+  "/user/getUser",
   async (user) => {
     try {
-      const userResponse = await axios.post(`/api/users`, {
-        identifier: user.sub,
-        firstName: user.given_name,
-        lastName: user.family_name,
-        email: user.email,
-      });
+      const userResponse = await axios.post(`/api/users/${user.sub}`, {
+        // identifier: user.sub,
+        // firstName: user.given_name,
+        // lastName: user.family_name,
+        // email: user.email,
+      })
       return userResponse.data;
     } catch (err) {
       console.log(err);
@@ -30,11 +30,11 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    auth0login: (state, action) => {
-      state.user = action.payload;
-      state.isLoggedIn = true;
-      state.isLoadingRedux = false;
-    },
+    // auth0login: (state, action) => {
+    //   state.user = action.payload;
+    //   state.isLoggedIn = true;
+    //   state.isLoadingRedux = false;
+    // },
     auth0logout: (state, action) => {
       state.user = {};
       state.userId = "";
@@ -43,10 +43,10 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(addOrFindUser.fulfilled, (state, action) => {
+    builder.addCase(getUser.fulfilled, (state, action) => {
       state.userId = action.payload.id;
-    });
-  },
+      state.user = action.payload;
+    })},
 });
 
 export const { auth0login, auth0logout } = userSlice.actions;

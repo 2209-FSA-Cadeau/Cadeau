@@ -35,17 +35,19 @@ const zlib = require("zlib");
             location: "United States",
             sort_by: "review_score",
             max_page: 1,
+            hide_base64_images: "true",
+            include_fields: "shopping_results"
           },
         };
         axios
           .request(options)
           .then(function (response) {
             console.log(response.data)
-            res.send(response.data)
-            // zlib.gunzip(response.data, function (_err, output) {
-            //   console.log("THIS IS THE OUTPUT", output)
-            //   res.send(output)
-            // });
+            // res.send(response.data)
+            zlib.gunzip(response.data, function (_err, output) {
+              console.log("THIS IS THE OUTPUT", output)
+              res.send(output)
+            });
           })
           .catch(function (error) {
             console.error(error);

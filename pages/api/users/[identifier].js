@@ -1,6 +1,6 @@
 const {
   db,
-  models: { User },
+  models: { User, Recipient },
 } = require("../../../db");
 
 export default async function userIdentifierHandler(req, res) {
@@ -21,7 +21,8 @@ export default async function userIdentifierHandler(req, res) {
     case "GET":
       // GET single user based on their identifier
       const user = await User.findOne({
-        where: {identifier: identifier}
+        where: {identifier: identifier},
+        include: { model: Recipient}
       });
       res.status(200).json(user);
       break;

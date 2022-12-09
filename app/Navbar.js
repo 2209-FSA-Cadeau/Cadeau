@@ -8,24 +8,27 @@ import { auth0login, auth0logout, addOrFindUser } from "../store/userSlice";
 import { setTab } from "../store/recipientSlice";
 
 const Navbar = () => {
-  const router = useRouter();
-  const { user, isLoading } = useUser();
+  // const router = useRouter();
+  // const { user, isLoading } = useUser();
   const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector((store) => store.user);
+  const { userId, isLoggedin } = useSelector((store) => store.user);
 
-  useEffect(() => {
-    if (!isLoading) {
-      if (user) {
-        dispatch(auth0login(user));
-        dispatch(addOrFindUser(user));
-      } else {
-        router.push("/landing");
-      }
-    }
-  }, [dispatch, user, isLoading, router]);
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     console.log('USER BEFORE DISPATCH', user)
+  //     dispatch(auth0login(user));
+  //     console.log('USER AFTER DISPATCH', user)
+  //   }}, [isLoading]);
+
+  // add another useEffect to addOrFindUser here
+  // useEffect(() => {
+  //   dispatch(addOrFindUser(user))
+
+  //   // router.push("/dashboard");
+  // }, [isLoggedin])
 
   return (
-    <div className={!isLoggedIn ? "hidden" : ""}>
+    <div className={userId ? "hidden" : ""}>
       <div className="fixed w-full h-20 shadow-md z-[100] bg-gradient-to-br from-cblue-700/[80] to-cblue-600/90 text-white">
         <div className="flex justify-between items-center w-full h-full px-2">
           <Link href="/shop" className="ml-6">
@@ -33,7 +36,7 @@ const Navbar = () => {
           </Link>
           <div>
             <ul className="flex">
-              {isLoggedIn ? (
+              {userId ? (
                 <>
                   <Link href="/shop/">
                     <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-white ">
