@@ -3,7 +3,7 @@ const db = require("../db");
 
 const Gift = db.define("gift", {
   name: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   },
   description: {
     type: Sequelize.TEXT,
