@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Start from "./Start";
@@ -10,6 +10,8 @@ import Likes from "./Likes";
 import Dislikes from "./Dislikes";
 import Complete from "./Complete";
 import { addRecipient } from "../../../store/recipientSlice";
+import { useUser } from "@auth0/nextjs-auth0";
+import { addOrFindUser } from "../../../store/userSlice";
 
 const page = () => {
   const [step, setStep] = useState(0);
@@ -27,6 +29,20 @@ const page = () => {
 
   const dispatch = useDispatch();
   const router = useRouter();
+  const { isLoading, user } = useUser();
+
+  useEffect(() => {
+    if (!isLoading) {
+      dispatch(
+        addOrFindUser({
+          firstName: "",
+          lastName: "",
+          identifier: user.sub,
+          email: user.email,
+        })
+      );
+    }
+  }, [isLoading]);
 
   const prevClickHandler = () => {
     setStep(step - 1);

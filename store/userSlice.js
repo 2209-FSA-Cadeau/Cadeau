@@ -12,6 +12,7 @@ export const addOrFindUser = createAsyncThunk(
         lastName: user.family_name,
         email: user.email,
       });
+      console.log(userResponse)
       return userResponse.data;
     } catch (err) {
       console.log(err);
@@ -44,7 +45,7 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(addOrFindUser.fulfilled, (state, action) => {
-      state.userId = action.payload.id;
+      state.userId = action.payload;
     });
   },
 });
@@ -52,3 +53,5 @@ export const userSlice = createSlice({
 export const { auth0login, auth0logout } = userSlice.actions;
 
 export default userSlice.reducer;
+
+
