@@ -6,7 +6,7 @@ export const getUser = createAsyncThunk(
   "/user/getUser",
   async (user) => {
     try {
-      const userResponse = await axios.post(`/api/users/${user.sub}`, {
+      const userResponse = await axios.get(`/api/users/${user.sub}`, {
         // identifier: user.sub,
         // firstName: user.given_name,
         // lastName: user.family_name,
@@ -16,6 +16,23 @@ export const getUser = createAsyncThunk(
     } catch (err) {
       console.log(err);
     }
+  }
+);
+
+export const addOrFindUser = createAsyncThunk(
+  "/user/addOrFindUser",
+  async (user) => {
+    try {
+      const userResponse = await axios.post(`/api/users`, {
+        identifier: user.sub,
+        firstName: user.given_name,
+        lastName: user.family_name,
+        email: user.email,
+      });
+      console.log(userResponse)
+      return userResponse.data;
+    } catch (err) {
+      console.log(err);
   }
 );
 
@@ -43,6 +60,10 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(addOrFindUser.fulfilled, (state, action) => {
+      state.userId = action.payload;
+    });
+  },
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.userId = action.payload.id;
       state.user = action.payload;
@@ -52,3 +73,5 @@ export const userSlice = createSlice({
 export const { auth0login, auth0logout } = userSlice.actions;
 
 export default userSlice.reducer;
+
+
