@@ -30,22 +30,7 @@ function SearchBar() {
   }, [recipients])
 
   const [searchText, setSearchText] = useState("");
-  const [filterCategory, setFilterCategory] = useState("all");
   const router = useRouter();
-
-  const handleSearch = (event) => {
-    event.preventDefault();
-    dispatch(searchOff())
-    dispatch(deleteFilters())
-    dispatch(resetChecklist())
-    dispatch(resetFilterType())
-    dispatch(filterOff())
-    router.push(`/shop/${currentRecipient.name}/search/1?category=${filterCategory}&value=${event.target.searchBar.value}`); 
-  };
-
-  const handleFilter = (event) => {
-    setFilterCategory(event.target.value);
-  };
 
   const handleRecipient = (event) => {
     const newRecipient = recipients.recipients.find(recipient => recipient.name === event.target.value)
@@ -72,42 +57,11 @@ function SearchBar() {
     else router.push(`/shop/${currentRecipient.name}/${event.target.id}/1`)
   }
 
-  const categories = ["Books", "Electronics", "Cooking", "Sports", "Outdoors",
-                      "Clothing", "Music", "Movies", "Technology", "Games",
-                      "Pets", "Home", "Art"]
+  
 
 console.log(currentRecipient, Object.keys(currentRecipient).length)
 return (
   <div className="flex flex-col h-36 rounded-lg bg-orange-200 justify-evenly">
-    <div className="flex justify-center w-full h-[40px]">
-      <form
-        onSubmit={handleSearch}
-        className="flex justify-center w-[100%] h-full"
-      >
-        <span className="basis-1/6 h-full w-full px-2 ">
-          <select className="text-center w-full h-full rounded-sm" onChange={handleFilter}>
-            <option value="all"> All Categories: </option>
-           {categories.map((category, index) => (
-            <option key={index} value={category}> {category} </option>
-           ))}
-          </select>
-        </span>
-        <span className="basis-4/6 w-full h-full ">
-          <input
-            className="w-full h-full rounded-sm"
-            name="searchBar"
-            type="text"
-            placeholder="Search for items..."
-          />
-        </span>
-        <span className="basis-1/6 w-full h-full px-2">
-          <button type="submit" className="w-full h-full rounded-sm bg-blue-400">
-            {" "}
-            Search{" "}
-          </button>
-        </span>
-      </form>
-    </div>
     <div className="flex flex-row justify-evenly">
       <div>
        <select onChange={handleRecipient} className="h-8 w-32 rounded-lg text-center">
