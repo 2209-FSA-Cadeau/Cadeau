@@ -5,7 +5,7 @@
 
 @layer base {
   body {
-    @apply bg-white text-[#1f2937] tracking-wide;
+    @apply bg-cwhite-200 text-cblue-700 tracking-wide;
   }
   
   h1,
@@ -34,11 +34,16 @@
   }
   
   button {
-    @apply shadow-xl shadow-gray-400 rounded-lg uppercase bg-gradient-to-br from-cadeau-500 to-cadeau-400 text-white;
+    @apply shadow-xl rounded-lg uppercase bg-gradient-to-br from-cblue-700 to-cblue-500 text-cwhite;
   }
   
   [data-nextjs-scroll-focus-boundary] {
     display: contents;
   }
   }
+
+  @font-face {
+    font-family: lobster;
+    src: url(/fonts/Lobster/Lobster-Regular.ttf);
+}
   

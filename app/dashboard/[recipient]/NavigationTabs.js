@@ -1,32 +1,39 @@
 "use client";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { setTab } from "../../../store/recipientSlice";
-import { CgSmileMouthOpen, CgNotes } from "react-icons/cg";
+import { CgNotes } from "react-icons/cg";
 import { BiGift } from "react-icons/bi";
+import { RiUserSettingsLine } from "react-icons/ri";
 
 const NavigationTabs = ({ params }) => {
   const { tab } = useSelector((store) => store.recipients);
   const dispatch = useDispatch();
   let [tabArray, setTabArray] = useState([
-    {tab: "preferences", css: "bg-cadeau-100"},
-    {tab: "saved", css: "bg-cadeau-100"},
-    {tab: "notes", css: "bg-cadeau-100"}
-  ])
-  
-  useEffect(() => {
-    console.log("use effect fire", tab)
+    { tab: "preferences", css: "" },
+    { tab: "saved", css: "" },
+    { tab: "notes", css: "" },
+  ]);
 
-    setTabArray(tabArray.map(elem => {
-      if (elem.tab === tab) {
-        return {tab: elem.tab, css:"basis-1/3 h-full flex justify-center items-center rounded-t-2xl bg-cadeau-200 shadow-xl"}
-      } else {
-        return {tab: elem.tab, css:"basis-1/3 h-full flex justify-center items-center rounded-t-2xl bg-cadeau-100 hover:text-cadeau-500"}
-      }
-    }))
-    console.log(tabArray)
-  }, [tab])
+  useEffect(() => {
+    setTabArray(
+      tabArray.map((elem) => {
+        if (elem.tab === tab) {
+          return {
+            tab: elem.tab,
+            css: "basis-1/3 h-full flex justify-center items-center rounded-t-2xl bg-cgold-500 shadow-xl text-cwhite",
+          };
+        } else {
+          return {
+            tab: elem.tab,
+            css: "basis-1/3 h-full flex justify-center items-center rounded-t-2xl bg-cgold-300 hover:text-cgold-600",
+          };
+        }
+      })
+    );
+    console.log(tabArray);
+  }, [tab]);
 
   return (
     <div className="flex justify-evenly items-center w-full gap-1">
@@ -40,7 +47,7 @@ const NavigationTabs = ({ params }) => {
         <div className="flex justify-center items-center p-4 w-[60%]">
           <div className="flex justify-evenly items-center w-full">
             <h3>Preferences</h3>
-            <CgSmileMouthOpen className="scale-150" />
+            <RiUserSettingsLine className="scale-150" />
           </div>
         </div>
       </Link>
