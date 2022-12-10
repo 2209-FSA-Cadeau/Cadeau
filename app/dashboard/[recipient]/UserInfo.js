@@ -41,7 +41,7 @@ const UserInfo = ({ params }) => {
       </div>
       <div>
         <h3 className="mx-2">
-          Holidays / Occasions:{" "}
+          Gift Occasions:{" "}
           {!singleRecipient.holidays
             ? "Loading..."
             : singleRecipient.holidays.map((holiday, index) => {
