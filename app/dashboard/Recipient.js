@@ -10,6 +10,7 @@ const Recipient = ({ recipient }) => {
 
   const handleClick = (evt) => {
     dispatch(setSingleRecipient(recipient.id));
+
   };
 
   return (
@@ -22,4 +23,3 @@ const Recipient = ({ recipient }) => {
 };
 
 export default Recipient;
-

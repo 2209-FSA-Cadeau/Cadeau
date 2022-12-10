@@ -21,7 +21,7 @@ export default async function recipientGiftHandler(req, res) {
     case "GET":
       const gifts = await Recipient.findAll({
         where: {
-          id: 2,
+          id: recipientId,
         },
         include: { model: Gift },
       });

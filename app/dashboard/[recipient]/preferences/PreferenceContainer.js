@@ -20,29 +20,25 @@ const PreferenceContainer = () => {
   const [dislikes, setDislikes] = useState([]);
 
   useEffect(() => {
+    //Logic for displaying likes and dislikes
+
     const newLikes = [];
     const newDislikes = [];
 
     if (!singleRecipient.preferences) {
-      if (!likes && !dislikes) {
-        setTimeout(() => {
-          console.log("Timeout ran");
-          dispatch(fetchPreferences(singleRecipient.id));
-          if (singleRecipient.preferences) {
-            singleRecipient.preferences.map((preference) => {
-              if (preference.preference === "like") {
-                newLikes.push(preference.category);
-              } else {
-                newDislikes.push(preference.category);
-              }
-            });
-            setLikes(newLikes);
-            setDislikes(newDislikes);
-          }
-        }, 500);
-      }
+      dispatch(fetchPreferences(singleRecipient.id));
+    } else if (singleRecipient.preferences) {
+      singleRecipient.preferences.map((preference) => {
+        if (preference.preference === "like") {
+          newLikes.push(preference.category);
+        } else {
+          newDislikes.push(preference.category);
+        }
+      });
+      setLikes(newLikes);
+      setDislikes(newDislikes);
     }
-  }, [singleRecipient]);
+  }, [singleRecipient.preferences]);
 
   useEffect(() => {
     // Logic for populating only unselected options in the likes/dislikes picklists

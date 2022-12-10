@@ -1,11 +1,19 @@
 "use client";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { FiEdit2 } from "react-icons/fi";
+import { fetchHolidays } from "../../../store/recipientSlice";
 
 const UserInfo = ({ params }) => {
+  const dispatch = useDispatch();
+
   const { singleRecipient } = useSelector((store) => store.recipients);
+
+  useEffect(() => {
+    dispatch(fetchHolidays(singleRecipient.id));
+  }, []);
+
   return (
     <div className="w-full h-[18%] bg-cgold-100 shadow-xl mb-4 rounded-md border">
       <div className="flex justify-between items-start">
@@ -26,7 +34,18 @@ const UserInfo = ({ params }) => {
         </div>
       </div>
       <div>
-        <h3 className="mx-2">Holidays / Occasions: NEED TO PULL HOLIDAYS INTO SINGLE RECIPIENT STATE</h3>
+        <h3 className="mx-2">
+          Holidays / Occasions:{" "}
+          {!singleRecipient.holidays
+            ? "Loading..."
+            : singleRecipient.holidays.map((holiday, index) => {
+                return (
+                  <li key={index}>
+                    {holiday.name} - {holiday.date}
+                  </li>
+                );
+              })}
+        </h3>
       </div>
     </div>
   );
