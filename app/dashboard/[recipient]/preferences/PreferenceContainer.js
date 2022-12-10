@@ -23,21 +23,28 @@ const PreferenceContainer = () => {
     const newLikes = [];
     const newDislikes = [];
 
-    // Logic for conditional rendering of preferences from database
     if (!singleRecipient.preferences) {
-      console.log("loading");
-    } else if (likes.length === 0 && dislikes.length === 0) {
-      singleRecipient.preferences.map((preference) => {
-        if (preference.preference === "like") {
-          newLikes.push(preference.category);
-        } else {
-          newDislikes.push(preference.category);
-        }
-      });
-      setLikes(newLikes);
-      setDislikes(newDislikes);
+      if (!likes && !dislikes) {
+        setTimeout(() => {
+          console.log("Timeout ran");
+          dispatch(fetchPreferences(singleRecipient.id));
+          if (singleRecipient.preferences) {
+            singleRecipient.preferences.map((preference) => {
+              if (preference.preference === "like") {
+                newLikes.push(preference.category);
+              } else {
+                newDislikes.push(preference.category);
+              }
+            });
+            setLikes(newLikes);
+            setDislikes(newDislikes);
+          }
+        }, 500);
+      }
     }
+  }, [singleRecipient]);
 
+  useEffect(() => {
     // Logic for populating only unselected options in the likes/dislikes picklists
     let newOptions = [];
 
@@ -138,14 +145,6 @@ const PreferenceContainer = () => {
           return (
             <div key={index}>
               <PreferenceCard type={"like"} choice={like} />
-              {/* <button
-                name="like"
-                value={like}
-                onClick={onDeleteHandler}
-                key={`btn-${index}`}
-              >
-                X
-              </button> */}
             </div>
           );
         })}
@@ -168,14 +167,6 @@ const PreferenceContainer = () => {
           return (
             <div key={index}>
               <PreferenceCard type={"dislike"} choice={dislike} />
-              {/* <button
-                name="dislike"
-                value={dislike}
-                onClick={onDeleteHandler}
-                key={`btn-${index}`}
-              >
-                X
-              </button> */}
             </div>
           );
         })}

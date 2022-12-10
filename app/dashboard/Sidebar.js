@@ -12,7 +12,7 @@ function Sidebar() {
 
   useEffect(() => {
     dispatch(fetchRecipients(userId));
-  }, [dispatch, userId]);
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col justify-between w-full h-full rounded-md bg-white shadow-xl">
