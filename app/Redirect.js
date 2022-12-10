@@ -13,6 +13,7 @@ const Redirect = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(isLoading, user)
   if (!isLoading) {
     if (!user) {
       router.push("/landing")

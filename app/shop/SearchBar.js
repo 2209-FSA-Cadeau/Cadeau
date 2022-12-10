@@ -10,7 +10,7 @@ function SearchBar() {
   const dispatch = useDispatch()
 
   const [currentRecipient, setRecipient] = useState(recipients.singleRecipient)
-  
+
   useEffect(() => {
     if(Object.keys(recipients.singleRecipient).length === 1 && Object.keys(currentRecipient).length === 1){
       dispatch(fetchRecipients(2))
@@ -57,9 +57,9 @@ function SearchBar() {
     else router.push(`/shop/${currentRecipient.name}/${event.target.id}/1`)
   }
 
-  
 
-console.log(currentRecipient, Object.keys(currentRecipient).length)
+
+// console.log(currentRecipient, Object.keys(currentRecipient).length)
 return (
   <div className="flex flex-col h-36 rounded-lg bg-orange-200 justify-evenly">
     <div className="flex flex-row justify-evenly">
@@ -73,14 +73,14 @@ return (
         Top Choices
        </div>
       </div>
-      { Object.keys(currentRecipient).length !== 1 ? 
+      { Object.keys(currentRecipient).length !== 1 ?
           currentRecipient.recommendations.map((recommendation, index) => (
               <div key={index} onClick={handleCategory} className="flex flex-col justify-center h-8 w-32 rounded-lg border-2 border-black">
                 <div id={recommendation.columnName} className="text-center"> {recommendation.columnName} </div>
               </div>
             )):
             ""
-      }  
+      }
     </div>
   </div>
   );
