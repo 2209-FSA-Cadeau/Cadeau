@@ -33,10 +33,12 @@ const page = () => {
 
   useEffect(() => {
     if (!isLoading) {
+      if (user.firstName && user.lastName) {
+        dispatch(
+          addOrFindUser(user)
+  )}
       dispatch(
         addOrFindUser({
-          firstName: "",
-          lastName: "",
           identifier: user.sub,
           email: user.email,
         })

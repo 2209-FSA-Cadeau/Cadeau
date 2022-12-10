@@ -10,9 +10,9 @@ const Page = ({ params }) => {
     (store) => store.recipients.singleRecipient
   );
 
-  useEffect(() => {
-    dispatch(fetchPreferences(singleRecipient.id));
-  },[singleRecipient.id]);
+  // useEffect(() => {
+  //   dispatch(fetchPreferences(singleRecipient.id));
+  // },[singleRecipient.id]);
 
 
   return (
