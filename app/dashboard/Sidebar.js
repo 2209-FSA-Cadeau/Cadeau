@@ -20,20 +20,26 @@ function Sidebar() {
         <div className="flex justify-center items-center h-[40px] bg-cblue-700 text-cwhite rounded-t-md shadow-xl">
           <h3>Gift Recipients</h3>
         </div>
-        <div className="">
-          {isLoadingRedux
-            ? "Loading Recipients.."
-            : (recipients.map((recipient, index) => {
-                return <Recipient recipient={recipient} key={index} />;
-              }))}
+        <div class="w-full h-full" aria-label="Sidebar">
+          <div class="overflow-y-auto py-4 px-3 bg-white rounded dark:bg-gray-800">
+            <ul class="space-y-2">
+              {isLoadingRedux ? (
+                <li>Loading Recipients..</li>
+              ) : (
+                recipients.map((recipient, index) => {
+                  return <Recipient recipient={recipient} key={index} />;
+                })
+              )}
+            </ul>
+          </div>
         </div>
       </div>
       <div className="m-4 h-[10%]">
-        <button className="text-center w-full h-full rounded-sm hover:scale-105 ease-in duration-150 shadow-lg">
-          <Link href={"/dashboard/addnew"}>
+        <Link href={"/dashboard/addnew"}>
+          <button className="text-center w-full h-full rounded-sm hover:scale-105 ease-in duration-150 shadow-lg">
             <h3>Add Recipient +</h3>
-          </Link>
-        </button>
+          </button>
+        </Link>
       </div>
     </div>
   );

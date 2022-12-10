@@ -16,10 +16,7 @@ const UserInfo = ({ params }) => {
             href={`/dashboard/${singleRecipient.name}/edit`}
             className="p-2"
           >
-            <FiEdit2 className="h-[28px] w-auto hover:scale-110 ease-in duration-150" />
-          </Link>
-          <Link href={`/dashboard`} className="p-2">
-            <AiOutlineClose className="h-[28px] w-auto hover:scale-110 ease-in duration-150" />
+            <FiEdit2 className="h-[22px] w-auto hover:text-cgold-500" />
           </Link>
         </div>
       </div>
@@ -36,7 +33,7 @@ const UserInfo = ({ params }) => {
       </div>
       <div>
         <h3 className="mx-2">
-          Holidays / Occasions: NEED TO PULL HOLIDAYS INTO SINGLE RECIPIENT
+          Gift Occasions: NEED TO PULL HOLIDAYS INTO SINGLE RECIPIENT
           STATE
         </h3>
       </div>

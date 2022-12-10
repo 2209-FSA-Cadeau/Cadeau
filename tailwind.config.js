@@ -4,11 +4,12 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/flowbite-react/**/*.js",
   ],
   theme: {
     extend: {
       fontFamily: {
-        lobster: ['Lobster']
+        lobster: ["Lobster"],
       },
       backgroundImage: {
         landing: "url('/assets/landing-choice-2.jpeg')",
@@ -56,5 +57,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("flowbite/plugin")],
 };
