@@ -12,7 +12,7 @@ export default async function holidayHandler(req, res) {
       .json({ message: "Unable to connect to the database:", error });
   }
 
-  const { body: {recipientId}, method } = req;
+  const { body, method } = req;
 
   switch (method) {
     case "POST":

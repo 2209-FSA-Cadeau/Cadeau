@@ -71,7 +71,6 @@ export const fetchHolidays = createAsyncThunk(
   "/recipients/fetchHolidays",
   async (recipientId) => {
     try {
-      console.log(recipientId);
       const response = await axios.get(
         `/api/holidays/recipients/${recipientId}`
       );
