@@ -62,8 +62,14 @@ export const userSlice = createSlice({
       state.userId = action.payload;
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
-      state.userId = action.payload.id;
-      state.user = action.payload;
+      if(!action.payload){
+        state.userId = null;
+        state.user = null;
+      } else {
+        state.userId = action.payload.id;
+        state.user = action.payload;
+      }
+     
     });
   },
 });
