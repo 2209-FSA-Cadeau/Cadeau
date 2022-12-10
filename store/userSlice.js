@@ -84,9 +84,14 @@ export const userSlice = createSlice({
       state.userId = action.payload.id;
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
-      state.isLoadingRedux = false;
-      state.userId = action.payload.id;
-      state.user = action.payload;
+      if(!action.payload){
+        state.userId = null;
+        state.user = null;
+      } else {
+            state.isLoadingRedux = false;
+        state.userId = action.payload.id;
+        state.user = action.payload;
+      }
     });
   },
 });

@@ -7,24 +7,25 @@ import { getUser } from "../store/userSlice";
 
 const Redirect = () => {
   const router = useRouter()
-  const { isLoggedIn, isLoadingRedux, userId } = useSelector((store) => store.user);
-  const { recipients } = useSelector((store) => store.recipients)
+  const { userId } = useSelector((store) => store.user);
   const { user, isLoading } = useUser();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(isLoading, user)
-  if (!isLoading) {
-    if (!user) {
-      router.push("/landing")
+    if(!user){
+        router.push("/landing")
     } else {
-      dispatch(getUser(user))
+        dispatch(getUser(user))
     }
-  }}, [isLoading]);
+  }, [isLoading])
 
   useEffect(() => {
-    router.push("/shop")
-  }, [userId])
+    if (!userId) {
+        router.push("/dashboard/addnew")
+    } else {
+        router.push("/shop")
+    }
+  }, [userId]);
 
 };
 
