@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import { setSingleRecipient } from "../../store/recipientSlice";
+import { fetchHolidays, setSingleRecipient } from "../../store/recipientSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const Recipient = ({ recipient }) => {
@@ -10,6 +10,7 @@ const Recipient = ({ recipient }) => {
 
   const handleClick = (evt) => {
     dispatch(setSingleRecipient(recipient.id));
+    dispatch(fetchHolidays(recipient.id));
   };
 
   return (
@@ -22,4 +23,3 @@ const Recipient = ({ recipient }) => {
 };
 
 export default Recipient;
-

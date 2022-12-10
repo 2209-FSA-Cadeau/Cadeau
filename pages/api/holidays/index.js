@@ -12,22 +12,15 @@ export default async function holidayHandler(req, res) {
       .json({ message: "Unable to connect to the database:", error });
   }
 
-  const {
-    body,
-    method,
-  } = req;
+  const { body: {recipientId}, method } = req;
 
-  switch(method) {
-    case "GET":
-      const holidays = await Holiday.findAll({ where: { recipientId: recipientId }});
-      res.status(200).json(holidays);
-      break;
+  switch (method) {
     case "POST":
       const holiday = await Holiday.create(body);
       res.status(201).json(holiday);
       break;
     default:
-      res.setHeader("Allow", ["GET", "POST"]);
+      res.setHeader("Allow", ["POST"]);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 }

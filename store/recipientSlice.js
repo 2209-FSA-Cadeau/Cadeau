@@ -67,6 +67,21 @@ export const addRecipient = createAsyncThunk(
   }
 );
 
+export const fetchHolidays = createAsyncThunk(
+  "/recipients/fetchHolidays",
+  async (recipientId) => {
+    try {
+      console.log(recipientId);
+      const response = await axios.get(
+        `/api/holidays/recipients/${recipientId}`
+      );
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 // Get a recipient's saved items
 export const getGifts = createAsyncThunk(
   "/recipients/getGifts",
@@ -291,6 +306,12 @@ export const recipientSlice = createSlice({
           gifts: state.singleRecipient.gifts.filter(
             (gift) => gift.id != action.payload.id
           ),
+        };
+      })
+      .addCase(fetchHolidays.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          holidays: action.payload,
         };
       });
   },

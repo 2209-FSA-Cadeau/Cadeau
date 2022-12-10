@@ -10,7 +10,6 @@ export const getUser = createAsyncThunk("/user/getUser", async (user) => {
       // lastName: user.family_name,
       // email: user.email,
     });
-    console.log(userResponse);
     return userResponse.data;
   } catch (err) {
     console.log(err);

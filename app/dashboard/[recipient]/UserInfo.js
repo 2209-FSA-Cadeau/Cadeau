@@ -26,7 +26,16 @@ const UserInfo = ({ params }) => {
         </div>
       </div>
       <div>
-        <h3 className="mx-2">Holidays / Occasions: NEED TO PULL HOLIDAYS INTO SINGLE RECIPIENT STATE</h3>
+        <h3 className="mx-2">
+          Holidays / Occasions:{" "}
+          {singleRecipient.holidays.map((holiday) => {
+            return (
+              <li>
+                {holiday.name} - {holiday.date}
+              </li>
+            );
+          })}
+        </h3>
       </div>
     </div>
   );
