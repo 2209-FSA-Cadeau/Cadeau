@@ -7,13 +7,14 @@ import { searchOff, deleteFilters, resetFilterType, resetChecklist, filterOff } 
 
 function SearchBar() {
   const recipients = useSelector((state) => state.recipients)
+  const userId = useSelector((state) => state.user)
   const dispatch = useDispatch()
 
   const [currentRecipient, setRecipient] = useState(recipients.singleRecipient)
 
   useEffect(() => {
     if(Object.keys(recipients.singleRecipient).length === 1 && Object.keys(currentRecipient).length === 1){
-      dispatch(fetchRecipients(2))
+      dispatch(fetchRecipients(userId))
     }
   }, [])
 
