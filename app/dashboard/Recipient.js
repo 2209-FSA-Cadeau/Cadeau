@@ -1,12 +1,16 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { setSingleRecipient } from "../../store/recipientSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { AiOutlineClose } from "react-icons/ai";
+import RemoveRecModal from "./RemoveRecModal";
 
 const Recipient = ({ recipient }) => {
   const { tab } = useSelector((store) => store.recipients);
   const dispatch = useDispatch();
+  const [xIsShown, setXIsShown] = useState(false);
+  const [modalIsShown, setModalIsShown] = useState(false);
 
   const handleClick = (evt) => {
     dispatch(setSingleRecipient(recipient.id));
@@ -14,11 +18,35 @@ const Recipient = ({ recipient }) => {
   };
 
   return (
-    <Link href={`/dashboard/${recipient.name}/${tab}`} onClick={handleClick}>
-      <div className="h-[45px] rounded-md m-4 bg-cwhite-600/80 text-cblue-700 hover:scale-105 ease-in duration-150 drop-shadow-xl flex justify-center items-center">
-        <h3>{recipient.name}</h3>
-      </div>
-    </Link>
+    <>
+      <li
+        onMouseEnter={() => setXIsShown(true)}
+        onMouseLeave={() => setXIsShown(false)}
+      >
+        <div className="flex justify-between items-center text-lg font-normal text-cblue-900 rounded-lg hover:bg-neutral-100">
+          <Link
+            href={`/dashboard/${recipient.name}/${tab}`}
+            onClick={handleClick}
+            className="flex items-center p-2 text-lg font-norma grow"
+          >
+            <span className="ml-3 text-left">{recipient.name}</span>
+          </Link>
+          {xIsShown && (
+            <div
+              onClick={() => setModalIsShown(true)}
+              className="h-full rounded-r-lg"
+            >
+              <AiOutlineClose className="m-2" />
+            </div>
+          )}
+        </div>
+      </li>
+      <RemoveRecModal
+        recipient={recipient}
+        modalIsShown={modalIsShown}
+        setModalIsShown={setModalIsShown}
+      />
+    </>
   );
 };
 

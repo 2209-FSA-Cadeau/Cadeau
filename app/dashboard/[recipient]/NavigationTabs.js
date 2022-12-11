@@ -60,7 +60,7 @@ const NavigationTabs = ({ params }) => {
       >
         <div className="flex justify-center items-center p-4 w-[60%]">
           <div className="flex justify-evenly items-center w-full">
-            <h3>Saved Gifts</h3>
+            <h3>Saved</h3>
             <BiGift className="scale-150" />
           </div>
         </div>
@@ -74,7 +74,7 @@ const NavigationTabs = ({ params }) => {
       >
         <div className="flex justify-center items-center p-4 w-[60%]">
           <div className="flex justify-evenly items-center w-full">
-            <h3>Notes for Later</h3>
+            <h3>Notes</h3>
             <CgNotes className="scale-150" />
           </div>
         </div>
