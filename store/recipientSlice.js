@@ -22,7 +22,7 @@ export const addRecipient = createAsyncThunk(
       const recipientRes = await axios.post(`/api/recipients`, {
         userId: recipient.userId,
         updateInfo: recipient,
-      }); //NEED TO UPDATE WITH REAL USERID WHEN AVAILABLE
+      });
       await Promise.all(
         recipient.likes.map(async (like) => {
           try {
@@ -60,7 +60,20 @@ export const addRecipient = createAsyncThunk(
           }
         })
       );
+      console.log(recipientRes)
       return recipientRes.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+export const removeRecipient = createAsyncThunk(
+  "/recipients/removeRecipient",
+  async (recipientId) => {
+    try {
+      const response = await axios.delete(`/api/recipients/recipient/${recipientId}`);
+      return response;
     } catch (err) {
       console.log(err);
     }
@@ -259,6 +272,11 @@ export const recipientSlice = createSlice({
       .addCase(addRecipient.fulfilled, (state, action) => {
         state.recipients = [...state.recipients, action.payload];
         state.singleRecipient = action.payload;
+      })
+      .addCase(removeRecipient.fulfilled, (state, action) => {
+        state.recipients = state.recipients.filter(
+          (recipient) => recipient.id != action.payload.id
+        );
       })
       .addCase(fetchPreferences.fulfilled, (state, action) => {
         state.recipients = [...state.recipients];

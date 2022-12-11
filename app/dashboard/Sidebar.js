@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import Recipient from "./Recipient";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchRecipients } from "../../store/recipientSlice";
+import { fetchRecipients, removeRecipient } from "../../store/recipientSlice";
 
 function Sidebar() {
   const { userId, isLoadingRedux } = useSelector((store) => store.user);
@@ -14,20 +14,31 @@ function Sidebar() {
     dispatch(fetchRecipients(userId));
   }, [dispatch]);
 
+  const onClickHandler = (id) => {
+    dispatch(removeRecipient(id));
+  };
+
   return (
     <div className="flex flex-col justify-between w-full h-full rounded-md bg-white shadow-xl">
       <div className="w-full text-center">
         <div className="flex justify-center items-center h-[40px] bg-cblue-700 text-cwhite rounded-t-md shadow-xl">
           <h3>Gift Recipients</h3>
         </div>
-        <div class="w-full h-full" aria-label="Sidebar">
-          <div class="overflow-y-auto py-4 px-3 bg-white rounded dark:bg-gray-800">
-            <ul class="space-y-2">
+        <div className="w-full h-full" aria-label="Sidebar">
+          <div className="overflow-y-auto py-4 px-3 bg-white rounded dark:bg-gray-800">
+            <ul className="space-y-2">
               {isLoadingRedux ? (
                 <li>Loading Recipients..</li>
               ) : (
                 recipients.map((recipient, index) => {
-                  return <Recipient recipient={recipient} key={index} />;
+                  return (
+                    <div key={index}>
+                      <Recipient recipient={recipient}  />
+                      <button onClick={() => onClickHandler(recipient.id)}>
+                        X
+                      </button>
+                    </div>
+                  );
                 })
               )}
             </ul>
