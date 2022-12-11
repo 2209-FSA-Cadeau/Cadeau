@@ -29,13 +29,10 @@
     @apply text-base sm:text-lg;
   }
   
-  li {
+  /* li {
     @apply cursor-pointer;
-  }
+  } */
   
-  button {
-    @apply shadow-xl rounded-lg uppercase bg-gradient-to-br from-cblue-700 to-cblue-500 text-cwhite;
-  }
   
   [data-nextjs-scroll-focus-boundary] {
     display: contents;

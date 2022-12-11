@@ -17,7 +17,7 @@ const UserInfo = ({ params }) => {
 
   return (
     <div className="w-full h-[18%] bg-cgold-100 shadow-xl mb-4 rounded-md border">
-      <div className="flex justify-between items-start bg-cgold-300 rounded-t-md">
+      <div className="flex justify-between items-start bg-cgold-300 rounded-t-md shadow-md">
         <h1 className="p-2">{`${singleRecipient.name}`}</h1>
         <div className="flex justify-between gap-2">
           <Link
