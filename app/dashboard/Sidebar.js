@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import Recipient from "./Recipient";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchRecipients, removeRecipient } from "../../store/recipientSlice";
+import { fetchRecipients } from "../../store/recipientSlice";
 
 function Sidebar() {
   const { userId, isLoadingRedux } = useSelector((store) => store.user);
@@ -13,10 +13,6 @@ function Sidebar() {
   useEffect(() => {
     dispatch(fetchRecipients(userId));
   }, [dispatch]);
-
-  const onClickHandler = (id) => {
-    dispatch(removeRecipient(id));
-  };
 
   return (
     <div className="flex flex-col justify-between w-full h-full rounded-md bg-white shadow-xl">
@@ -31,14 +27,7 @@ function Sidebar() {
                 <li>Loading Recipients..</li>
               ) : (
                 recipients.map((recipient, index) => {
-                  return (
-                    <div key={index}>
-                      <Recipient recipient={recipient}  />
-                      <button onClick={() => onClickHandler(recipient.id)}>
-                        X
-                      </button>
-                    </div>
-                  );
+                  return <Recipient recipient={recipient} key={index} />;
                 })
               )}
             </ul>

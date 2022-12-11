@@ -60,7 +60,7 @@ export const addRecipient = createAsyncThunk(
           }
         })
       );
-      console.log(recipientRes)
+      console.log(recipientRes);
       return recipientRes.data;
     } catch (err) {
       console.log(err);
@@ -72,8 +72,10 @@ export const removeRecipient = createAsyncThunk(
   "/recipients/removeRecipient",
   async (recipientId) => {
     try {
-      const response = await axios.delete(`/api/recipients/recipient/${recipientId}`);
-      return response;
+      const recipient = await axios.delete(
+        `/api/recipients/recipient/${recipientId}`
+      );
+      return recipient.data;
     } catch (err) {
       console.log(err);
     }
@@ -210,8 +212,6 @@ export const deleteLike = createAsyncThunk(
           recipientId: recipientId,
         },
       });
-      console.log(response);
-
       return response.data;
     } catch (err) {
       console.log(err);
