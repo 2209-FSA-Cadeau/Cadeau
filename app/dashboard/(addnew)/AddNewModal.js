@@ -94,37 +94,26 @@ const AddNewModal = ({
         );
       case 1:
         return (
-          <Name newRecipient={newRecipient} setNewRecipient={setNewRecipient} />
-        );
-      case 2:
-        return (
-          <Demographics
-            newRecipient={newRecipient}
-            setNewRecipient={setNewRecipient}
-          />
-        );
-      case 3:
-        return (
           <Holidays
             newRecipient={newRecipient}
             setNewRecipient={setNewRecipient}
           />
         );
-      case 4:
+      case 2:
         return (
           <Likes
             newRecipient={newRecipient}
             setNewRecipient={setNewRecipient}
           />
         );
-      case 5:
+      case 3:
         return (
           <Dislikes
             newRecipient={newRecipient}
             setNewRecipient={setNewRecipient}
           />
         );
-      case 6:
+      case 4:
         return (
           <Complete
             newRecipient={newRecipient}
@@ -138,7 +127,7 @@ const AddNewModal = ({
     return (
       <div className="fixed top-0 left-0 h-screen w-screen z-50 bg-black/50">
         <div className="flex justify-center items-center w-full h-full ">
-          <div className="relative bg-white rounded-lg shadow w-[70%] h-[70%]">
+          <div className="relative bg-white rounded-lg shadow w-[60%] h-[60%] overflow-y-scroll">
             <button
               type="button"
               onClick={() => {
@@ -151,8 +140,8 @@ const AddNewModal = ({
               <span className="sr-only">Close modal</span>
             </button>
             <div className="flex flex-col justify-between w-full h-full p-4">
-              {conditionalComponent()}
-              <div className="flex items-center justify-center gap-4 mb-8">
+              <div className="grow">{conditionalComponent()}</div>
+              <div className="flex items-center justify-center gap-4 mb-6">
                 {step > 0 ? (
                   <button
                     name="previousButton"
