@@ -34,9 +34,8 @@ const page = () => {
   useEffect(() => {
     if (!isLoading) {
       if (user.firstName && user.lastName) {
-        dispatch(
-          addOrFindUser(user)
-  )}
+        dispatch(addOrFindUser(user));
+      }
       dispatch(
         addOrFindUser({
           identifier: user.sub,

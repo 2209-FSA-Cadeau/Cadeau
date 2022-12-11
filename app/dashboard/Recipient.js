@@ -1,7 +1,10 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { setSingleRecipient } from "../../store/recipientSlice";
+import {
+  removeRecipient,
+  setSingleRecipient,
+} from "../../store/recipientSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineClose } from "react-icons/ai";
 import RemoveRecModal from "./RemoveRecModal";
@@ -14,7 +17,11 @@ const Recipient = ({ recipient }) => {
 
   const handleClick = (evt) => {
     dispatch(setSingleRecipient(recipient.id));
+  };
 
+  const removeClick = () => {
+    dispatch(removeRecipient(recipient.id));
+    setModalIsShown(false)
   };
 
   return (
@@ -45,6 +52,7 @@ const Recipient = ({ recipient }) => {
         recipient={recipient}
         modalIsShown={modalIsShown}
         setModalIsShown={setModalIsShown}
+        removeClick={removeClick}
       />
     </>
   );

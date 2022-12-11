@@ -20,9 +20,9 @@ function Sidebar() {
         <div className="flex justify-center items-center h-[40px] bg-cblue-700 text-cwhite rounded-t-md shadow-xl">
           <h3>Gift Recipients</h3>
         </div>
-        <div class="w-full h-full" aria-label="Sidebar">
-          <div class="overflow-y-auto py-4 px-3 bg-white rounded dark:bg-gray-800">
-            <ul class="space-y-2">
+        <div className="w-full h-full" aria-label="Sidebar">
+          <div className="overflow-y-auto py-4 px-3 bg-white rounded dark:bg-gray-800">
+            <ul className="space-y-2">
               {isLoadingRedux ? (
                 <li>Loading Recipients..</li>
               ) : (

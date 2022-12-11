@@ -2,7 +2,7 @@
 import React from "react";
 import { AiOutlineClose, AiOutlineExclamationCircle } from "react-icons/ai";
 
-function RemoveRecModal({ modalIsShown, setModalIsShown, recipient }) {
+function RemoveRecModal({ modalIsShown, setModalIsShown, recipient, removeClick }) {
   if (modalIsShown) {
     return (
       <div className="fixed top-0 left-0 h-screen w-screen z-50 bg-black/50">
@@ -26,6 +26,7 @@ function RemoveRecModal({ modalIsShown, setModalIsShown, recipient }) {
               <button
                 type="button"
                 className="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+                onClick={removeClick}
               >
                 Yes, I'm sure
               </button>
