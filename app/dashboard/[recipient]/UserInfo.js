@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { FiEdit2 } from "react-icons/fi";
-import { AiOutlineClose } from "react-icons/ai";
 import { fetchHolidays } from "../../../store/recipientSlice";
 
 const UserInfo = ({ params }) => {

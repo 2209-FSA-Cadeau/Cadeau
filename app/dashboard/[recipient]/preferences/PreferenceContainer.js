@@ -10,6 +10,7 @@ import {
   deleteLike,
   deleteDislike,
   fetchPreferences,
+  fetchHolidays,
 } from "../../../../store/recipientSlice";
 
 const PreferenceContainer = () => {
@@ -37,6 +38,10 @@ const PreferenceContainer = () => {
       });
       setLikes(newLikes);
       setDislikes(newDislikes);
+    }
+
+    if (!singleRecipient.holidays) {
+      dispatch(fetchHolidays(singleRecipient.id));
     }
   }, [singleRecipient.preferences]);
 
