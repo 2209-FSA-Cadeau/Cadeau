@@ -23,7 +23,7 @@ function Sidebar() {
           <h3>Gift Recipients</h3>
         </div>
         <div className="w-full h-full grow min-h-0 overflow-y-scroll" aria-label="Sidebar">
-          <div className="overflow-y-scroll py-4 px-3 bg-white rounded dark:bg-gray-800">
+          <div className="overflow-y-scroll py-4 px-3 bg-white rounded">
             <ul className="space-y-2">
               {isLoadingRedux ? (
                 <li>Loading Recipients..</li>

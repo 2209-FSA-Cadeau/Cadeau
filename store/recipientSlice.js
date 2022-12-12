@@ -60,7 +60,22 @@ export const addRecipient = createAsyncThunk(
           }
         })
       );
+      console.log(recipientRes);
       return recipientRes.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+export const removeRecipient = createAsyncThunk(
+  "/recipients/removeRecipient",
+  async (recipientId) => {
+    try {
+      const recipient = await axios.delete(
+        `/api/recipients/recipient/${recipientId}`
+      );
+      return recipient.data;
     } catch (err) {
       console.log(err);
     }
@@ -196,8 +211,6 @@ export const deleteLike = createAsyncThunk(
           recipientId: recipientId,
         },
       });
-      console.log(response);
-
       return response.data;
     } catch (err) {
       console.log(err);
@@ -259,6 +272,11 @@ export const recipientSlice = createSlice({
         state.recipients = [...state.recipients, action.payload];
         state.singleRecipient = action.payload;
       })
+      .addCase(removeRecipient.fulfilled, (state, action) => {
+        state.recipients = state.recipients.filter(
+          (recipient) => recipient.id != action.payload.id
+        );
+      })
       .addCase(fetchPreferences.fulfilled, (state, action) => {
         state.recipients = [...state.recipients];
         state.singleRecipient = {
@@ -295,7 +313,7 @@ export const recipientSlice = createSlice({
       .addCase(getGifts.fulfilled, (state, action) => {
         state.singleRecipient = {
           ...state.singleRecipient,
-          gifts: action.payload[0].gifts,
+          gifts: action.payload.gifts,
         };
       })
       .addCase(removeItem.fulfilled, (state, action) => {

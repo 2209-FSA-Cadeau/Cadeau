@@ -2,9 +2,21 @@ const {
   db,
   models: { Recipient, Note, User },
 } = require("../../../db");
+  db,
+  models: { Recipient, Note, User },
+} = require("../../../db");
 
 const Sequelize = require("sequelize");
+const Sequelize = require("sequelize");
 
+export default async function recipientHandler(req, res) {
+  try {
+    await db.authenticate();
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: "Unable to connect to the database:", error });
+  }
 export default async function recipientHandler(req, res) {
   try {
     await db.authenticate();
@@ -54,4 +66,5 @@ export default async function recipientHandler(req, res) {
       res.setHeader("Allow", ["POST", "PUT", "DELETE"]);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
+}
 }
