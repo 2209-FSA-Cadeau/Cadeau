@@ -3,32 +3,32 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { useUser } from "@auth0/nextjs-auth0";
-import { getUser } from "../store/userSlice";
+import { addOrFindUser } from "../store/userSlice";
 
 const Redirect = () => {
-  const router = useRouter()
-  const { userId } = useSelector((store) => store.user);
-  const { recipients } = useSelector((state) => state.recipients)
+  const router = useRouter();
+  const { userId, isLoadingRedux } = useSelector((store) => store.user);
+  const { recipients } = useSelector((state) => state.recipients);
   const { user, isLoading } = useUser();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(!user){
-        router.push("/landing")
-    } else {
-        dispatch(getUser(user))
+    if (!isLoading) {
+      if (!user) {
+        router.push("/landing");
+      } else {
+        dispatch(addOrFindUser(user));
+      }
     }
-  }, [isLoading])
+  }, [isLoading]);
 
-  useEffect(() => {
-    if (!userId || recipients.length === 0) {
-        router.push("/dashboard/addnew")
-    } else {
-      console.log("RECIPIENTS", recipients)
-        router.push("/shop")
-    }
-  }, [userId]);
-
+  // useEffect(() => {
+  //   if (recipients.length === 0) {
+  //     router.push("/dashboard");
+  //   } else {
+  //     router.push("/shop");
+  //   }
+  // }, [userId]);
 };
 
 export default Redirect;

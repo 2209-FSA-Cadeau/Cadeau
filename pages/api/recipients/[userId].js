@@ -2,7 +2,7 @@ const {
     db,
     models: { Recipient, Note, User },
   } = require("../../../db");
-  
+
   export default async function userIdRecipientHandler(req, res) {
     try {
       await db.authenticate();
@@ -11,18 +11,18 @@ const {
         .status(400)
         .json({ message: "Unable to connect to the database:", error });
     }
-  
+
     const {
       query: {userId},
       method,
     } = req;
-    
+
     switch (method) {
       case "GET":
         // GET all recipients based on user
         const userWithRecip  = await User.findOne({
             include: {
-                model: Note, 
+                model: Note,
                     include:{
                         model: Recipient
                         }
@@ -43,4 +43,3 @@ const {
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   }
-  

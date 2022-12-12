@@ -34,6 +34,7 @@ export const addOrFindUserWithName = createAsyncThunk(
   }
 );
 
+
 export const addOrFindUser = createAsyncThunk(
   "/user/addOrFindUser",
   async (user) => {
@@ -73,13 +74,15 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(addOrFindUserWithName.fulfilled, (state, action) => {
-      state.isLoadingRedux = false;
-      state.userId = action.payload.id;
-    });
+    // builder.addCase(addOrFindUserWithName.fulfilled, (state, action) => {
+    //   state.isLoadingRedux = false;
+    //   state.userId = action.payload.id;
+    // });
     builder.addCase(addOrFindUser.fulfilled, (state, action) => {
       state.isLoadingRedux = false;
+      state.isLoggedIn = true;
       state.userId = action.payload.id;
+      state.user = action.payload;
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       if(!action.payload){

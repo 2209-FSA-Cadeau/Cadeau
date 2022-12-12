@@ -7,6 +7,7 @@ export const fetchRecipients = createAsyncThunk(
   async (userId) => {
     try {
       const response = await axios.get(`/api/recipients/${userId}`);
+      console.log(response.data)
       return response.data;
     } catch (err) {
       console.log(err);
@@ -236,14 +237,36 @@ export const deleteDislike = createAsyncThunk(
   }
 );
 
+// Fetch note for a single recipient
+export const fetchNote = createAsyncThunk(
+  "/fetchNotes",
+  async (requiredIds) =>{
+    try {
+      const response = await axios.get("/api/notes", {
+        params: {
+          userId: requiredIds.userId,
+          recipientId: requiredIds.recipientId,
+        }
+      })
+      return response.data
+    } catch (err) {
+      console.log(err)
+    }
+  }
+)
+
 // Update a note for a single recipient
-export const updateNote = createAsyncThunk("/notes", async (noteObj) => {
-  try {
-    const response = await axios.put("/api/notes", noteObj);
-    console.log(response);
-    return response.data;
-  } catch (err) {
-    console.log(err);
+
+export const updateNote =  createAsyncThunk(
+  "/updateNotes",
+  async (noteObj) => {
+    try {
+      const response = await axios.put("/api/notes", noteObj)
+      console.log(response)
+      return response.data
+    } catch (err) {
+      console.log(err);
+    }
   }
 });
 
@@ -341,6 +364,12 @@ export const recipientSlice = createSlice({
           ...state.singleRecipient,
           holidays: action.payload,
         };
+      })
+      .addCase(fetchNote.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          note: action.payload
+        }
       })
       .addCase(updateNote.fulfilled, (state, action) => {
         state.singleRecipient = {

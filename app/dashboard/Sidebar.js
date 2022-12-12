@@ -21,6 +21,7 @@ function Sidebar() {
   const dispatch = useDispatch();
   const pathname = usePathname();
 
+
   const { isLoading, user } = useUser();
 
   useEffect(() => {
