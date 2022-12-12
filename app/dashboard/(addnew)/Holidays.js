@@ -64,7 +64,7 @@ export default function Holidays(props) {
       <div className="border-b border-cblue-700">
         <h1>Other Important Dates</h1>
         <h2 className="my-3">
-          Holidays and other dates that you'll want to provide gifts for
+          Holidays and other dates that you'll want to provide gifts htmlFor
         </h2>
       </div>
       <div className="grow flex flex-col justify-start overflow-y-scroll pt-4 gap-8">
@@ -101,7 +101,7 @@ export default function Holidays(props) {
                 onChange={occasionNameHandler}
               />
               <label
-                for="occasionName"
+                htmlFor="occasionName"
                 className="absolute text-lg duration-200 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-cblue-700  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
               >
                 Occasion Name
@@ -117,7 +117,7 @@ export default function Holidays(props) {
                 onChange={occasionDateHandler}
               />
               <label
-                for="occasionDate"
+                htmlFor="occasionDate"
                 className="absolute text-lg duration-200 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-cblue-700  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
               >
                 Occasion Date

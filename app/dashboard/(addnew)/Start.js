@@ -25,7 +25,7 @@ export default function Start({ firstTime, newRecipient, setNewRecipient }) {
       )}
       <div className="grow flex flex-col justify-center overflow-y-scroll">
         <div className="p-1">
-          <label for="name" className="block mb-2 text-lg font-bold">
+          <label htmlFor="name" className="block mb-2 text-lg font-bold">
             Name
           </label>
           <div className="relative mb-6">
@@ -49,7 +49,7 @@ export default function Start({ firstTime, newRecipient, setNewRecipient }) {
           </div>
         </div>
         <div className="p-1">
-          <label for="email" className="block mb-2 text-lg font-bold">
+          <label htmlFor="email" className="block mb-2 text-lg font-bold">
             Email
           </label>
           <div className="relative mb-6">
@@ -73,7 +73,7 @@ export default function Start({ firstTime, newRecipient, setNewRecipient }) {
           </div>
         </div>
         <div className="p-1">
-          <label for="birthday" className="block mb-2 text-lg font-bold">
+          <label htmlFor="birthday" className="block mb-2 text-lg font-bold">
             Birthday
           </label>
           <div className="relative mb-6">
@@ -97,7 +97,7 @@ export default function Start({ firstTime, newRecipient, setNewRecipient }) {
           </div>
         </div>
         <div className="p-1">
-          <label for="occupation" className="block mb-2 text-lg font-bold">
+          <label htmlFor="occupation" className="block mb-2 text-lg font-bold">
             Occupation
           </label>
           <div className="relative mb-6">

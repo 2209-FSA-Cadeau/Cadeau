@@ -22,7 +22,7 @@ const NavigationTabs = ({ params }) => {
         if (elem.tab === tab) {
           return {
             tab: elem.tab,
-            css: "basis-1/3 h-full flex justify-center items-center rounded-t-2xl bg-cgold-500 shadow-xl text-cwhite",
+            css: "basis-1/3 h-full flex justify-center items-center rounded-t-2xl bg-cgold-500 shadow-md text-cwhite",
           };
         } else {
           return {
@@ -36,7 +36,7 @@ const NavigationTabs = ({ params }) => {
   }, [tab]);
 
   return (
-    <div className="flex justify-evenly items-center w-full gap-1">
+    <div className="flex justify-evenly items-center w-full gap-1 z-10">
       <Link
         href={`/dashboard/${params.recipient}/preferences`}
         className={tabArray[0].css}
