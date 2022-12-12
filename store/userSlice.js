@@ -27,7 +27,6 @@ export const addOrFindUserWithName = createAsyncThunk(
         lastName: user.lastName,
         email: user.email,
       });
-      console.log(userResponse);
       return userResponse.data;
     } catch (err) {
       console.log(err);
