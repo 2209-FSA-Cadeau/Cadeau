@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Recipient from "./Recipient";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,8 +8,6 @@ import {
   getGifts,
   setSingleRecipient,
 } from "../../store/recipientSlice";
-import { useUser } from "@auth0/nextjs-auth0";
-import { getUser } from "../../store/userSlice";
 import AddNewModal from "./(addnew)/AddNewModal";
 
 function Sidebar() {
@@ -19,38 +16,39 @@ function Sidebar() {
     (store) => store.recipients
   );
   const [addNewModalIsShown, setAddNewModalIsShown] = useState(false);
+  const [newUser, setNewUser] = useState(window.localStorage.getItem("new"));
   const dispatch = useDispatch();
   const pathname = usePathname();
 
-  const { isLoading, user } = useUser();
-  const newUser = localStorage.getItem("new");
+  useEffect(() => {
+    setNewUser(window.localStorage.getItem("new"));
+  }, [isLoadingRedux, addNewModalIsShown]);
 
   useEffect(() => {
-    if (isLoading) {
-    } else if (!isLoading && !userId) {
-      dispatch(getUser(user));
-    } else if (userId && recipients.length === 0) {
-      dispatch(fetchRecipients(userId));
-    } else if (userId && recipients.length > 0 && !singleRecipient.id) {
-      if (pathname.includes("preferences") || pathname.includes("notes")) {
-        const parsed = pathname.split("/")[2].split("%20").join(" ");
-        const newRecipient = recipients.filter(
-          (recipient) => recipient.name === parsed
-        );
-        dispatch(setSingleRecipient(newRecipient[0].id));
-      } else if (pathname.includes("saved")) {
-        const parsed = pathname.split("/")[2].split("%20").join(" ");
-        const newRecipient = recipients.filter(
-          (recipient) => recipient.name === parsed
-        );
-        dispatch(setSingleRecipient(newRecipient[0].id));
-        dispatch(getGifts(newRecipient[0].id));
-      }
-    }
+    console.log(newUser)
+    // if (isLoadingRedux || newUser) {
+    // } else if (userId && recipients.length === 0) {
+    //   dispatch(fetchRecipients(userId));
+    // } else if (userId && recipients.length > 0 && !singleRecipient.id) {
+    //   if (pathname.includes("preferences") || pathname.includes("notes")) {
+    //     const parsed = pathname.split("/")[2].split("%20").join(" ");
+    //     const newRecipient = recipients.filter(
+    //       (recipient) => recipient.name === parsed
+    //     );
+    //     dispatch(setSingleRecipient(newRecipient[0].id));
+    //   } else if (pathname.includes("saved")) {
+    //     const parsed = pathname.split("/")[2].split("%20").join(" ");
+    //     const newRecipient = recipients.filter(
+    //       (recipient) => recipient.name === parsed
+    //     );
+    //     dispatch(setSingleRecipient(newRecipient[0].id));
+    //     dispatch(getGifts(newRecipient[0].id));
+    //   }
+    // }
     if (newUser) {
       setAddNewModalIsShown(true);
     }
-  }, [isLoading, recipients, singleRecipient.id, userId]);
+  }, [isLoadingRedux, recipients, singleRecipient.id, userId]);
 
   return (
     <div className="flex flex-col justify-between w-full h-full rounded-md bg-white shadow-xl">
