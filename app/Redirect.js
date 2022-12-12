@@ -1,16 +1,16 @@
 "use client"; // USE CLIENT MUST BE USED TO ACCESS REDUX
 import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { useUser } from "@auth0/nextjs-auth0";
 import { addOrFindUser } from "../store/userSlice";
 
 const Redirect = () => {
   const router = useRouter();
-  const { userId, isLoadingRedux } = useSelector((store) => store.user);
-  const { recipients } = useSelector((state) => state.recipients);
   const { user, isLoading } = useUser();
+  const { isLoadingRedux } = useSelector((store) => store.user);
   const dispatch = useDispatch();
+  const pathname = usePathname()
 
   useEffect(() => {
     if (!isLoading) {
@@ -22,13 +22,12 @@ const Redirect = () => {
     }
   }, [isLoading]);
 
-  // useEffect(() => {
-  //   if (recipients.length === 0) {
-  //     router.push("/dashboard");
-  //   } else {
-  //     router.push("/shop");
-  //   }
-  // }, [userId]);
+  useEffect(() => {
+    if (window.localStorage.getItem("new") === "true" && pathname !== "/dashboard" && pathname !== "/landing") {
+      router.push("/dashboard")
+    }
+  },[isLoadingRedux, pathname])
+
 };
 
 export default Redirect;

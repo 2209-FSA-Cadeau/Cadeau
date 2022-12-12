@@ -11,10 +11,14 @@ function Sidebar() {
   const { recipients } = useSelector((store) => store.recipients);
   const [addNewModalIsShown, setAddNewModalIsShown] = useState(false);
   const dispatch = useDispatch();
+  const newUser = localStorage.getItem("new");
 
   useEffect(() => {
     if (!isLoadingRedux) {
       dispatch(fetchRecipients(userId));
+    }
+    if (newUser) {
+      setAddNewModalIsShown(true);
     }
   }, [userId, isLoadingRedux]);
 
@@ -24,11 +28,16 @@ function Sidebar() {
         <div className="flex justify-center items-center h-[40px] bg-cblue-700 text-cwhite rounded-t-md shadow-md z-10">
           <h3>Gift Recipients</h3>
         </div>
-        <div className="w-full h-full grow min-h-0 overflow-y-scroll" aria-label="Sidebar">
+        <div
+          className="w-full h-full grow min-h-0 overflow-y-scroll"
+          aria-label="Sidebar"
+        >
           <div className="overflow-y-scroll py-4 px-3 bg-white rounded">
             <ul className="space-y-2">
               {isLoadingRedux ? (
                 <li>Loading Recipients..</li>
+              ) : newUser ? (
+                ""
               ) : (
                 recipients.map((recipient, index) => {
                   return <Recipient recipient={recipient} key={index} />;
@@ -39,11 +48,26 @@ function Sidebar() {
         </div>
       </div>
       <div className="m-4 h-[10%]">
-          <button onClick={() => setAddNewModalIsShown(true)} className="shadow-xl rounded-md uppercase bg-gradient-to-br from-cblue-700 to-cblue-500 text-cwhite text-center w-full h-full hover:scale-105 ease-in duration-100">
-            <h3>Add Recipient +</h3>
-          </button>
+        <button
+          onClick={() => setAddNewModalIsShown(true)}
+          className="shadow-xl rounded-md uppercase bg-gradient-to-br from-cblue-700 to-cblue-500 text-cwhite text-center w-full h-full hover:scale-105 ease-in duration-100"
+        >
+          <h3>Add Recipient +</h3>
+        </button>
       </div>
-      <AddNewModal firstTime={false} addNewModalIsShown={addNewModalIsShown} setAddNewModalIsShown={setAddNewModalIsShown}/>
+      {newUser ? (
+        <AddNewModal
+          firstTime={true}
+          addNewModalIsShown={addNewModalIsShown}
+          setAddNewModalIsShown={setAddNewModalIsShown}
+        />
+      ) : (
+        <AddNewModal
+          firstTime={false}
+          addNewModalIsShown={addNewModalIsShown}
+          setAddNewModalIsShown={setAddNewModalIsShown}
+        />
+      )}
     </div>
   );
 }

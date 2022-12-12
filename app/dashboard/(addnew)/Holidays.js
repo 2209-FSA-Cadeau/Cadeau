@@ -64,11 +64,11 @@ export default function Holidays(props) {
       <div className="border-b border-cblue-700">
         <h1>Other Important Dates</h1>
         <h2 className="my-3">
-          Holidays and other dates that you'll want to provide gifts htmlFor
+          All occasions you'll want to provide gifts For
         </h2>
       </div>
       <div className="grow flex flex-col justify-start overflow-y-scroll pt-4 gap-8">
-        <div className="z-20">
+        {/* <div className="z-20">
           <label className="block mb-4 text-lg font-bold">
             <h2>Holidays Celebrated</h2>
           </label>
@@ -81,10 +81,10 @@ export default function Holidays(props) {
             instanceId={"holidays"}
             className="text-lg"
           />
-        </div>
+        </div> */}
         <div className="grow flex flex-col">
           <label className="block mb-4 text-lg font-bold">
-            <h2>Other Important Occasions</h2>
+            {/* <h2>Other Important Occasions</h2> */}
             <p className="font-medium">An anniversary, perhaps?</p>
           </label>
           <form

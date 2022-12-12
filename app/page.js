@@ -9,7 +9,7 @@ const App = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoadingRedux) {
+    if (!isLoadingRedux && !window.localStorage.getItem("new")) {
       router.push("/shop");
     }
   }, [isLoadingRedux]);

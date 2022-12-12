@@ -19,8 +19,6 @@ export default async function userHandler(req, res) {
     method,
   } = req;
 
-  console.log(req)
-
   switch (method) {
     case "GET":
       const users = await User.findAll();
@@ -33,14 +31,14 @@ export default async function userHandler(req, res) {
           identifier: identifier,
         },
         defaults: {
-          identifer: identifier,
+          // identifer: identifier,
           email: email,
         },
       });
       if (!created) {
         user.update({ email });
       }
-      res.status(201).json(user);
+      res.status(201).json({ user, created });
       break;
     default:
       res.setHeader("Allow", ["GET", "POST"]);
