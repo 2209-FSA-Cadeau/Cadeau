@@ -16,24 +16,24 @@ export const getUser = createAsyncThunk("/user/getUser", async (user) => {
   }
 });
 
-export const addOrFindUserWithName = createAsyncThunk(
-  "/user/addOrFindUserWithName",
-  async (user) => {
-    console.log(user);
-    try {
-      const userResponse = await axios.post(`/api/users`, {
-        identifier: user.identifier,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-      });
-      console.log(userResponse);
-      return userResponse.data;
-    } catch (err) {
-      console.log(err);
-    }
-  }
-);
+// export const addOrFindUserWithName = createAsyncThunk(
+//   "/user/addOrFindUserWithName",
+//   async (user) => {
+//     console.log(user);
+//     try {
+//       const userResponse = await axios.post(`/api/users`, {
+//         identifier: user.identifier,
+//         firstName: user.firstName,
+//         lastName: user.lastName,
+//         email: user.email,
+//       });
+//       console.log(userResponse);
+//       return userResponse.data;
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   }
+// );
 
 export const addOrFindUser = createAsyncThunk(
   "/user/addOrFindUser",
@@ -74,13 +74,15 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(addOrFindUserWithName.fulfilled, (state, action) => {
-      state.isLoadingRedux = false;
-      state.userId = action.payload.id;
-    });
+    // builder.addCase(addOrFindUserWithName.fulfilled, (state, action) => {
+    //   state.isLoadingRedux = false;
+    //   state.userId = action.payload.id;
+    // });
     builder.addCase(addOrFindUser.fulfilled, (state, action) => {
       state.isLoadingRedux = false;
+      state.isLoggedIn = true;
       state.userId = action.payload.id;
+      state.user = action.payload;
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       if(!action.payload){

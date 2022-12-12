@@ -230,8 +230,6 @@ export const deleteDislike = createAsyncThunk(
           recipientId: recipientId,
         },
       });
-
-      console.log(response);
       return response.data;
     } catch (err) {
       console.log(err);
@@ -258,6 +256,7 @@ export const fetchNote = createAsyncThunk(
 )
 
 // Update a note for a single recipient
+
 export const updateNote =  createAsyncThunk(
   "/updateNotes",
   async (noteObj) => {
@@ -269,7 +268,7 @@ export const updateNote =  createAsyncThunk(
       console.log(err);
     }
   }
-)
+});
 
 const initialState = {
   recipients: [],
@@ -334,14 +333,16 @@ export const recipientSlice = createSlice({
         state.singleRecipient = {
           ...state.singleRecipient,
           preferences: state.singleRecipient.preferences.filter(
-            (preference) => preference.category != action.payload
+            (preference) => preference.preference === "dislike"
           ),
         };
       })
       .addCase(deleteDislike.fulfilled, (state, action) => {
         state.singleRecipient = {
           ...state.singleRecipient,
-          preferences: [],
+          preferences: state.singleRecipient.preferences.filter(
+            (preference) => preference.preference === "like"
+          ),
         };
       })
       .addCase(getGifts.fulfilled, (state, action) => {
@@ -373,8 +374,8 @@ export const recipientSlice = createSlice({
       .addCase(updateNote.fulfilled, (state, action) => {
         state.singleRecipient = {
           ...state.singleRecipient,
-          note: action.payload
-        }
+          note: action.payload,
+        };
       })
       .addCase(editRecipient.fulfilled, (state, action) => {
         state.singleRecipient = {
