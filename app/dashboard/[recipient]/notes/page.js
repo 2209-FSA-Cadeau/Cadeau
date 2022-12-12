@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchHolidays, updateNote } from "../../../../store/recipientSlice";
 
 const page = () => {
-  const { singleRecipient } = useSelector((state) => state.recipients)
+  const { singleRecipient } = useSelector((store) => store.recipients)
   const [value, setValue] = useState(singleRecipient.note.content);
   const [updated, setUpdated] = useState(true);
   const { userId } = useSelector((state) => state.user)
