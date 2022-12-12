@@ -314,7 +314,7 @@ export const recipientSlice = createSlice({
       .addCase(getGifts.fulfilled, (state, action) => {
         state.singleRecipient = {
           ...state.singleRecipient,
-          gifts: action.payload[0].gifts,
+          gifts: action.payload.gifts,
         };
       })
       .addCase(removeItem.fulfilled, (state, action) => {
