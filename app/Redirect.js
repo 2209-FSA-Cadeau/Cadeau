@@ -7,7 +7,7 @@ import { addOrFindUser } from "../store/userSlice";
 
 const Redirect = () => {
   const router = useRouter();
-  const { userId } = useSelector((store) => store.user);
+  const { userId, isLoadingRedux } = useSelector((store) => store.user);
   const { recipients } = useSelector((state) => state.recipients);
   const { user, isLoading } = useUser();
   const dispatch = useDispatch();
