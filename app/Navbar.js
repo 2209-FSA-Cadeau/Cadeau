@@ -39,7 +39,7 @@ const Navbar = () => {
                   </li>
                 </Link>
                 <a
-                  href="/api/auth/logout/"
+                  href="/api/auth/logout?http%3A%2F%2Flocalhost%3A3000%2Flanding"
                   onClick={() => {
                     dispatch(auth0logout());
                   }}
