@@ -26,25 +26,26 @@ function Sidebar() {
 
   useEffect(() => {
     console.log(newUser)
-    // if (isLoadingRedux || newUser) {
-    // } else if (userId && recipients.length === 0) {
-    //   dispatch(fetchRecipients(userId));
-    // } else if (userId && recipients.length > 0 && !singleRecipient.id) {
-    //   if (pathname.includes("preferences") || pathname.includes("notes")) {
-    //     const parsed = pathname.split("/")[2].split("%20").join(" ");
-    //     const newRecipient = recipients.filter(
-    //       (recipient) => recipient.name === parsed
-    //     );
-    //     dispatch(setSingleRecipient(newRecipient[0].id));
-    //   } else if (pathname.includes("saved")) {
-    //     const parsed = pathname.split("/")[2].split("%20").join(" ");
-    //     const newRecipient = recipients.filter(
-    //       (recipient) => recipient.name === parsed
-    //     );
-    //     dispatch(setSingleRecipient(newRecipient[0].id));
-    //     dispatch(getGifts(newRecipient[0].id));
-    //   }
-    // }
+    if (isLoadingRedux || newUser) {
+    } 
+    else if (userId && recipients.length === 0) {
+      dispatch(fetchRecipients(userId));
+    } else if (userId && recipients.length > 0 && !singleRecipient.id) {
+      if (pathname.includes("preferences") || pathname.includes("notes")) {
+        const parsed = pathname.split("/")[2].split("%20").join(" ");
+        const newRecipient = recipients.filter(
+          (recipient) => recipient.name === parsed
+        );
+        dispatch(setSingleRecipient(newRecipient[0].id));
+      } else if (pathname.includes("saved")) {
+        const parsed = pathname.split("/")[2].split("%20").join(" ");
+        const newRecipient = recipients.filter(
+          (recipient) => recipient.name === parsed
+        );
+        dispatch(setSingleRecipient(newRecipient[0].id));
+        dispatch(getGifts(newRecipient[0].id));
+      }
+    }
     if (newUser) {
       setAddNewModalIsShown(true);
     }
