@@ -11,10 +11,12 @@ import {
   deleteDislike,
   fetchPreferences,
   fetchHolidays,
+  fetchNote
 } from "../../../../store/recipientSlice";
 
 const PreferenceContainer = () => {
   const { singleRecipient } = useSelector((store) => store.recipients);
+  const { userId } = useSelector((store) => store.user)
   const dispatch = useDispatch();
   const [options, setOptions] = useState([]);
   const [likes, setLikes] = useState([]);
@@ -42,6 +44,13 @@ const PreferenceContainer = () => {
 
     if (!singleRecipient.holidays) {
       dispatch(fetchHolidays(singleRecipient.id));
+    }
+    const requiredIds = {
+      userId,
+      recipientId: singleRecipient.id
+    }
+    if (!singleRecipient.note) {
+      dispatch(fetchNote(requiredIds))
     }
   }, [singleRecipient.preferences]);
 
