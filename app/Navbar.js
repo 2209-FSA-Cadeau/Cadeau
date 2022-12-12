@@ -20,7 +20,7 @@ const Navbar = () => {
 
   return (
     <div className={!auth0User ? "hidden" : ""}>
-      <div className="fixed w-full h-20 shadow-md z-[100] bg-gradient-to-br from-cblue-700/[80] to-cblue-600/90 text-white">
+      <div className="fixed w-full h-20 shadow-xl z-[100] bg-gradient-to-br from-cblue-700/[80] to-cblue-600/90 text-white">
         <div className="flex justify-between items-center w-full h-full px-2">
           <Link href="/shop" className="ml-6">
             <h2 className="font-lobster text-3xl text-cgold-500">Cadeau</h2>

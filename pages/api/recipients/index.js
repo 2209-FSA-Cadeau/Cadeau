@@ -15,7 +15,7 @@ export default async function recipientHandler(req, res) {
   }
 
   const {
-    body: { updateInfo, userId },
+    body: { userId, recipientId, updateInfo },
     method,
   } = req;
 
@@ -24,7 +24,7 @@ export default async function recipientHandler(req, res) {
       //ADD NEW RECIPIENT
       const originalLength = await Recipient.findAll();
       updateInfo.id = originalLength.length + 1;
-      updateInfo.individualHooks = true
+      // updateInfo.individualHooks = true
       const newRecipient = await Recipient.create(updateInfo);
       await newRecipient.addUser(userId);
       res.status(201).json(newRecipient);
@@ -32,10 +32,22 @@ export default async function recipientHandler(req, res) {
 
     case "PUT":
       // UPDATE SINGLE RECIPIENT
-      console.log(req.body);
-      const recipient = await Recipient.findByPk(userId);
-      const updatedRecipient = await recipient.update(updateInfo);
+      const recipient = await Recipient.findByPk(updateInfo.id);
+      const updatedRecipient = await recipient.update(updateInfo, {
+        returning: true,
+        plain: true,
+      });
       res.status(200).json(updatedRecipient);
+      break;
+
+    case "DELETE":
+      //DELETE SINGLE RECIPIENT
+      await Recipient.destroy({
+        where: { id: recipientId },
+        individualHooks: true,
+      });
+
+      res.status(204).end();
       break;
 
     default:
