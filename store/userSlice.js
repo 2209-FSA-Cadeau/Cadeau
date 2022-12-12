@@ -16,24 +16,6 @@ export const getUser = createAsyncThunk("/user/getUser", async (user) => {
   }
 });
 
-export const addOrFindUserWithName = createAsyncThunk(
-  "/user/addOrFindUserWithName",
-  async (user) => {
-    console.log(user);
-    try {
-      const userResponse = await axios.post(`/api/users`, {
-        identifier: user.identifier,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-      });
-      return userResponse.data;
-    } catch (err) {
-      console.log(err);
-    }
-  }
-);
-
 
 export const addOrFindUser = createAsyncThunk(
   "/user/addOrFindUser",
@@ -61,11 +43,6 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    // auth0login: (state, action) => {
-    //   state.user = action.payload;
-    //   state.isLoggedIn = true;
-    //   state.isLoadingRedux = false;
-    // },
     auth0logout: (state, action) => {
       state.user = {};
       state.userId = "";
@@ -74,22 +51,21 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // builder.addCase(addOrFindUserWithName.fulfilled, (state, action) => {
-    //   state.isLoadingRedux = false;
-    //   state.userId = action.payload.id;
-    // });
     builder.addCase(addOrFindUser.fulfilled, (state, action) => {
       state.isLoadingRedux = false;
       state.isLoggedIn = true;
-      state.userId = action.payload.id;
-      state.user = action.payload;
+      state.userId = action.payload.user.id;
+      state.user = action.payload.user;
+      if (action.payload.created) {
+        window.localStorage.setItem('new', 'true');
+      }
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
-      if(!action.payload){
+      if (!action.payload) {
         state.userId = null;
         state.user = null;
       } else {
-            state.isLoadingRedux = false;
+        state.isLoadingRedux = false;
         state.userId = action.payload.id;
         state.user = action.payload;
       }
@@ -97,6 +73,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { auth0login, auth0logout } = userSlice.actions;
+export const { auth0logout } = userSlice.actions;
 
 export default userSlice.reducer;

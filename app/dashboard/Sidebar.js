@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Recipient from "./Recipient";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,8 +8,6 @@ import {
   getGifts,
   setSingleRecipient,
 } from "../../store/recipientSlice";
-import { useUser } from "@auth0/nextjs-auth0";
-import { getUser } from "../../store/userSlice";
 import AddNewModal from "./(addnew)/AddNewModal";
 
 function Sidebar() {
@@ -19,16 +16,19 @@ function Sidebar() {
     (store) => store.recipients
   );
   const [addNewModalIsShown, setAddNewModalIsShown] = useState(false);
+  const [newUser, setNewUser] = useState(window.localStorage.getItem("new"));
   const dispatch = useDispatch();
   const pathname = usePathname();
 
-  const { isLoading, user } = useUser();
+  useEffect(() => {
+    setNewUser(window.localStorage.getItem("new"));
+  }, [isLoadingRedux, addNewModalIsShown]);
 
   useEffect(() => {
-    if (isLoading) {
-    } else if (!isLoading && !userId) {
-      dispatch(getUser(user));
-    } else if (userId && recipients.length === 0) {
+    console.log(newUser)
+    if (isLoadingRedux || newUser) {
+    } 
+    else if (userId && recipients.length === 0) {
       dispatch(fetchRecipients(userId));
     } else if (userId && recipients.length > 0 && !singleRecipient.id) {
       if (pathname.includes("preferences") || pathname.includes("notes")) {
@@ -46,7 +46,10 @@ function Sidebar() {
         dispatch(getGifts(newRecipient[0].id));
       }
     }
-  }, [isLoading, recipients, singleRecipient.id, userId]);
+    if (newUser) {
+      setAddNewModalIsShown(true);
+    }
+  }, [isLoadingRedux, recipients, singleRecipient.id, userId]);
 
   return (
     <div className="flex flex-col justify-between w-full h-full rounded-md bg-white shadow-xl">
@@ -62,6 +65,8 @@ function Sidebar() {
             <ul className="space-y-2">
               {isLoadingRedux ? (
                 <li>Loading Recipients..</li>
+              ) : newUser ? (
+                ""
               ) : (
                 recipients.map((recipient, index) => {
                   return <Recipient recipient={recipient} key={index} />;
@@ -79,11 +84,19 @@ function Sidebar() {
           <h3>Add Recipient +</h3>
         </button>
       </div>
-      <AddNewModal
-        firstTime={false}
-        addNewModalIsShown={addNewModalIsShown}
-        setAddNewModalIsShown={setAddNewModalIsShown}
-      />
+      {newUser ? (
+        <AddNewModal
+          firstTime={true}
+          addNewModalIsShown={addNewModalIsShown}
+          setAddNewModalIsShown={setAddNewModalIsShown}
+        />
+      ) : (
+        <AddNewModal
+          firstTime={false}
+          addNewModalIsShown={addNewModalIsShown}
+          setAddNewModalIsShown={setAddNewModalIsShown}
+        />
+      )}
     </div>
   );
 }
