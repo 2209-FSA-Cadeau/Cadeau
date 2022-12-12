@@ -268,7 +268,7 @@ export const updateNote =  createAsyncThunk(
       console.log(err);
     }
   }
-});
+);
 
 const initialState = {
   recipients: [],
