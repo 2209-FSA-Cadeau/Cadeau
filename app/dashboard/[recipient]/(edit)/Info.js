@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   AiOutlineMail,
@@ -6,23 +7,13 @@ import {
 } from "react-icons/ai";
 import { TbHammer } from "react-icons/tb";
 
-export default function Start({ firstTime, newRecipient, setNewRecipient }) {
+export default function Name({ updateRecipient, setUpdateRecipient }) {
   return (
     <div className="flex flex-col justify-start h-full overflow-y-scroll">
-      {firstTime ? (
-        <div className="border-b border-cblue-700">
-          <h1>First things first...</h1>
-          <h2>Let's add a recipient!</h2>
-          <p>
-            Here you can describe your recipient and select some likes/dislikes
-          </p>
-        </div>
-      ) : (
-        <div className="border-b border-cblue-700">
-          <h1>Let's get started</h1>
-          <h2 className="my-3">Add some general details about this person</h2>
-        </div>
-      )}
+      <div className="border-b border-cblue-700">
+        <h1>Edit Recipient Info</h1>
+        <h2 className="my-3">General details</h2>
+      </div>
       <div className="grow flex flex-col justify-center overflow-y-scroll">
         <div className="p-1">
           <label for="name" className="block mb-2 text-lg font-bold">
@@ -38,10 +29,10 @@ export default function Start({ firstTime, newRecipient, setNewRecipient }) {
               className="bg-neutral-100 border border-gray-300 text-xl rounded-lg focus:ring-cblue-300 focus:border-cblue-300 block w-full pl-14 p-2.5"
               placeholder="John Doe"
               required
-              value={newRecipient.name}
+              value={updateRecipient.name}
               onChange={(e) => {
-                setNewRecipient({
-                  ...newRecipient,
+                setUpdateRecipient({
+                  ...updateRecipient,
                   name: e.target.value,
                 });
               }}
@@ -62,10 +53,10 @@ export default function Start({ firstTime, newRecipient, setNewRecipient }) {
               className="bg-neutral-100 border border-gray-300 text-xl rounded-lg focus:ring-cblue-300 focus:border-cblue-300 block w-full pl-14 p-2.5"
               placeholder="name@cadeau.com"
               required
-              value={newRecipient.email}
+              value={updateRecipient.email}
               onChange={(e) => {
-                setNewRecipient({
-                  ...newRecipient,
+                setUpdateRecipient({
+                  ...updateRecipient,
                   email: e.target.value,
                 });
               }}
@@ -86,10 +77,10 @@ export default function Start({ firstTime, newRecipient, setNewRecipient }) {
               className="bg-neutral-100 border border-gray-300 text-xl rounded-lg focus:ring-cblue-300 focus:border-cblue-300 block w-full pl-14 p-2.5"
               placeholder="MM/DD"
               required
-              value={newRecipient.birthday}
+              value={updateRecipient.birthday}
               onChange={(e) => {
-                setNewRecipient({
-                  ...newRecipient,
+                setUpdateRecipient({
+                  ...updateRecipient,
                   birthday: e.target.value,
                 });
               }}
@@ -110,10 +101,10 @@ export default function Start({ firstTime, newRecipient, setNewRecipient }) {
               className="bg-neutral-100 border border-gray-300 text-xl rounded-lg focus:ring-cblue-300 focus:border-cblue-300 block w-full pl-14 p-2.5"
               placeholder="Carpenter"
               required
-              value={newRecipient.occupation}
+              value={updateRecipient.occupation}
               onChange={(e) => {
-                setNewRecipient({
-                  ...newRecipient,
+                setUpdateRecipient({
+                  ...updateRecipient,
                   occupation: e.target.value,
                 });
               }}

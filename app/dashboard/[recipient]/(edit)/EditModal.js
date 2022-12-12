@@ -1,51 +1,24 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import Start from "./Start";
-import Holidays from "./Holidays";
-import LikesAndDislikes from "./LikesAndDislikes";
-import { addRecipient } from "../../../store/recipientSlice";
-import { useUser } from "@auth0/nextjs-auth0";
-import { addOrFindUser } from "../../../store/userSlice";
+import Info from "./Info";
+import { editRecipient } from "../../../../store/recipientSlice";
 import { AiOutlineClose } from "react-icons/ai";
 
-const AddNewModal = ({
-  firstTime,
-  addNewModalIsShown,
-  setAddNewModalIsShown,
-}) => {
-  const [step, setStep] = useState(0);
-  const userId = useSelector((store) => store.user.userId);
-  const [newRecipient, setNewRecipient] = useState({
-    name: "",
-    email: "",
-    birthday: "",
-    occupation: "",
-    occasions: [],
-    holidays: [],
-    likes: [],
-    dislikes: [],
-    userId,
-  });
-
-  const dispatch = useDispatch();
+const EditModal = ({ editModalIsShown, setEditModalIsShown }) => {
   const router = useRouter();
-  const { isLoading, user } = useUser();
+  const dispatch = useDispatch();
+  const { singleRecipient } = useSelector((store) => store.recipients);
 
-  useEffect(() => {
-    if (!isLoading) {
-      if (user.firstName && user.lastName) {
-        dispatch(addOrFindUser(user));
-      }
-      dispatch(
-        addOrFindUser({
-          identifier: user.sub,
-          email: user.email,
-        })
-      );
-    }
-  }, [isLoading]);
+  const [step, setStep] = useState(0);
+  const [updateRecipient, setUpdateRecipient] = useState({
+    id: singleRecipient.id,
+    name: singleRecipient.name,
+    email: singleRecipient.email,
+    birthday: singleRecipient.birthday,
+    occupation: singleRecipient.occupation,
+  });
 
   const prevClickHandler = () => {
     setStep(step - 1);
@@ -55,57 +28,40 @@ const AddNewModal = ({
     setStep(step + 1);
   };
 
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
-    setAddNewModalIsShown(false);
-    dispatch(addRecipient(newRecipient));
+  const onSubmitHandler = () => {
+    setEditModalIsShown(false);
+    dispatch(editRecipient(updateRecipient));
     resetHandler();
-    router.push(`/dashboard/${newRecipient.name}/preferences`);
   };
 
   const resetHandler = () => {
-    setNewRecipient({
-      name: "",
-      email: "",
-      birthday: "",
-      occupation: "",
-      occasions: [],
-      holidays: [],
-      likes: [],
-      dislikes: [],
-      userId,
+    setUpdateRecipient({
+      id: singleRecipient.id,
+      name: singleRecipient.name,
+      email: singleRecipient.email,
+      birthday: singleRecipient.birthday,
+      occupation: singleRecipient.occupation,
     });
     setStep(0);
   };
+
+  useEffect(() => {
+    resetHandler();
+  }, []);
 
   const conditionalComponent = () => {
     switch (step) {
       case 0:
         return (
-          <Start
-            newRecipient={newRecipient}
-            setNewRecipient={setNewRecipient}
-            firstTime={firstTime}
-          />
-        );
-      case 1:
-        return (
-          <Holidays
-            newRecipient={newRecipient}
-            setNewRecipient={setNewRecipient}
-          />
-        );
-      case 2:
-        return (
-          <LikesAndDislikes
-            newRecipient={newRecipient}
-            setNewRecipient={setNewRecipient}
+          <Info
+            updateRecipient={updateRecipient}
+            setUpdateRecipient={setUpdateRecipient}
           />
         );
     }
   };
 
-  if (addNewModalIsShown) {
+  if (editModalIsShown) {
     return (
       <div className="fixed top-0 left-0 h-screen w-screen z-50 bg-black/50">
         <div className="flex justify-center items-center w-full h-full ">
@@ -113,7 +69,7 @@ const AddNewModal = ({
             <button
               type="button"
               onClick={() => {
-                setAddNewModalIsShown(false);
+                setEditModalIsShown(false);
                 resetHandler();
               }}
               className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-lg p-3 ml-auto inline-flex items-center"
@@ -134,7 +90,7 @@ const AddNewModal = ({
                       Previous
                     </button>
                   ) : null}
-                  {step < 2 ? (
+                  {step < 0 ? (
                     <button
                       name="nextButton"
                       onClick={nextClickHandler}
@@ -161,4 +117,4 @@ const AddNewModal = ({
   }
 };
 
-export default AddNewModal;
+export default EditModal;

@@ -22,7 +22,7 @@ export const addRecipient = createAsyncThunk(
       const recipientRes = await axios.post(`/api/recipients`, {
         userId: recipient.userId,
         updateInfo: recipient,
-      }); //NEED TO UPDATE WITH REAL USERID WHEN AVAILABLE
+      });
       await Promise.all(
         recipient.likes.map(async (like) => {
           try {
@@ -134,7 +134,6 @@ export const editRecipient = createAsyncThunk(
     try {
       console.log(recipient);
       const { data } = await axios.put(`/api/recipients`, {
-        userId: recipient.id,
         updateInfo: recipient,
       });
       return data;
@@ -311,6 +310,15 @@ export const recipientSlice = createSlice({
         state.singleRecipient = {
           ...state.singleRecipient,
           holidays: action.payload,
+        };
+      })
+      .addCase(editRecipient.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          name: action.payload.name,
+          email: action.payload.email,
+          birthday: action.payload.birthday,
+          occupation: action.payload.occupation,
         };
       });
   },
