@@ -1,15 +1,17 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Recipient from "./Recipient";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchRecipients } from "../../store/recipientSlice";
 import { useUser } from "@auth0/nextjs-auth0";
 import { addOrFindUser } from "../../store/userSlice"
+import AddNewModal from "./(addnew)/AddNewModal";
 
 function Sidebar() {
   const { userId, isLoadingRedux } = useSelector((store) => store.user);
   const { recipients } = useSelector((store) => store.recipients);
+  const [addNewModalIsShown, setAddNewModalIsShown] = useState(false);
   const dispatch = useDispatch();
 
   const { isLoading, user } = useUser();
@@ -37,12 +39,12 @@ function Sidebar() {
 
   return (
     <div className="flex flex-col justify-between w-full h-full rounded-md bg-white shadow-xl">
-      <div className="w-full text-center">
-        <div className="flex justify-center items-center h-[40px] bg-cblue-700 text-cwhite rounded-t-md shadow-xl">
+      <div className="flex flex-col justify-start w-full text-center grow min-h-0">
+        <div className="flex justify-center items-center h-[40px] bg-cblue-700 text-cwhite rounded-t-md shadow-md z-10">
           <h3>Gift Recipients</h3>
         </div>
-        <div className="w-full h-full" aria-label="Sidebar">
-          <div className="overflow-y-auto py-4 px-3 bg-white rounded dark:bg-gray-800">
+        <div className="w-full h-full grow min-h-0 overflow-y-scroll" aria-label="Sidebar">
+          <div className="overflow-y-scroll py-4 px-3 bg-white rounded">
             <ul className="space-y-2">
               {isLoadingRedux ? (
                 <li>Loading Recipients..</li>
@@ -56,12 +58,11 @@ function Sidebar() {
         </div>
       </div>
       <div className="m-4 h-[10%]">
-        <Link href={"/dashboard/addnew"}>
-          <button className="text-center w-full h-full rounded-sm hover:scale-105 ease-in duration-150 shadow-lg">
+          <button onClick={() => setAddNewModalIsShown(true)} className="shadow-xl rounded-md uppercase bg-gradient-to-br from-cblue-700 to-cblue-500 text-cwhite text-center w-full h-full hover:scale-105 ease-in duration-100">
             <h3>Add Recipient +</h3>
           </button>
-        </Link>
       </div>
+      <AddNewModal firstTime={false} addNewModalIsShown={addNewModalIsShown} setAddNewModalIsShown={setAddNewModalIsShown}/>
     </div>
   );
 }

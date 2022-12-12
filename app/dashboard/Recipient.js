@@ -41,7 +41,7 @@ const Recipient = ({ recipient }) => {
           {xIsShown && (
             <div
               onClick={() => setModalIsShown(true)}
-              className="h-full rounded-r-lg"
+              className="h-full rounded-r-lg hover:text-red-700"
             >
               <AiOutlineClose className="m-2" />
             </div>

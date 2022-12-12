@@ -149,7 +149,6 @@ export const editRecipient = createAsyncThunk(
     try {
       console.log(recipient);
       const { data } = await axios.put(`/api/recipients`, {
-        userId: recipient.id,
         updateInfo: recipient,
       });
       return data;
@@ -329,7 +328,7 @@ export const recipientSlice = createSlice({
       .addCase(getGifts.fulfilled, (state, action) => {
         state.singleRecipient = {
           ...state.singleRecipient,
-          gifts: action.payload[0].gifts,
+          gifts: action.payload.gifts,
         };
       })
       .addCase(removeItem.fulfilled, (state, action) => {
@@ -351,6 +350,15 @@ export const recipientSlice = createSlice({
           ...state.singleRecipient,
           note: action.payload
         }
+      })
+      .addCase(editRecipient.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          name: action.payload.name,
+          email: action.payload.email,
+          birthday: action.payload.birthday,
+          occupation: action.payload.occupation,
+        };
       });
   },
 });

@@ -1,15 +1,14 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Link from "next/link";
 import { FiEdit2 } from "react-icons/fi";
-import { AiOutlineClose } from "react-icons/ai";
 import { fetchHolidays } from "../../../store/recipientSlice";
+import EditModal from "./(edit)/EditModal";
 
 const UserInfo = ({ params }) => {
   const dispatch = useDispatch();
-
   const { singleRecipient } = useSelector((store) => store.recipients);
+  const [editModalIsShown, setEditModalIsShown] = useState(false);
 
   useEffect(() => {
     dispatch(fetchHolidays(singleRecipient.id));
@@ -17,15 +16,10 @@ const UserInfo = ({ params }) => {
 
   return (
     <div className="w-full h-[18%] bg-cgold-100 shadow-xl mb-4 rounded-md border">
-      <div className="flex justify-between items-start bg-cgold-300 rounded-t-md">
+      <div className="flex justify-between items-start bg-cgold-300 rounded-t-md shadow-md">
         <h1 className="p-2">{`${singleRecipient.name}`}</h1>
-        <div className="flex justify-between gap-2">
-          <Link
-            href={`/dashboard/${singleRecipient.name}/edit`}
-            className="p-2"
-          >
-            <FiEdit2 className="h-[22px] w-auto hover:text-cgold-500" />
-          </Link>
+        <div className="p-2" onClick={() => setEditModalIsShown(true)}>
+          <FiEdit2 className="h-[22px] w-auto hover:text-cgold-500" />
         </div>
       </div>
       <div className="flex justify-start my-2 mx-2 gap-10">
@@ -53,6 +47,12 @@ const UserInfo = ({ params }) => {
               })}
         </h3>
       </div>
+      {editModalIsShown && (
+        <EditModal
+          editModalIsShown={editModalIsShown}
+          setEditModalIsShown={setEditModalIsShown}
+        />
+      )}
     </div>
   );
 };
