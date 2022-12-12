@@ -348,7 +348,7 @@ export const recipientSlice = createSlice({
       .addCase(getGifts.fulfilled, (state, action) => {
         state.singleRecipient = {
           ...state.singleRecipient,
-          gifts: action.payload.gifts,
+          gifts: action.payload === undefined ? null : action.payload[0].gifts,
         };
       })
       .addCase(removeItem.fulfilled, (state, action) => {

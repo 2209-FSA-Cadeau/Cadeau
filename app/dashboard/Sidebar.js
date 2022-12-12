@@ -6,6 +6,7 @@ import Recipient from "./Recipient";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchRecipients,
+  getGifts,
   setSingleRecipient,
 } from "../../store/recipientSlice";
 import { useUser } from "@auth0/nextjs-auth0";
@@ -21,7 +22,6 @@ function Sidebar() {
   const dispatch = useDispatch();
   const pathname = usePathname();
 
-
   const { isLoading, user } = useUser();
 
   useEffect(() => {
@@ -30,21 +30,23 @@ function Sidebar() {
       dispatch(getUser(user));
     } else if (userId && recipients.length === 0) {
       dispatch(fetchRecipients(userId));
-    } else if (userId && recipients && !singleRecipient.id) {
-      if (
-        pathname.includes("preferences") ||
-        pathname.includes("saved") ||
-        pathname.includes("notes")
-      ) {
+    } else if (userId && recipients.length > 0 && !singleRecipient.id) {
+      if (pathname.includes("preferences") || pathname.includes("notes")) {
         const parsed = pathname.split("/")[2].split("%20").join(" ");
         const newRecipient = recipients.filter(
-          (recipient) =>
-            recipient.name === parsed
+          (recipient) => recipient.name === parsed
         );
         dispatch(setSingleRecipient(newRecipient[0].id));
+      } else if (pathname.includes("saved")) {
+        const parsed = pathname.split("/")[2].split("%20").join(" ");
+        const newRecipient = recipients.filter(
+          (recipient) => recipient.name === parsed
+        );
+        dispatch(setSingleRecipient(newRecipient[0].id));
+        dispatch(getGifts(newRecipient[0].id));
       }
     }
-  }, [dispatch, isLoading, recipients, singleRecipient, userId]);
+  }, [isLoading, recipients, singleRecipient.id, userId]);
 
   return (
     <div className="flex flex-col justify-between w-full h-full rounded-md bg-white shadow-xl">
