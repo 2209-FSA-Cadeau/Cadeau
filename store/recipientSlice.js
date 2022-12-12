@@ -229,8 +229,6 @@ export const deleteDislike = createAsyncThunk(
           recipientId: recipientId,
         },
       });
-
-      console.log(response);
       return response.data;
     } catch (err) {
       console.log(err);
@@ -239,18 +237,15 @@ export const deleteDislike = createAsyncThunk(
 );
 
 // Update a note for a single recipient
-export const updateNote =  createAsyncThunk(
-  "/notes",
-  async (noteObj) => {
-    try {
-      const response = await axios.put("/api/notes", noteObj)
-      console.log(response)
-      return response.data
-    } catch (err) {
-      console.log(err);
-    }
+export const updateNote = createAsyncThunk("/notes", async (noteObj) => {
+  try {
+    const response = await axios.put("/api/notes", noteObj);
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(err);
   }
-)
+});
 
 const initialState = {
   recipients: [],
@@ -315,14 +310,16 @@ export const recipientSlice = createSlice({
         state.singleRecipient = {
           ...state.singleRecipient,
           preferences: state.singleRecipient.preferences.filter(
-            (preference) => preference.category != action.payload
+            (preference) => preference.preference === "dislike"
           ),
         };
       })
       .addCase(deleteDislike.fulfilled, (state, action) => {
         state.singleRecipient = {
           ...state.singleRecipient,
-          preferences: [],
+          preferences: state.singleRecipient.preferences.filter(
+            (preference) => preference.preference === "like"
+          ),
         };
       })
       .addCase(getGifts.fulfilled, (state, action) => {
@@ -348,8 +345,8 @@ export const recipientSlice = createSlice({
       .addCase(updateNote.fulfilled, (state, action) => {
         state.singleRecipient = {
           ...state.singleRecipient,
-          note: action.payload
-        }
+          note: action.payload,
+        };
       })
       .addCase(editRecipient.fulfilled, (state, action) => {
         state.singleRecipient = {

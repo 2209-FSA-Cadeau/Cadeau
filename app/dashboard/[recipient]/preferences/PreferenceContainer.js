@@ -65,7 +65,7 @@ const PreferenceContainer = () => {
   }, [likes, dislikes]);
 
   // Handle changes to the likes array
-  const likesChangeHandler = (selectedOption) => {
+  const likesChangeHandler = async (selectedOption) => {
     if (
       selectedOption.length + dislikes.length >
       singleRecipient.preferences.length
@@ -78,7 +78,7 @@ const PreferenceContainer = () => {
       selectedOption.length + dislikes.length <
       singleRecipient.preferences.length
     ) {
-      dispatch(deleteLike(singleRecipient.id));
+      await dispatch(deleteLike(singleRecipient.id));
       selectedOption.forEach(async (like) => {
         await dispatch(
           addLike({ like: like.label, recipientId: singleRecipient.id })
@@ -94,7 +94,7 @@ const PreferenceContainer = () => {
   };
 
   // Handle changes to the dislikes array
-  const dislikesChangeHandler = (selectedOption) => {
+  const dislikesChangeHandler = async (selectedOption) => {
     if (
       selectedOption.length + likes.length >
       singleRecipient.preferences.length
@@ -110,7 +110,7 @@ const PreferenceContainer = () => {
       selectedOption.length + likes.length <
       singleRecipient.preferences.length
     ) {
-      dispatch(deleteDislike(singleRecipient.id));
+      await dispatch(deleteDislike(singleRecipient.id));
       selectedOption.forEach(async (dislike) => {
         await dispatch(
           addDislike({
