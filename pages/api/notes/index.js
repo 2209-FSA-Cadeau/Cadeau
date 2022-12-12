@@ -19,7 +19,6 @@ export default async function noteHandler(req, res) {
 
   switch(method) {
     case "GET":
-      console.log(req)
       const note = await Note.findOne({
         where: {
           userId: req.query.userId,
