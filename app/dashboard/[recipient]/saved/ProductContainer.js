@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getGifts, removeItem } from "../../../../store/recipientSlice";
+import {
+  fetchHolidays,
+  getGifts,
+  removeItem,
+} from "../../../../store/recipientSlice";
 
 export default function ProductContainer(props) {
   const { gifts, setGifts } = props;
@@ -13,7 +17,11 @@ export default function ProductContainer(props) {
     } else {
       setGifts(singleRecipient.gifts);
     }
-  }, [gifts]);
+
+    if (singleRecipient.id && !singleRecipient.holidays) {
+      dispatch(fetchHolidays(singleRecipient.id));
+    }
+  }, [gifts, singleRecipient.holidays]);
 
   const onClickHandler = async (id) => {
     await dispatch(removeItem(id));
@@ -33,9 +41,9 @@ export default function ProductContainer(props) {
                   </a>
                   <div>Name: {gift.name}</div>
                   <div>Description: {gift.description}</div>
-                  <b>Purchased?</b>
+                  <br />
                   <button onClick={() => onClickHandler(gift.id)}>
-                    Unsave
+                    Remove Gift
                   </button>
                 </div>
               );

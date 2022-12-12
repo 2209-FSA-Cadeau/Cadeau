@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGifts } from "../../../../store/recipientSlice";
 import ProductContainer from "./ProductContainer";
-import SavedFilter from "./SavedFilter";
 
 const page = () => {
   const [gifts, setGifts] = useState([]);

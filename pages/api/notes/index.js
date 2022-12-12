@@ -21,8 +21,8 @@ export default async function noteHandler(req, res) {
     case "GET":
       const note = await Note.findOne({
         where: {
-          userId: userId,
-          recipientId: recipientId
+          userId: req.query.userId,
+          recipientId: req.query.recipientId
         }
       });
       res.status(200).json(note);

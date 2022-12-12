@@ -12,7 +12,7 @@ const UserInfo = ({ params }) => {
 
   useEffect(() => {
     dispatch(fetchHolidays(singleRecipient.id));
-  }, []);
+  }, [singleRecipient.id]);
 
   return (
     <div className="w-full h-[18%] bg-cgold-100 shadow-xl mb-4 rounded-md border">
@@ -35,7 +35,7 @@ const UserInfo = ({ params }) => {
       </div>
       <div>
         <h3 className="mx-2">
-          Gift Occasions:{" "}
+          Gift Occasions:
           {!singleRecipient.holidays
             ? "Loading..."
             : singleRecipient.holidays.map((holiday, index) => {
