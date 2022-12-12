@@ -24,26 +24,26 @@ const page = () => {
     holidays: [],
     likes: [],
     dislikes: [],
-    userId: useSelector((store) => store.user.userId),
+    userId: useSelector((state) => state.user.userId),
   });
 
   const dispatch = useDispatch();
   const router = useRouter();
-  const { isLoading, user } = useUser();
+  // const { isLoading, user } = useUser();
 
-  useEffect(() => {
-    if (!isLoading) {
-      if (user.firstName && user.lastName) {
-        dispatch(addOrFindUser(user));
-      }
-      dispatch(
-        addOrFindUser({
-          identifier: user.sub,
-          email: user.email,
-        })
-      );
-    }
-  }, [isLoading]);
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     if (user.firstName && user.lastName) {
+  //       dispatch(addOrFindUser(user));
+  //     }
+  //     dispatch(
+  //       addOrFindUser({
+  //         identifier: user.sub,
+  //         email: user.email,
+  //       })
+  //     );
+  //   }
+  // }, [isLoading]);
 
   const prevClickHandler = () => {
     setStep(step - 1);

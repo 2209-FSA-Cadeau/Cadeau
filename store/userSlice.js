@@ -23,8 +23,8 @@ export const addOrFindUserWithName = createAsyncThunk(
     try {
       const userResponse = await axios.post(`/api/users`, {
         identifier: user.identifier,
-        firstName: user.given_name,
-        lastName: user.family_name,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
       });
       console.log(userResponse);
