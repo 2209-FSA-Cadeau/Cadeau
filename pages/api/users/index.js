@@ -15,9 +15,11 @@ export default async function userHandler(req, res) {
   //add verification with auth0 function
 
   const {
-    body: { identifier, firstName, lastName, email },
+    body: { identifier, email },
     method,
   } = req;
+
+  console.log(req)
 
   switch (method) {
     case "GET":
@@ -31,13 +33,12 @@ export default async function userHandler(req, res) {
           identifier: identifier,
         },
         defaults: {
-          firstName: firstName,
-          lastName: lastName,
+          identifer: identifier,
           email: email,
         },
       });
       if (!created) {
-        user.update({ firstName, lastName, email });
+        user.update({ email });
       }
       res.status(201).json(user);
       break;

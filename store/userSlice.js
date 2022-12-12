@@ -40,7 +40,7 @@ export const addOrFindUser = createAsyncThunk(
   async (user) => {
     try {
       const userResponse = await axios.post(`/api/users`, {
-        identifier: user.identifier,
+        identifier: user.sub,
         email: user.email,
       });
       return userResponse.data;

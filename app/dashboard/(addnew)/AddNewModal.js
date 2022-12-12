@@ -7,7 +7,7 @@ import Holidays from "./Holidays";
 import LikesAndDislikes from "./LikesAndDislikes";
 import { addRecipient } from "../../../store/recipientSlice";
 import { useUser } from "@auth0/nextjs-auth0";
-import { addOrFindUser } from "../../../store/userSlice";
+// import { addOrFindUser } from "../../../store/userSlice";
 import { AiOutlineClose } from "react-icons/ai";
 
 const AddNewModal = ({
@@ -31,21 +31,21 @@ const AddNewModal = ({
 
   const dispatch = useDispatch();
   const router = useRouter();
-  const { isLoading, user } = useUser();
+  // const { isLoading, user } = useUser();
 
-  useEffect(() => {
-    if (!isLoading) {
-      if (user.firstName && user.lastName) {
-        dispatch(addOrFindUser(user));
-      }
-      dispatch(
-        addOrFindUser({
-          identifier: user.sub,
-          email: user.email,
-        })
-      );
-    }
-  }, [isLoading]);
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     if (user.firstName && user.lastName) {
+  //       dispatch(addOrFindUser(user));
+  //     }
+  //     dispatch(
+  //       addOrFindUser({
+  //         identifier: user.sub,
+  //         email: user.email,
+  //       })
+  //     );
+  //   }
+  // }, [isLoading]);
 
   const prevClickHandler = () => {
     setStep(step - 1);
