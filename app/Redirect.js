@@ -8,6 +8,7 @@ import { getUser } from "../store/userSlice";
 const Redirect = () => {
   const router = useRouter()
   const { userId } = useSelector((store) => store.user);
+  const { recipients } = useSelector((state) => state.recipients)
   const { user, isLoading } = useUser();
   const dispatch = useDispatch();
 
@@ -20,9 +21,10 @@ const Redirect = () => {
   }, [isLoading])
 
   useEffect(() => {
-    if (!userId) {
+    if (!userId || recipients.length === 0) {
         router.push("/dashboard/addnew")
     } else {
+      console.log("RECIPIENTS", recipients)
         router.push("/shop")
     }
   }, [userId]);

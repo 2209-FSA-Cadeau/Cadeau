@@ -238,10 +238,25 @@ export const deleteDislike = createAsyncThunk(
   }
 );
 
+// Update a note for a single recipient
+export const updateNote =  createAsyncThunk(
+  "/notes",
+  async (noteObj) => {
+    try {
+      const response = await axios.put("/api/notes", noteObj)
+      console.log(response)
+      return response.data
+    } catch (err) {
+      console.log(err);
+    }
+  }
+)
+
 const initialState = {
   recipients: [],
   singleRecipient: {
     preferences: [],
+    note: "",
   },
   tab: "preferences",
 };
@@ -329,6 +344,12 @@ export const recipientSlice = createSlice({
           ...state.singleRecipient,
           holidays: action.payload,
         };
+      })
+      .addCase(updateNote.fulfilled, (state, action) => {
+        state.singleRecipient = {
+          ...state.singleRecipient,
+          note: action.payload
+        }
       })
       .addCase(editRecipient.fulfilled, (state, action) => {
         state.singleRecipient = {

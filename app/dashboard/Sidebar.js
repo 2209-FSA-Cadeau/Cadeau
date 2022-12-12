@@ -4,6 +4,8 @@ import Link from "next/link";
 import Recipient from "./Recipient";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchRecipients } from "../../store/recipientSlice";
+import { useUser } from "@auth0/nextjs-auth0";
+import { addOrFindUser } from "../../store/userSlice"
 import AddNewModal from "./(addnew)/AddNewModal";
 
 function Sidebar() {
@@ -11,6 +13,25 @@ function Sidebar() {
   const { recipients } = useSelector((store) => store.recipients);
   const [addNewModalIsShown, setAddNewModalIsShown] = useState(false);
   const dispatch = useDispatch();
+
+  const { isLoading, user } = useUser();
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (user.firstName && user.lastName) {
+        dispatch(addOrFindUser(user));
+      }
+      console.log(user)
+      dispatch(
+        addOrFindUser({
+          identifier: user.sub,
+          firstName: user.given_name,
+          lastName: user.family_name,
+          email: user.email,
+        })
+      );
+    }
+  }, [isLoading]);
 
   useEffect(() => {
     dispatch(fetchRecipients(userId));
