@@ -28,20 +28,6 @@ Note.belongsTo(Recipient)
 Recipient.belongsToMany(Gift, {through: "giftHistory"})
 Gift.belongsToMany(Recipient, {through: "giftHistory"})
 
-// async function syncDb(){
-//   await db.sync()
-//   console.log("DATABASE HAS BEEN SYNCED")
-// }
-
-
-// syncDb()
-
-// if(process.env.seed === true){
-
-// }
-
-
-
 module.exports = {
   db,
   models: {

@@ -12,7 +12,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import RemoveRecModal from "./RemoveRecModal";
 
 const Recipient = ({ recipient }) => {
-  const { tab, isLoading } = useSelector((store) => store.recipients);
+  const { tab } = useSelector((store) => store.recipients);
   const { userId } = useSelector((store) => store.user)
   const dispatch = useDispatch();
   const [xIsShown, setXIsShown] = useState(false);

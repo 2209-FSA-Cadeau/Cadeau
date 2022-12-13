@@ -71,8 +71,8 @@ function createMatrix(recipientArr){
     return newMatrix
 }
 
-  
-  
+
+
 function fillInBlanks(matrix, id) {
 const recipientArr = matrix[id - 1]
 const newCalcs = []
@@ -105,51 +105,50 @@ for(let j = 0; j < recipientArr.length; j++){
     }
     if(j === 3){
     columnObj.columnName = "Sports"
-    columnObj.index = j 
+    columnObj.index = j
     }
     if(j === 4){
     columnObj.columnName = "Outdoors"
-    columnObj.index = j 
+    columnObj.index = j
     }
     if(j === 5){
     columnObj.columnName = "Clothing"
-    columnObj.index = j 
+    columnObj.index = j
     }
     if(j === 6){
     columnObj.columnName = "Music"
-    columnObj.index = j 
+    columnObj.index = j
     }
     if(j === 7){
     columnObj.columnName = "Movies"
-    columnObj.index = j 
+    columnObj.index = j
     }
     if(j === 8){
     columnObj.columnName = "Technology"
-    columnObj.index = j 
+    columnObj.index = j
     }
     if(j === 9){
     columnObj.columnName = "Games"
-    columnObj.index = j 
+    columnObj.index = j
     }
     if(j === 10){
     columnObj.columnName = "Pets"
-    columnObj.index = j 
+    columnObj.index = j
     }
-    
+
     if(j === 11){
     columnObj.columnName = "Home"
-    columnObj.index = j 
+    columnObj.index = j
     }
-    
+
     if(j === 12){
     columnObj.columnName = "Art"
-    columnObj.index = j 
+    columnObj.index = j
     }
-    
+
     columnObj.similarity = column
     allColumns.push(columnObj)
 }
-// console.log("All Columns", allColumns)
 
 // calculates all cosine similarities for a given column
 for(let i = 0; i < recipientArr.length; i++){
@@ -158,7 +157,7 @@ for(let i = 0; i < recipientArr.length; i++){
     Object.assign(newObject, column)
     return newObject
     })
-    
+
     if(recipientArr[i] === 0){
     const vector1 = calcColumns[i].similarity
     for(let j = 0; j < calcColumns.length; j++){
@@ -168,13 +167,10 @@ for(let i = 0; i < recipientArr.length; i++){
         calcColumns[j] = 1
         }
     }
-    // console.log("calcColumns", calcColumns)
 
     //gets rid of anchor column + sorts array in ASC order
     calcColumns.splice(calcColumns.indexOf(1), 1)
     calcColumns.sort((a,b) => a.similarity - b.similarity)
-    // console.log("sort", calcColumns)
-
 
     //gets top 3 results
     let topThreeResults
@@ -183,22 +179,19 @@ for(let i = 0; i < recipientArr.length; i++){
     } else {
         topThreeResults = calcColumns
     }
-    // console.log("topthree", topThreeResults)
-
 
     //calculates final score
     const numerator = topThreeResults.reduce((preV, currV) => {
         preV = preV + recipientArr[currV.index] * currV.similarity
         return preV
         }, 0)
-    
+
     const denominator = topThreeResults.reduce((preV, curV) => {
         preV = preV + curV.similarity
         return preV
     }, 0)
-    
+
     const guess = numerator/denominator
-    // console.log(topThreeResults, denominator)
 
     //store new calcs in independent array so that do not affect subsequent calcs
     const newCalc = {
@@ -208,8 +201,6 @@ for(let i = 0; i < recipientArr.length; i++){
     }
 
     newCalcs.push(newCalc)
-
-    // console.log(recipientArr)
     }
 }
 
@@ -229,5 +220,5 @@ const finalScores = allColumns.map((column, index) => {
 
 return finalScores
 }
-  
+
 module.exports = {createMatrix, fillInBlanks}

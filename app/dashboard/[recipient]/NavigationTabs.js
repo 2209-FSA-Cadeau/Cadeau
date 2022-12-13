@@ -32,7 +32,6 @@ const NavigationTabs = ({ params }) => {
         }
       })
     );
-    // console.log(tabArray);
   }, [tab]);
 
   return (

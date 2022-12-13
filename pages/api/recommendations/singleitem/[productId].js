@@ -7,7 +7,6 @@ const zlib = require("zlib");
       method,
     } = req;
 
-    console.log(query)
     switch (method) {
       case "GET":
         //GET PRODUCT RESULTS
