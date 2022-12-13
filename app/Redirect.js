@@ -15,6 +15,7 @@ const Redirect = () => {
 
   useEffect(() => {
     debugger;
+    console.log(isLoading, user)
     if (!isLoading) {
       if (!user) {
         console.log('No user')
