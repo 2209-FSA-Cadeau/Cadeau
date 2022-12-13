@@ -13,18 +13,17 @@ import {
 } from "../../store/shopSlice";
 
 function SearchBar() {
+  console.log("top")
   const { recipients, singleRecipient } = useSelector(
     (state) => state.recipients
   );
   const router = useRouter();
   const updatedRecip = useRef(false);
-  const updatedList = useRef(false);
   const { userId, isLoadingRedux } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const path = usePathname();
 
   const [currentRecipient, setRecipient] = useState(null);
-  const [updatedRecipients, setUpdatedRecipients] = useState(null);
   const [dropdownIsShown, setDropdownIsShown] = useState(false);
 
   useEffect(() => {
@@ -35,7 +34,7 @@ function SearchBar() {
 
   useEffect(() => {
     if (updatedRecip.current) {
-      updatedList.current = true;
+      console.log("useEffect1")
       let recipientURL;
       if (path.split("/")[2]) {
         recipientURL = path.split("/")[2].split("%20").join(" ");
@@ -57,7 +56,6 @@ function SearchBar() {
       score = score.sort((a, b) => b.score - a.score);
       iterable.recommendations = score;
       setRecipient(iterable);
-      setUpdatedRecipients(recipients);
       if (!recipientURL) {
         router.push(`/shop/${iterable.name}/toprecs`);
       }
@@ -65,24 +63,6 @@ function SearchBar() {
       updatedRecip.current = true;
     }
   }, [recipients]);
-
-  useEffect(() => {
-    if (updatedList.current) {
-      if (currentRecipient) {
-        // console.log("USE FFECT2", currentRecipient, updatedRecipients);
-        if (currentRecipient.name !== updatedRecipients[0].name) {
-          const shownRecipients = [];
-          shownRecipients.push(currentRecipient);
-          shownRecipients.push(
-            ...updatedRecipients.filter(
-              (recipients) => recipients.name !== currentRecipient.name
-            )
-          );
-          setUpdatedRecipients(shownRecipients);
-        }
-      }
-    }
-  }, [currentRecipient]);
 
   const handleRecipient = (event) => {
     const newRecipient = recipients.find(
@@ -120,11 +100,10 @@ function SearchBar() {
       <div className="basis-[20%] h-[80%] min-w-fit">
         <select
           onChange={handleRecipient}
+          value={currentRecipient && recipients.length > 0 ? currentRecipient.name : ""}
           className="rounded-lg text-center h-full w-full shadow-xl text-lg font-bold cursor-pointer hover:text-cgold-500 focus:border-cblue-300"
         >
-          {!updatedRecipients
-            ? ""
-            : updatedRecipients.map((recipient, index) => (
+          {recipients.map((recipient, index) => (
                 <option key={index} value={recipient.name}>
                   {" "}
                   {recipient.name}{" "}
