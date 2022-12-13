@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import {
+  fetchNote,
   removeRecipient,
   setSingleRecipient,
 } from "../../store/recipientSlice";
@@ -10,13 +11,15 @@ import { AiOutlineClose } from "react-icons/ai";
 import RemoveRecModal from "./RemoveRecModal";
 
 const Recipient = ({ recipient }) => {
-  const { tab } = useSelector((store) => store.recipients);
+  const { tab, isLoading } = useSelector((store) => store.recipients);
+  const { userId } = useSelector((store) => store.user)
   const dispatch = useDispatch();
   const [xIsShown, setXIsShown] = useState(false);
   const [modalIsShown, setModalIsShown] = useState(false);
 
   const handleClick = (evt) => {
     dispatch(setSingleRecipient(recipient.id));
+    dispatch(fetchNote({ userId, recipientId: recipient.id}))
   };
 
   const removeClick = () => {

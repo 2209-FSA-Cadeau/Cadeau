@@ -5,25 +5,36 @@ import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchHolidays, updateNote } from "../../../../store/recipientSlice";
+import { fetchHolidays, fetchNote, updateNote } from "../../../../store/recipientSlice";
 
 const page = () => {
-  const { singleRecipient } = useSelector((store) => store.recipients)
-  const [value, setValue] = useState(singleRecipient.note.content);
+  const { singleRecipient, isLoading } = useSelector((store) => store.recipients)
+  const [value, setValue] = useState('');
   const [updated, setUpdated] = useState(true);
   const { userId } = useSelector((state) => state.user)
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(fetchNote({ userId, recipientId: singleRecipient.id}))
+  }, [])
+
+  useEffect(() => {
+    setValue(singleRecipient.note.content)
+  }, [])
+
+  useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       setUpdated(false);
+
       const noteObj = {
         userId,
         recipientId: singleRecipient.id,
         content: value
       }
       console.log("send to back end", `${value}`);
-      dispatch(updateNote(noteObj))
+      if(!isLoading) {
+        dispatch(updateNote(noteObj))
+      }
       setTimeout(() => {
         setUpdated(true);
       }, 2000);
