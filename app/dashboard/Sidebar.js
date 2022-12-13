@@ -54,7 +54,7 @@ function Sidebar() {
   return (
     <div className="flex flex-col justify-between w-full h-full rounded-md bg-white shadow-xl">
       <div className="flex flex-col justify-start w-full text-center grow min-h-0">
-        <div className="flex justify-center items-center h-[40px] bg-cblue-700 text-cwhite rounded-t-md shadow-md z-10">
+        <div className="flex justify-center items-center h-[40px] w-full bg-cblue-700 text-cwhite rounded-t-md shadow-md z-10">
           <h3>Gift Recipients</h3>
         </div>
         <div
