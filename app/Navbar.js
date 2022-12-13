@@ -21,7 +21,7 @@ const Navbar = () => {
             <ul className="flex">
               <>
                 <Link href="/shop/">
-                  <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-white ">
+                  <li className="mx-10 text-sm uppercase border-b-2 border-transparent hover:border-b-2 hover:border-white ">
                     Shop Products
                   </li>
                 </Link>
@@ -29,12 +29,12 @@ const Navbar = () => {
                   href="/dashboard/"
                   onClick={() => dispatch(setTab("preferences"))}
                 >
-                  <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-white">
+                  <li className="mx-10 text-sm uppercase border-b-2 border-transparent hover:border-b-2 hover:border-white">
                     Dashboard
                   </li>
                 </Link>
                 <Link href="/about/">
-                  <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-white">
+                  <li className="mx-10 text-sm uppercase border-b-2 border-transparent hover:border-b-2 hover:border-white">
                     About
                   </li>
                 </Link>
@@ -44,7 +44,7 @@ const Navbar = () => {
                     dispatch(auth0logout());
                   }}
                 >
-                  <li className="mx-10 text-sm uppercase hover:border-b-2 hover:border-white">
+                  <li className="mx-10 text-sm uppercase border-b-2 border-transparent hover:border-b-2 hover:border-white">
                     Logout
                   </li>
                 </a>

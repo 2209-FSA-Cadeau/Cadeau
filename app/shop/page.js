@@ -1,15 +1,8 @@
-
 "use client"
-import React, { useEffect } from 'react'
-
-
+import React from 'react'
 
 const ShopPage = () => {
-  return (
-    <div>
-      Welcome to the new page with new stuff on it 
-    </div>
-  )
+  // only needed so URL exists for initial shop page render
 }
 
 export default ShopPage
