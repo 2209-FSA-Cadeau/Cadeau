@@ -30,10 +30,10 @@ const zlib = require("zlib");
         axios
           .request(options)
           .then(function (response) {
-            // res.send(response.data)
-            zlib.gunzip(response.data, function (_err, output) {
-              res.send(output);
-            });
+            res.send(response.data)
+            // zlib.gunzip(response.data, function (_err, output) {
+            //   res.send(output);
+            // });
           })
           .catch(function (error) {
             console.error(error);
