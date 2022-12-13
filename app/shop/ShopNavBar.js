@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchRecipients } from "../../store/recipientSlice";
+import { fetchRecipients, setSingleRecipient } from "../../store/recipientSlice";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import {
   searchOff,
@@ -75,6 +75,8 @@ function SearchBar() {
       (a, b) => b.score - a.score
     );
     iterable.recommendations = score;
+    console.log('RECIPIENT', newRecipient);
+    dispatch(setSingleRecipient(newRecipient.id))
     setRecipient(iterable);
     dispatch(resetCategories())
     dispatch(searchOff());
