@@ -20,5 +20,8 @@ if (process.env.DATABASE_URL) {
   };
 }
 
-const db = new Sequelize(cadeau, config);
+const db = new Sequelize(
+  process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`,
+  config
+);
 module.exports = db;
