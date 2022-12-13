@@ -28,7 +28,6 @@ function Sidebar() {
 
   useEffect(() => {
     if (isLoadingRedux || newUser) {
-      console.log("this ran");
     } else if (userId && recipients.length === 0) {
       dispatch(fetchRecipients(userId));
     } else if (userId && recipients.length > 0 && !singleRecipient.id) {
@@ -59,10 +58,8 @@ function Sidebar() {
           <h3>Gift Recipients</h3>
         </div>
         <div
-          className="w-full h-full grow min-h-0 overflow-y-scroll"
-          aria-label="Sidebar"
+          className="w-full h-full grow min-h-0 overflow-y-scroll py-4 px-3"
         >
-          <div className="overflow-y-scroll py-4 px-3 bg-white rounded">
             <ul className="space-y-2">
               {isLoadingRedux ? (
                 <li>Loading Recipients..</li>
@@ -74,7 +71,6 @@ function Sidebar() {
                 })
               )}
             </ul>
-          </div>
         </div>
       </div>
       <div className="m-4 h-[10%]">

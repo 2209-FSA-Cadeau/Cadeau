@@ -28,7 +28,7 @@ function SearchBar() {
   }, []);
 
   useEffect(() => {
-if (
+    if (
       recipients.recipients.length !== 0 &&
       Object.keys(currentRecipient).length === 1
     ) {
@@ -63,7 +63,7 @@ if (
     dispatch(filterOff());
     router.push(`/shop/${iterable.name}/TopRecs`);
   };
-
+  
   const handleCategory = (event) => {
     dispatch(searchOff());
     dispatch(deleteFilters());
@@ -77,38 +77,37 @@ if (
 
   // console.log(currentRecipient, Object.keys(currentRecipient).length)
   return (
-    <div className="flex flex-col h-36 rounded-lg bg-orange-200 justify-evenly">
-      <div className="flex flex-row justify-evenly">
-        <div>
-          <select
-            onChange={handleRecipient}
-            className="h-8 w-32 rounded-lg text-center"
-          >
-            {recipients.recipients.map((recipient, index) => (
-              <option key={index} value={recipient.name}>
-
-                {recipient.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex flex-col justify-center h-8 w-32 border-2 border-black rounded-lg">
-          <div onClick={handleCategory} id="Top Choices">
-            Top Choices
-          </div>
-        </div>
-        {Object.keys(currentRecipient).length !== 1 &&
-        currentRecipient.recommendations
+    <div className="flex h-36 rounded-md bg-cblue-500 justify-start items-center p-4 gap-[1%] shadow-xl">
+      <div className="basis-[20%] h-[80%]">
+        <select
+          onChange={handleRecipient}
+          className="rounded-lg text-center h-full w-full shadow-xl text-lg font-bold cursor-pointer"
+        >
+          {recipients.recipients.map((recipient, index) => (
+            <option key={index} value={recipient.name}>
+              {recipient.name}
+            </option>
+          ))}
+        </select>
+      </div>
+      <button
+        onClick={handleCategory}
+        className="basis-[10%] h-[80%] bg-white flex justify-center items-center rounded-lg shadow-xl px-4 hover:text-cgold-500"
+      >
+        <h2>Top Choices</h2>
+      </button>
+      <div className=" basis-[78%] h-[80%] flex flex-row gap-2 overflow-x-auto scroll-smooth">
+        {Object.keys(currentRecipient).length > 1
           ? currentRecipient.recommendations.map((recommendation, index) => (
-              <div
+              <button
                 key={index}
                 onClick={handleCategory}
-                className="flex flex-col justify-center h-8 w-32 rounded-lg border-2 border-black"
+                className="flex justify-center items-center rounded-lg w-[20%] min-w-fit px-4 text-white"
               >
-                <div id={recommendation.columnName} className="text-center">
+                <h3 className="text-center">
                   {recommendation.columnName}
-                </div>
-              </div>
+                </h3>
+              </button>
             ))
           : ""}
       </div>
