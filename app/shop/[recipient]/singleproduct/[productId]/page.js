@@ -6,10 +6,9 @@ import { saveItem } from '../../../../../store/recipientSlice';
 
 const ProductIdPage = props => {
   const { singleProduct } = useSelector(state => state.shop);
-  const { recipients } = useSelector(state => state.recipients)
+  const { singleRecipient } = useSelector(state => state.recipients)
   const dispatch = useDispatch();
   const product = singleProduct.product_results
-  const curRecipient = recipients[0]
   useEffect(() => {
     dispatch(getSingleItem(props.params.productId))
     return () => {
@@ -20,7 +19,7 @@ const ProductIdPage = props => {
 
   const handleSaveItem = () => {
     const saveObj = {
-      recipientId: curRecipient.id,
+      recipientId: singleRecipient.id,
       name: product.title,
       description: product.description,
       imageUrl: product.primary_image,
