@@ -5,6 +5,7 @@ import {
   fetchNote,
   removeRecipient,
   setSingleRecipient,
+  fetchNotesLoading
 } from "../../store/recipientSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineClose } from "react-icons/ai";
@@ -18,6 +19,7 @@ const Recipient = ({ recipient }) => {
   const [modalIsShown, setModalIsShown] = useState(false);
 
   const handleClick = (evt) => {
+    dispatch(fetchNotesLoading(true))
     dispatch(setSingleRecipient(recipient.id));
     dispatch(fetchNote({ userId, recipientId: recipient.id}))
   };
