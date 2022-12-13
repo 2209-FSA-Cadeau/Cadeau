@@ -69,7 +69,6 @@ function SearchBar() {
   useEffect(() => {
     if (updatedList.current) {
       if (currentRecipient) {
-        // console.log("USE FFECT2", currentRecipient, updatedRecipients);
         if (currentRecipient.name !== updatedRecipients[0].name) {
           const shownRecipients = [];
           shownRecipients.push(currentRecipient);
@@ -104,7 +103,6 @@ function SearchBar() {
   };
 
   const handleCategory = (category) => {
-    console.log(category);
     dispatch(searchOff());
     dispatch(deleteFilters());
     dispatch(resetChecklist());

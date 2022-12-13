@@ -7,7 +7,6 @@ export const fetchRecipients = createAsyncThunk(
   async (userId) => {
     try {
       const response = await axios.get(`/api/recipients/${userId}`);
-      console.log(response.data)
       return response.data;
     } catch (err) {
       console.log(err);
@@ -148,7 +147,6 @@ export const editRecipient = createAsyncThunk(
   "/recipients/editRecipient",
   async (recipient) => {
     try {
-      console.log(recipient);
       const { data } = await axios.put(`/api/recipients`, {
         updateInfo: recipient,
       });
@@ -262,7 +260,6 @@ export const updateNote =  createAsyncThunk(
   async (noteObj) => {
     try {
       const response = await axios.put("/api/notes", noteObj)
-      console.log(response)
       return response.data
     } catch (err) {
       console.log(err);

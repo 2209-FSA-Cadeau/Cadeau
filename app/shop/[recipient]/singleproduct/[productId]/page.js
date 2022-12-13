@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getSingleItem, clearSingleItem } from '../../../../../store/shopSlice'
 import { saveItem } from '../../../../../store/recipientSlice';
@@ -36,7 +36,6 @@ const ProductIdPage = props => {
       {product === undefined ?
         "Loading Product...":
       (<div>
-        {console.log(product, recipients)}
         <div className="flex-none w-52 relative">
           <picture>
             <img src={product.primary_image} />

@@ -1,7 +1,7 @@
 "use client"; // USE CLIENT MUST BE USED TO ACCESS REDUX
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const App = () => {
   const { user, isLoadingRedux } = useSelector((store) => store.user);

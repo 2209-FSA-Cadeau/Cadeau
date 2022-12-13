@@ -34,7 +34,6 @@ const page = () => {
         recipientId: singleRecipient.id,
         content: value
       }
-      console.log("send to back end", `${value}`);
       if(!isLoading) {
         dispatch(updateNote(noteObj))
       }
