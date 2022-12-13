@@ -25,12 +25,11 @@ function Sidebar() {
   }, [isLoadingRedux, addNewModalIsShown]);
 
   useEffect(() => {
-    console.log(newUser)
     if (isLoadingRedux || newUser) {
-    } 
-    else if (userId && recipients.length === 0) {
-      dispatch(fetchRecipients(userId));
-    } else if (userId && recipients.length > 0 && !singleRecipient.id) {
+    } else if (userId && recipients.length === 0) {
+        dispatch(fetchRecipients(userId));
+    }
+    else if (userId && recipients.length > 0 && !singleRecipient.id) {
       if (pathname.includes("preferences") || pathname.includes("notes")) {
         const parsed = pathname.split("/")[2].split("%20").join(" ");
         const newRecipient = recipients.filter(
@@ -58,10 +57,8 @@ function Sidebar() {
           <h3>Gift Recipients</h3>
         </div>
         <div
-          className="w-full h-full grow min-h-0 overflow-y-scroll"
-          aria-label="Sidebar"
+          className="w-full h-full grow min-h-0 overflow-y-scroll py-4 px-3"
         >
-          <div className="overflow-y-scroll py-4 px-3 bg-white rounded">
             <ul className="space-y-2">
               {isLoadingRedux ? (
                 <li>Loading Recipients..</li>
@@ -73,7 +70,6 @@ function Sidebar() {
                 })
               )}
             </ul>
-          </div>
         </div>
       </div>
       <div className="m-4 h-[10%]">
