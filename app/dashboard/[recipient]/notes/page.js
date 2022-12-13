@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchHolidays, fetchNote, updateNote } from "../../../../store/recipientSlice";
+import { fetchHolidays, fetchNote, fetchNotesLoading, updateNote } from "../../../../store/recipientSlice";
 
 const page = () => {
   const { singleRecipient, isLoading } = useSelector((store) => store.recipients)
@@ -15,12 +15,15 @@ const page = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(fetchNotesLoading(true))
     dispatch(fetchNote({ userId, recipientId: singleRecipient.id}))
   }, [])
 
   useEffect(() => {
-    setValue(singleRecipient.note.content)
-  }, [])
+    if(!isLoading) {
+      setValue(singleRecipient.note.content)
+    }
+  }, [isLoading])
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
