@@ -10,6 +10,7 @@ import {
   resetFilterType,
   resetChecklist,
   filterOff,
+  resetCategories
 } from "../../store/shopSlice";
 
 function SearchBar() {
@@ -75,6 +76,7 @@ function SearchBar() {
     );
     iterable.recommendations = score;
     setRecipient(iterable);
+    dispatch(resetCategories())
     dispatch(searchOff());
     dispatch(deleteFilters());
     dispatch(resetChecklist());

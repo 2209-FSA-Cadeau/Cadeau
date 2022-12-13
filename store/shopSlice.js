@@ -69,7 +69,8 @@ const initialState = {
         Games: [],
         Pets: [],
         Home: [],
-        Art: []
+        Art: [],
+        toprecs: []
     },
     searchResults: [],
     singleProduct: {},
@@ -129,16 +130,29 @@ const shopSlice = createSlice({
         },
         resetFilterType: (state)  => {
             state.filterType = ""
+        },
+        resetCategories: (state) => {
+            for(let keys in state.categories){
+                state.categories[keys] = []
+            }
         }
 
     },
     extraReducers: (builder) => {
         builder
             .addCase(getSingleCategory.fulfilled, (state, action) => {
-                if(state.categories[action.payload.query].length === 0){
-                    state.categories[action.payload.query] = action.payload.shopping_results
+                if(action.payload.query.includes(" ")){
+                    if(state.categories.toprecs.length === 0){
+                        state.categories.toprecs = action.payload.shopping_results
+                    } else {
+                        state.categories.toprecs = [...state.categories.toprecs, ...action.payload.shopping_results]
+                    }
                 } else {
-                    state.categories[action.payload.query] = [...state.categories[action.payload.query], ...action.payload.shopping_results]
+                    if(state.categories[action.payload.query].length === 0){
+                        state.categories[action.payload.query] = action.payload.shopping_results
+                    } else {
+                        state.categories[action.payload.query] = [...state.categories[action.payload.query], ...action.payload.shopping_results]
+                    }
                 }
                 })
             .addCase(getSearchResults.fulfilled, (state, action) => {
@@ -154,5 +168,5 @@ const shopSlice = createSlice({
 })
 
 
-export const {searchOff, filterOn, filterOff, addFilter, deleteFilters, deleteSingleFilter, changeFilterType, addChecklist, deleteChecklist, resetChecklist, resetFilterType, resetFilterView} = shopSlice.actions
+export const {searchOff, filterOn, filterOff, addFilter, deleteFilters, deleteSingleFilter, changeFilterType, addChecklist, deleteChecklist, resetChecklist, resetFilterType, resetFilterView, resetCategories} = shopSlice.actions
 export default shopSlice.reducer

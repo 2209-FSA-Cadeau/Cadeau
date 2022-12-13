@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import {
@@ -19,6 +19,7 @@ const ShoppingSideBar = () => {
   const router = useRouter();
   let path = usePathname();
   let searchParams = useSearchParams();
+  const form = useRef(null)
 
   const { checklist, filterType } = useSelector((state) => state.shop);
 
@@ -163,6 +164,7 @@ const ShoppingSideBar = () => {
         <form
           onSubmit={handleSearch}
           className="flex justify-center w-[100%] h-full"
+          ref={form}
         >
           <span className="basis-1/6 h-full w-full px-2 ">
             <select
