@@ -8,17 +8,14 @@ const zlib = require("zlib");
     } = req;
 
     let searchItem
-    console.log("QUERY", query)
     if(Object.keys(query).length === 1 || query.category === "all"){
       if(query.category){
         searchItem = query.value
       } else {
         searchItem = query.searchQuery
       }
-      console.log("HIT NO FILTER", searchItem)
     } else {
       searchItem = query.category + " " + query.value
-      console.log("HIT FILTER", searchItem)
     }
 
     switch (method) {
@@ -42,7 +39,6 @@ const zlib = require("zlib");
         axios
           .request(options)
           .then(function (response) {
-            console.log(response.data)
             res.send(response.data)
             // zlib.gunzip(response.data, function (_err, output) {
             //   console.log("THIS IS THE OUTPUT", output)

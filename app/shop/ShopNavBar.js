@@ -57,7 +57,7 @@ function SearchBar() {
       iterable.recommendations = score;
       setRecipient(iterable);
       if (!recipientURL) {
-        router.push(`/shop/${iterable.name}/toprecs`);
+        router.push(`/shop/${iterable.name}/toprecs/1`);
       }
     } else {
       updatedRecip.current = true;
@@ -80,18 +80,17 @@ function SearchBar() {
     dispatch(resetChecklist());
     dispatch(resetFilterType());
     dispatch(filterOff());
-    router.push(`/shop/${iterable.name}/toprecs`);
+    router.push(`/shop/${iterable.name}/toprecs/1`);
   };
 
   const handleCategory = (category) => {
-    console.log(category);
     dispatch(searchOff());
     dispatch(deleteFilters());
     dispatch(resetChecklist());
     dispatch(resetFilterType());
     dispatch(filterOff());
     if (category === "Top Choices")
-      router.push(`shop/${currentRecipient.name}/toprecs`);
+      router.push(`shop/${currentRecipient.name}/toprecs/1`);
     else router.push(`/shop/${currentRecipient.name}/${category.columnName}/1`);
   };
 
@@ -138,10 +137,11 @@ function SearchBar() {
           className="relative  rounded-lg w-[20%] min-w-fit px-4 text-cgold-500 border-2 border-cblue-500 hover:border-2 hover:border-white"
           type="button"
           onBlur={() => setDropdownIsShown(false)}
+          // onClick={() => setDropdownIsShown(false)}
         >
           <div
             className="w-full h-full flex justify-center items-center gap-1"
-            onClick={() => setDropdownIsShown(true)}
+            onClick={() => setDropdownIsShown(!dropdownIsShown)}
           >
             <h3>Other</h3>
             <RiArrowDropDownLine className="scale-[2]" />

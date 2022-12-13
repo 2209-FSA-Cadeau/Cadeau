@@ -1,7 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
 import { AiOutlineClose } from "react-icons/ai";
 
 export default function Holidays(props) {
@@ -68,23 +66,8 @@ export default function Holidays(props) {
         </h2>
       </div>
       <div className="grow flex flex-col justify-start overflow-y-scroll pt-4 gap-8">
-        {/* <div className="z-20">
-          <label className="block mb-4 text-lg font-bold">
-            <h2>Holidays Celebrated</h2>
-          </label>
-          <Select
-            value={newRecipient.holidays.map((holiday) => holiday)}
-            components={makeAnimated()}
-            options={holidays}
-            onChange={holidayChangeHandler}
-            isMulti
-            instanceId={"holidays"}
-            className="text-lg"
-          />
-        </div> */}
         <div className="grow flex flex-col">
           <label className="block mb-4 text-lg font-bold">
-            {/* <h2>Other Important Occasions</h2> */}
             <p className="font-medium">An anniversary, perhaps?</p>
           </label>
           <form

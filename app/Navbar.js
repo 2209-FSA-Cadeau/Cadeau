@@ -1,8 +1,7 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { useUser } from "@auth0/nextjs-auth0";
 import { auth0logout } from "../store/userSlice";
 import { setTab } from "../store/recipientSlice";
 

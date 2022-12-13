@@ -32,24 +32,6 @@ const Recipient = db.define("recipient", {
   }
 });
 
-// Recipient.afterCreate(async () => {
-//   const recipients = await Recipient.findAll({
-//         include: {model: models.preference},
-//         order: [["id", "ASC"]]
-//     })
-
-//     const recipientPrefs = recipients.map((element) => element.preferences)
-
-//     const matrix = createMatrix(recipientPrefs)
-
-//     for(let i = 1; i <= recipients.length; i++){
-//       const score = fillInBlanks(matrix, i)
-//       const updateObj = {recommendations: score}
-//       console.log(i, score)
-//       await recipients[i - 1].update(updateObj)
-//     }
-// })
-
 Recipient.afterDestroy(async (recipient) => {
   const changeId = await Recipient.findAll({
     where: {
@@ -76,7 +58,6 @@ const matrix = createMatrix(recipientPrefs)
 for(let i = 1; i <= recipients.length; i++){
   const score = fillInBlanks(matrix, i)
   const updateObj = {recommendations: score}
-  // console.log(i, score)
   await recipients[i - 1].update(updateObj)
 }
 })

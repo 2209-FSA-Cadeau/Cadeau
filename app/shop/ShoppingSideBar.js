@@ -69,7 +69,6 @@ const ShoppingSideBar = () => {
           path += `?category=${category}&value=${value}`;
         }
         dispatch(filterOff());
-        console.log("three", path);
         router.push(path);
       }
     } else {
@@ -130,7 +129,6 @@ const ShoppingSideBar = () => {
           path += filters;
         }
       }
-      console.log(path);
       router.push(path);
     }
   }, [checklist]);

@@ -26,16 +26,15 @@ Preference.afterUpdate(async () => {
           order: [["id", "ASC"]]
       })
 
-      const recipientPrefs = recipients.map((element) => element.preferences)  
-      
+      const recipientPrefs = recipients.map((element) => element.preferences)
+
       const matrix = createMatrix(recipientPrefs)
 
       for(let i = 1; i <= recipients.length; i++){
         const score = fillInBlanks(matrix, i)
         const updateObj = {recommendations: score}
-        // console.log(i, score)
         await recipients[i - 1].update(updateObj)
-      } 
+      }
 })
 
 Preference.afterDestroy(async () => {
@@ -44,14 +43,13 @@ Preference.afterDestroy(async () => {
       order: [["id", "ASC"]]
   })
 
-  const recipientPrefs = recipients.map((element) => element.preferences)  
+  const recipientPrefs = recipients.map((element) => element.preferences)
 
   const matrix = createMatrix(recipientPrefs)
 
   for(let i = 1; i <= recipients.length; i++){
     const score = fillInBlanks(matrix, i)
     const updateObj = {recommendations: score}
-    // console.log(i, score)
     await recipients[i - 1].update(updateObj)
   }
 })

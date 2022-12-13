@@ -68,7 +68,6 @@ export default function LikesAndDislikes(props) {
       ...baseStyles,
       color: "cblue-700",
       zIndex: "50",
-      // overflow: "visible",
     }),
   };
 

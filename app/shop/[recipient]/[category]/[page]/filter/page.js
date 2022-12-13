@@ -1,12 +1,11 @@
 "use client"
-import React, { use, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSelector, useDispatch } from 'react-redux'
 import ProductCards from "../ProductCards"
 import { filterOn, addFilter } from '../../../../../../store/shopSlice'
 
 const FilterPage = props => {
-  // console.log("HIT NEW PAGE")
   const {categories, searchResults, filterView, filters, filterType, checklist} = useSelector(state => state.shop)
   const dispatch = useDispatch()
   const router = useRouter()
@@ -52,8 +51,8 @@ const FilterPage = props => {
           }
           if(filterType === "add"){
             dispatch((addFilter("prices")))
-          } 
-        } 
+          }
+        }
 
         if(props.searchParams.ratings && !filters.includes("ratings")){
           if(props.searchParams.ratings === "5 Stars"){
@@ -61,83 +60,83 @@ const FilterPage = props => {
               dispatch((filterOn(searchResults.filter( result => result.rating === 5))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.rating === 5))))
-            } 
+            }
           }
           if(props.searchParams.ratings === "4 Stars"){
             if(filterView.length === 0 ){
               dispatch((filterOn(searchResults.filter( result => result.rating >= 4 && result.rating < 5 ))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.rating >= 4 && result.rating < 5 ))))
-            } 
+            }
           }
           if(props.searchParams.ratings === "3 Stars"){
             if(filterView.length === 0 ){
               dispatch((filterOn(searchResults.filter( result => result.rating >= 3  && result.rating < 4))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.rating >= 3  && result.rating < 4))))
-            } 
+            }
           }
           if(props.searchParams.ratings === "2 Stars"){
             if(filterView.length === 0 ){
               dispatch((filterOn(searchResults.filter( result => result.rating >= 2 && result.rating < 3))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.rating >= 2 && result.rating < 3))))
-            } 
+            }
           }
           if(props.searchParams.ratings === "1 Star"){
             if(filterView.length === 0 ){
               dispatch((filterOn(searchResults.filter( result => result.rating >= 1 && result.rating < 2))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.rating >= 1 && result.rating < 2))))
-            } 
+            }
           }
           if(filterType === "add"){
             dispatch((addFilter("ratings")))
           }
         }
-       
+
         if(props.searchParams.reviews && !filters.includes("reviews")){
           if(props.searchParams.reviews === "<10"){
             if(filterView.length === 0 ){
               dispatch((filterOn(searchResults.filter( result => result.reviews < 10))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.reviews < 10))))
-            } 
+            }
           }
           if(props.searchParams.reviews === "10-100"){
             if(filterView.length === 0 ){
               dispatch((filterOn(searchResults.filter( result => result.reviews >= 10 && result.reviews <= 100))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.reviews >= 10 && result.reviews <= 100))))
-            } 
+            }
           }
           if(props.searchParams.reviews === "100-250"){
             if(filterView.length === 0 ){
               dispatch((filterOn(searchResults.filter( result => result.reviews >= 100 && result.reviews <= 250))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.reviews >= 100 && result.reviews <= 250))))
-            } 
+            }
           }
           if(props.searchParams.reviews === "250-500"){
             if(filterView.length === 0 ){
               dispatch((filterOn(searchResults.filter( result => result.reviews >= 250 && result.reviews <= 500))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.reviews >= 250 && result.reviews <= 500))))
-            } 
+            }
           }
           if(props.searchParams.reviews === "500-1000"){
             if(filterView.length === 0 ){
               dispatch((filterOn(searchResults.filter( result => result.reviews >= 500 && result.reviews <= 1000))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.reviews >= 500 && result.reviews <= 1000))))
-            } 
+            }
           }
           if(props.searchParams.reviews === "1000+"){
             if(filterView.length === 0 ){
               dispatch((filterOn(searchResults.filter( result => result.reviews >= 1000))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.reviews >= 1000))))
-            } 
+            }
           }
           if(filterType === "add"){
             dispatch((addFilter("reviews")))
@@ -183,7 +182,7 @@ const FilterPage = props => {
           if(filterType === "add"){
             dispatch((addFilter("prices")))
           }
-        } 
+        }
 
         if(props.searchParams.ratings && !filters.includes("ratings")){
           if(props.searchParams.ratings === "5 Stars"){
@@ -191,69 +190,69 @@ const FilterPage = props => {
               dispatch((filterOn(categories[props.params.category].filter( result => result.rating === 5))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.rating === 5))))
-            } 
+            }
           }
           if(props.searchParams.ratings === "4 Stars"){
             if(filterView.length === 0 ){
               dispatch((filterOn(categories[props.params.category].filter( result => result.rating >= 4 && result.rating < 5 ))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.rating >= 4 && result.rating < 5 ))))
-            } 
+            }
           }
           if(props.searchParams.ratings === "3 Stars"){
             if(filterView.length === 0 ){
               dispatch((filterOn(categories[props.params.category].filter( result => result.rating >= 3  && result.rating < 4))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.rating >= 3  && result.rating < 4))))
-            } 
+            }
           }
           if(props.searchParams.ratings === "2 Stars"){
             if(filterView.length === 0 ){
               dispatch((filterOn(categories[props.params.category].filter( result => result.rating >= 2 && result.rating < 3))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.rating >= 2 && result.rating < 3))))
-            } 
+            }
           }
           if(props.searchParams.ratings === "1 Star"){
             if(filterView.length === 0 ){
               dispatch((filterOn(categories[props.params.category].filter( result => result.rating >= 1 && result.rating < 2))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.rating >= 1 && result.rating < 2))))
-            } 
+            }
           }
           if(filterType === "add"){
             dispatch((addFilter("ratings")))
           }
         }
-       
+
         if(props.searchParams.reviews && !filters.includes("reviews")){
           if(props.searchParams.reviews === "<10"){ // need to set up so that subtarct takjes from original array -> need another use effect?
             if(filterView.length === 0 ){
               dispatch((filterOn(categories[props.params.category].filter( result => result.reviews < 10))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.reviews < 10))))
-            } 
+            }
           }
           if(props.searchParams.reviews === "10-100"){
             if(filterView.length === 0 ){
               dispatch((filterOn(categories[props.params.category].filter( result => result.reviews >= 10 && result.reviews <= 100))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.reviews >= 10 && result.reviews <= 100))))
-            } 
+            }
           }
           if(props.searchParams.reviews === "100-250"){
             if(filterView.length === 0 ){
               dispatch((filterOn(categories[props.params.category].filter( result => result.reviews >= 100 && result.reviews <= 250))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.reviews >= 100 && result.reviews <= 250))))
-            } 
+            }
           }
           if(props.searchParams.reviews === "250-500"){
             if(filterView.length === 0 ){
               dispatch((filterOn(categories[props.params.category].filter( result => result.reviews >= 250 && result.reviews <= 500))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.reviews >= 250 && result.reviews <= 500))))
-            } 
+            }
           }
 
           if(props.searchParams.reviews === "500-1000"){
@@ -261,14 +260,14 @@ const FilterPage = props => {
               dispatch((filterOn(categories[props.params.category].filter( result => result.reviews >= 500 && result.reviews <= 1000))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.reviews >= 500 && result.reviews <= 1000))))
-            } 
+            }
           }
           if(props.searchParams.reviews === "1000+"){
             if(filterView.length === 0 ){
               dispatch((filterOn(categories[props.params.category].filter( result => result.reviews >= 1000))))
             } else {
               dispatch((filterOn(filterView.filter( result => result.reviews >= 1000))))
-            } 
+            }
           }
           if(filterType === "add"){
             dispatch((addFilter("reviews")))
@@ -288,7 +287,7 @@ const FilterPage = props => {
           } else if(checklist[keys] === "$25-$50") {
             baseList = baseList.filter( result => result.price >= 25 && result.price <= 50)
           } else if(checklist[keys] === "$50-$100") {
-            baseList = baseList.filter( result => result.price >= 50 && result.price <= 100)  
+            baseList = baseList.filter( result => result.price >= 50 && result.price <= 100)
           } else if(checklist[keys]=== "$100-$200") {
             baseList = baseList.filter( result => result.price >= 100 && result.price <= 200)
           } else if(checklist[keys] === "$200+") {
@@ -313,7 +312,7 @@ const FilterPage = props => {
             baseList = baseList.filter( result => result.reviews >= 250 && result.reviews <= 500)
           } else if(checklist[keys] === "500-1000"){
             baseList = baseList.filter( result => result.reviews >= 500 && result.reviews <= 1000)
-          } else if(checklist[keys] === "1000+"){ 
+          } else if(checklist[keys] === "1000+"){
             baseList = baseList.filter( result => result.reviews >= 1000)
           }
       }
@@ -353,7 +352,7 @@ const FilterPage = props => {
             path = `/shop/${props.params.recipient}/${props.params.category}/${Number(props.params.page) + 1}/filter?`
             path += filters
             router.push(path)
-          } 
+          }
       }
   }
 
