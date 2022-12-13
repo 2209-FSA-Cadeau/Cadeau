@@ -12,9 +12,13 @@ const Redirect = () => {
   const dispatch = useDispatch();
   const pathname = usePathname()
 
+
   useEffect(() => {
+    debugger;
     if (!isLoading) {
       if (!user) {
+        console.log('No user')
+
         router.push("/landing");
       } else {
         dispatch(addOrFindUser(user));

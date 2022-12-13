@@ -9,6 +9,7 @@ const App = () => {
   const [newUser, setNewUser] = useState("");
 
   useEffect(() => {
+    console.log('page loaded')
     if (typeof window != undefined) {
       setNewUser(localStorage.getItem("new"));
     }
