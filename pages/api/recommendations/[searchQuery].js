@@ -43,11 +43,11 @@ const zlib = require("zlib");
           .request(options)
           .then(function (response) {
             console.log(response.data)
-            // res.send(response.data)
-            zlib.gunzip(response.data, function (_err, output) {
-              console.log("THIS IS THE OUTPUT", output)
-              res.send(output)
-            });
+            res.send(response.data)
+            // zlib.gunzip(response.data, function (_err, output) {
+            //   console.log("THIS IS THE OUTPUT", output)
+            //   res.send(output)
+            // });
           })
           .catch(function (error) {
             console.error(error);

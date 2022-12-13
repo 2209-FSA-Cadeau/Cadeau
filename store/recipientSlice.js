@@ -277,6 +277,7 @@ const initialState = {
     note: "",
   },
   tab: "preferences",
+  isLoading: true,
 };
 
 export const recipientSlice = createSlice({
@@ -291,6 +292,9 @@ export const recipientSlice = createSlice({
     setTab: (state, action) => {
       state.tab = action.payload;
     },
+    fetchNotesLoading: (state, action) => {
+      state.isLoading = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -370,6 +374,7 @@ export const recipientSlice = createSlice({
           ...state.singleRecipient,
           note: action.payload
         }
+        state.isLoading = false
       })
       .addCase(updateNote.fulfilled, (state, action) => {
         state.singleRecipient = {
@@ -389,6 +394,6 @@ export const recipientSlice = createSlice({
   },
 });
 
-export const { setSingleRecipient, setTab } = recipientSlice.actions;
+export const { setSingleRecipient, setTab, fetchNotesLoading } = recipientSlice.actions;
 
 export default recipientSlice.reducer;

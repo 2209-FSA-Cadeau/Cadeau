@@ -49,9 +49,6 @@ const PreferenceContainer = () => {
       userId,
       recipientId: singleRecipient.id
     }
-    if (!singleRecipient.note) {
-      dispatch(fetchNote(requiredIds))
-    }
   }, [singleRecipient.preferences]);
 
   useEffect(() => {
