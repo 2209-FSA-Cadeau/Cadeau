@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect, useRef } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchRecipients } from "../../store/recipientSlice";
 import {
@@ -12,41 +12,77 @@ import {
 } from "../../store/shopSlice";
 
 function SearchBar() {
-  const recipients = useSelector((state) => state.recipients);
+  const { recipients, singleRecipient } = useSelector(
+    (state) => state.recipients
+  );
+  const router = useRouter();
+  const updatedRecip = useRef(false);
+  const updatedList = useRef(false);
   const { userId } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const path = usePathname();
 
-  const [currentRecipient, setRecipient] = useState(recipients.singleRecipient);
+  const [currentRecipient, setRecipient] = useState(null);
+  const [updatedRecipients, setUpdatedRecipients] = useState(null);
+
+  console.log("THE RECICPIENTS", updatedRecipients);
 
   useEffect(() => {
-    if (
-      Object.keys(recipients.singleRecipient).length === 1 &&
-      Object.keys(currentRecipient).length === 1
-    ) {
-      dispatch(fetchRecipients(userId));
-    }
+    dispatch(fetchRecipients(userId));
   }, []);
 
   useEffect(() => {
-    if (
-      recipients.recipients.length !== 0 &&
-      Object.keys(currentRecipient).length === 1
-    ) {
-      const currentRecipient = recipients.recipients[0];
+    if (updatedRecip.current) {
+      console.log("USE FFECT1");
+      updatedList.current = true;
+      const recipient = path.split("/")[2];
       const iterable = {};
-      Object.assign(iterable, currentRecipient);
+      // console.log("RECIPIENT IS", recipient)
+      if (recipient) {
+        const prevRecipient = recipients.find(
+          (recipient) => recipient.name === recipient
+        );
+        Object.assign(iterable, prevRecipient);
+      } else {
+        if (singleRecipient.preferences.length !== 0) {
+          Object.assign(iterable, singleRecipient);
+        } else {
+          Object.assign(iterable, recipients[0]);
+        }
+      }
       let score = [...iterable.recommendations];
       score = score.sort((a, b) => b.score - a.score).slice(0, 5);
       iterable.recommendations = score;
       setRecipient(iterable);
+      setUpdatedRecipients(recipients);
+      if (!recipient) {
+        router.push(`/shop/${iterable.name}/toprecs`);
+      }
+    } else {
+      updatedRecip.current = true;
     }
   }, [recipients]);
 
-  const [searchText, setSearchText] = useState("");
-  const router = useRouter();
+  useEffect(() => {
+    if (updatedList.current) {
+      if (currentRecipient) {
+        console.log("USE FFECT2", currentRecipient, updatedRecipients);
+        if (currentRecipient.name !== updatedRecipients[0].name) {
+          const shownRecipients = [];
+          shownRecipients.push(currentRecipient);
+          shownRecipients.push(
+            ...updatedRecipients.filter(
+              (recipients) => recipients.name !== currentRecipient.name
+            )
+          );
+          setUpdatedRecipients(shownRecipients);
+        }
+      }
+    }
+  }, [currentRecipient]);
 
   const handleRecipient = (event) => {
-    const newRecipient = recipients.recipients.find(
+    const newRecipient = recipients.find(
       (recipient) => recipient.name === event.target.value
     );
     const iterable = {};
@@ -61,9 +97,9 @@ function SearchBar() {
     dispatch(resetChecklist());
     dispatch(resetFilterType());
     dispatch(filterOff());
-    router.push(`/shop/${iterable.name}/TopRecs`);
+    router.push(`/shop/${iterable.name}/toprecs`);
   };
-  
+
   const handleCategory = (event) => {
     dispatch(searchOff());
     dispatch(deleteFilters());
@@ -75,41 +111,45 @@ function SearchBar() {
     else router.push(`/shop/${currentRecipient.name}/${event.target.id}/1`);
   };
 
-  // console.log(currentRecipient, Object.keys(currentRecipient).length)
   return (
-    <div className="flex h-36 rounded-md bg-cblue-500 justify-start items-center p-4 gap-[1%] shadow-xl">
-      <div className="basis-[20%] h-[80%]">
-        <select
-          onChange={handleRecipient}
-          className="rounded-lg text-center h-full w-full shadow-xl text-lg font-bold cursor-pointer"
+    <div className="flex flex-col h-36 rounded-lg bg-orange-200 justify-evenly">
+      <div className="flex flex-row justify-evenly">
+        <div>
+          <select
+            onChange={handleRecipient}
+            className="h-8 w-32 rounded-lg text-center"
+          >
+            {!updatedRecipients
+              ? ""
+              : updatedRecipients.map((recipient, index) => (
+                  <option key={index} value={recipient.name}>
+                    {" "}
+                    {recipient.name}{" "}
+                  </option>
+                ))}
+          </select>
+        </div>
+        <button
+          onClick={handleCategory}
+          className="basis-[10%] h-[80%] bg-white flex justify-center items-center rounded-lg shadow-xl px-4 hover:text-cgold-500"
         >
-          {recipients.recipients.map((recipient, index) => (
-            <option key={index} value={recipient.name}>
-              {recipient.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <button
-        onClick={handleCategory}
-        className="basis-[10%] h-[80%] bg-white flex justify-center items-center rounded-lg shadow-xl px-4 hover:text-cgold-500"
-      >
-        <h2>Top Choices</h2>
-      </button>
-      <div className=" basis-[78%] h-[80%] flex flex-row gap-2 overflow-x-auto scroll-smooth">
-        {Object.keys(currentRecipient).length > 1
-          ? currentRecipient.recommendations.map((recommendation, index) => (
-              <button
-                key={index}
-                onClick={handleCategory}
-                className="flex justify-center items-center rounded-lg w-[20%] min-w-fit px-4 text-white"
-              >
-                <h3 className="text-center">
-                  {recommendation.columnName}
-                </h3>
-              </button>
-            ))
-          : ""}
+          <h2>Top Choices</h2>
+        </button>
+        <div className=" basis-[78%] h-[80%] flex flex-row gap-2 overflow-x-auto scroll-smooth">
+          {currentRecipient
+            ? currentRecipient.recommendations.map((recommendation, index) => (
+                <div
+                  key={index}
+                  onClick={handleCategory}
+                  className="flex flex-col justify-center h-8 w-32 rounded-lg border-2 border-black"
+                >
+                  <div id={recommendation.columnName} className="text-center">
+                    {recommendation.columnName}
+                  </div>
+                </div>
+              ))
+            : ""}
+        </div>
       </div>
     </div>
   );
