@@ -16,19 +16,20 @@ function Sidebar() {
     (store) => store.recipients
   );
   const [addNewModalIsShown, setAddNewModalIsShown] = useState(false);
-  const [newUser, setNewUser] = useState(window.localStorage.getItem("new"));
+  const [newUser, setNewUser] = useState('');
   const dispatch = useDispatch();
   const pathname = usePathname();
 
   useEffect(() => {
-    setNewUser(window.localStorage.getItem("new"));
+    if (typeof window != undefined) {
+      setNewUser(localStorage.getItem("new"));
+    }
   }, [isLoadingRedux, addNewModalIsShown]);
 
   useEffect(() => {
-    console.log(newUser)
     if (isLoadingRedux || newUser) {
-    } 
-    else if (userId && recipients.length === 0) {
+      console.log("this ran");
+    } else if (userId && recipients.length === 0) {
       dispatch(fetchRecipients(userId));
     } else if (userId && recipients.length > 0 && !singleRecipient.id) {
       if (pathname.includes("preferences") || pathname.includes("notes")) {
