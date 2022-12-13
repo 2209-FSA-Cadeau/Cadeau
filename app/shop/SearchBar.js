@@ -13,7 +13,7 @@ import {
 
 function SearchBar() {
   const recipients = useSelector((state) => state.recipients);
-  const userId = useSelector((state) => state.user);
+  const { userId } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const [currentRecipient, setRecipient] = useState(recipients.singleRecipient);
@@ -63,7 +63,7 @@ function SearchBar() {
     dispatch(filterOff());
     router.push(`/shop/${iterable.name}/TopRecs`);
   };
-
+  
   const handleCategory = (event) => {
     dispatch(searchOff());
     dispatch(deleteFilters());

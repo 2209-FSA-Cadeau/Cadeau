@@ -23,7 +23,7 @@ const Redirect = () => {
   }, [isLoading]);
 
   useEffect(() => {
-    if (window.localStorage.getItem("new") === "true" && pathname !== "/dashboard" && pathname !== "/landing") {
+    if (localStorage.getItem("new") === "true" && pathname !== "/dashboard" && pathname !== "/landing") {
       router.push("/dashboard")
     }
   },[isLoadingRedux, pathname])

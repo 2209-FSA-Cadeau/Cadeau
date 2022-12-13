@@ -57,7 +57,7 @@ export const userSlice = createSlice({
       state.userId = action.payload.user.id;
       state.user = action.payload.user;
       if (action.payload.created) {
-        window.localStorage.setItem('new', 'true');
+        localStorage.setItem('new', 'true');
       }
     });
     builder.addCase(getUser.fulfilled, (state, action) => {

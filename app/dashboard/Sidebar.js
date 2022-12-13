@@ -16,20 +16,21 @@ function Sidebar() {
     (store) => store.recipients
   );
   const [addNewModalIsShown, setAddNewModalIsShown] = useState(false);
-  const [newUser, setNewUser] = useState(window.localStorage.getItem("new"));
+  const [newUser, setNewUser] = useState('');
   const dispatch = useDispatch();
   const pathname = usePathname();
 
   useEffect(() => {
-    setNewUser(window.localStorage.getItem("new"));
+    if (typeof window != undefined) {
+      setNewUser(localStorage.getItem("new"));
+    }
   }, [isLoadingRedux, addNewModalIsShown]);
 
   useEffect(() => {
     if (isLoadingRedux || newUser) {
     } else if (userId && recipients.length === 0) {
-        dispatch(fetchRecipients(userId));
-    }
-    else if (userId && recipients.length > 0 && !singleRecipient.id) {
+      dispatch(fetchRecipients(userId));
+    } else if (userId && recipients.length > 0 && !singleRecipient.id) {
       if (pathname.includes("preferences") || pathname.includes("notes")) {
         const parsed = pathname.split("/")[2].split("%20").join(" ");
         const newRecipient = recipients.filter(
