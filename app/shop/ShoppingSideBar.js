@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { AiOutlineSearch } from "react-icons/ai";
 import {
   deleteSingleFilter,
   changeFilterType,
@@ -39,9 +40,9 @@ const ShoppingSideBar = () => {
     router.push(path);
   };
 
-  const handleSearchFilter = (event) => {
-    setFilterCategory(event.target.value);
-  };
+  // const handleSearchFilter = (event) => {
+  //   setFilterCategory(event.target.value);
+  // };
 
   const handleFilter = (event) => {
     if (!checklist[event.target.id]) {
@@ -154,58 +155,63 @@ const ShoppingSideBar = () => {
   const reviews = ["<10", "10-100", "100-250", "250-500", "500-1000", "1000+"];
 
   const checklistOn =
-    "w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600";
+    "text-lg text-cblue-700 rounded border-neutral-300 focus:ring-cblue-300 focus:ring-2";
   const checklistOff = checklistOn + " pointer-events-none";
 
   return (
-    <div className="flex flex-col justify-start h-full bg-cgold-200 rounded-md shadow-xl p-2">
+    <div className="h-full flex flex-col justify-start bg-white rounded-md shadow-xl p-4">
       <div className="flex justify-center w-full h-[40px]">
         <form
           onSubmit={handleSearch}
-          className="flex justify-center w-[100%] h-full"
+          className="flex items-center w-full h-full"
         >
-          <span className="basis-1/6 h-full w-full px-2 ">
-            <select
-              className="text-center w-full h-full rounded-sm"
-              onChange={handleFilter}
-            >
-              <option value="all"> All Categories: </option>
-              {categories.map((category, index) => (
-                <option key={index} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </span>
-          <span className="basis-4/6 w-full h-full ">
+          <div className="relative w-full">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <AiOutlineSearch className="scale-150" />
+            </div>
             <input
-              className="w-full h-full rounded-sm"
+              className="bg-neutral-100 border border-neutral-200 text-cblue-700 text-md rounded-full focus:ring-cblue-300 focus:border-cblue-300 block w-full pl-10 p-2.5 "
               name="searchBar"
               type="text"
               placeholder="Search for items..."
             />
-          </span>
-          <span className="basis-1/6 w-full h-full px-2">
-            <button
-              type="submit"
-              className="w-full h-full rounded-sm bg-blue-400"
-            >
-              Search
-            </button>
-          </span>
+          </div>
         </form>
       </div>
-      <div className="flex flex-col h-full justify-around items-centerrounded-md">
-        <div className="flex flex-col justify-center items-start w-1/2 h-10 text-center ">
-          <div
-            id="Rating"
-            className="border-b-2 border-black self-center"
-            onClick={handleFilter}
-          >
-            Rating
+      <div className="grow flex flex-col w-full justify-start py-6 gap-4">
+        <div className="flex flex-col justify-center items-start">
+          <div id="Price" className="mb-1">
+            <h2>Price</h2>
+          </div>
+          {prices.map((price, index) => (
+            <div id={price} key={index} onClick={handleFilter}>
+              <input
+                id="prices"
+                type="checkbox"
+                value={price}
+                className={
+                  !checklist.prices
+                    ? checklistOn
+                    : checklist.prices === price
+                    ? checklistOn
+                    : checklistOff
+                }
+              />
+              <label
+                htmlFor="default-checkbox"
+                className="ml-2 text-lg font-medium"
+              >
+                {price}
+              </label>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-col justify-center items-start">
+          <div id="Rating" className="mb-1">
+            <h2>Rating</h2>
           </div>
           {ratings.map((rating, index) => (
-            <div id={rating} key={index}>
+            <div id={rating} key={index} onClick={handleFilter}>
               <input
                 id="ratings"
                 type="checkbox"
@@ -221,44 +227,16 @@ const ShoppingSideBar = () => {
               />
               <label
                 htmlFor="default-checkbox"
-                className="ml-2 text-sm font-medium text-gray-900"
+                className="ml-2 text-lg font-medium"
               >
                 {rating}
               </label>
             </div>
           ))}
         </div>
-        <div className="flex flex-col justify-center items-start w-1/2 h-10 text-center">
-          <div id="Price" className="border-b-2 border-black self-center">
-            Price
-          </div>
-          {prices.map((price, index) => (
-            <div id={price} key={index}>
-              <input
-                id="prices"
-                type="checkbox"
-                value={price}
-                className={
-                  !checklist.prices
-                    ? checklistOn
-                    : checklist.prices === price
-                    ? checklistOn
-                    : checklistOff
-                }
-                onClick={handleFilter}
-              />
-              <label
-                htmlFor="default-checkbox"
-                className="ml-2 text-sm font-medium text-gray-900 "
-              >
-                {price}
-              </label>
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-col justify-center items-start w-1/2 h-10 text-center">
-          <div id="Price" className="border-b-2 border-black self-center">
-            Reviews
+        <div className="flex flex-col justify-center items-start">
+          <div id="Price" className="mb-1">
+            <h2>Reviews</h2>
           </div>
           {reviews.map((review, index) => (
             <div id={review} key={index}>
@@ -277,7 +255,7 @@ const ShoppingSideBar = () => {
               />
               <label
                 htmlFor="default-checkbox"
-                className="ml-2 text-sm font-medium text-gray-900 "
+                className="ml-2 text-lg font-medium"
               >
                 {review}
               </label>

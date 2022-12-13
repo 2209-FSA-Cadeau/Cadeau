@@ -95,12 +95,12 @@ function SearchBar() {
   };
 
   return (
-    <div className="flex h-36 rounded-lg bg-cblue-500 justify-start items-center p-4 gap-[1%] shadow-xl overflow-visible">
-      <div className="basis-[20%] h-[80%] min-w-fit">
+    <div className="flex h-[80px] min-h-[80px] rounded-lg bg-cblue-500 justify-start items-center p-4 gap-[1%] shadow-2xl overflow-visible">
+      <div className="basis-[20%] h-[90%] min-w-fit m-h-[24]">
         <select
           onChange={handleRecipient}
           value={currentRecipient && recipients.length > 0 ? currentRecipient.name : ""}
-          className="rounded-lg text-center h-full w-full shadow-xl text-lg font-bold cursor-pointer hover:text-cgold-500 focus:border-cblue-300"
+          className="rounded-lg text-center h-full w-full shadow-xl text-lg font-bold cursor-pointer min-h-fit hover:text-cgold-500 focus:border-cblue-300"
         >
           {recipients.map((recipient, index) => (
                 <option key={index} value={recipient.name}>
@@ -112,11 +112,11 @@ function SearchBar() {
       </div>
       <button
         onClick={() => handleCategory("Top Choices")}
-        className="basis-[15%] h-[80%] bg-white flex justify-center items-center rounded-lg shadow-xl px-4 hover:text-cgold-500"
+        className="basis-[15%] h-[90%] bg-white flex justify-center items-center rounded-lg shadow-xl px-4 hover:text-cgold-500"
       >
         <h2>Top Choices</h2>
       </button>
-      <div className=" basis-[78%] h-[80%] flex flex-row gap-2">
+      <div className=" basis-[73%] h-[90%] flex flex-row gap-2">
         {currentRecipient
           ? currentRecipient.recommendations.map((recommendation, index) => {
               return index < 6 ? (

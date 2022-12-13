@@ -6,7 +6,7 @@ const LandingPage = () => {
     <>
       <div className="absolute inset-0 bg-landing bg-no-repeat bg-cover bg-top bg-local">
         <div className="absolute inset-0 bg-black/40 flex justify-center items-center">
-          <div className=" p-32 max-w-fit rounded-xl">
+          <div className="p-32 max-w-fit rounded-xl">
             <div className="flex flex-col justify-center items-center h-[100%] gap-24">
               <h1 className="text-cwhite-500 text-9xl font-lobster">Cadeau</h1>
               <p className="text-cwhite text-5xl text-center">

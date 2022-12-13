@@ -1,16 +1,16 @@
 "use client"
-import SearchBar from "./ShopNavBar";
+import ShopNavBar from "./ShopNavBar";
 import ShoppingSideBar from "./ShoppingSideBar";
 
 function ShopLayout({ children }) {
   return (
     <div className="flex flex-col h-full w-full">
-      <SearchBar />
-      <div className="flex h-full w-full mt-4">
-        <div className="basis-1/4 h-full">
+      <ShopNavBar />
+      <div className="grow flex w-full mt-4 min-h-0 gap-8">
+        <div className="basis-[20%] h-full pb-6">
           <ShoppingSideBar />
         </div>
-        <div className="basis-3/4 h-full">{children}</div>
+        <div className="basis-[80%] h-full">{children}</div>
       </div>
     </div>
   );

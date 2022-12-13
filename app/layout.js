@@ -17,7 +17,7 @@ function RootLayout({ children }) {
         <body>
           <Redirect />
           <Navbar />
-          <div className="w-full h-screen pt-[104px] pb-6 px-6">{children}</div>
+          <div className="w-full h-screen pt-[96px] pb-6 px-6">{children}</div>
         </body>
       </Providers>
     </html>
