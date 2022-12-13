@@ -28,9 +28,7 @@ function SearchBar() {
   }, []);
 
   useEffect(() => {
-    if (userId && recipients.recipients.length === 0) {
-      dispatch(fetchRecipients(userId));
-    } else if (
+if (
       recipients.recipients.length !== 0 &&
       Object.keys(currentRecipient).length === 1
     ) {
@@ -42,7 +40,7 @@ function SearchBar() {
       iterable.recommendations = score;
       setRecipient(iterable);
     }
-  }, [recipients, userId]);
+  }, [recipients]);
 
   const [searchText, setSearchText] = useState("");
   const router = useRouter();
@@ -88,8 +86,8 @@ function SearchBar() {
           >
             {recipients.recipients.map((recipient, index) => (
               <option key={index} value={recipient.name}>
-                {" "}
-                {recipient.name}{" "}
+
+                {recipient.name}
               </option>
             ))}
           </select>
@@ -108,8 +106,7 @@ function SearchBar() {
                 className="flex flex-col justify-center h-8 w-32 rounded-lg border-2 border-black"
               >
                 <div id={recommendation.columnName} className="text-center">
-                  {" "}
-                  {recommendation.columnName}{" "}
+                  {recommendation.columnName}
                 </div>
               </div>
             ))
