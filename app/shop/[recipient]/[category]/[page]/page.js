@@ -1,21 +1,40 @@
 "use client"
-import React, { use, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import React, { useEffect } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
 import { useSelector, useDispatch } from 'react-redux'
 import ProductCards from "./ProductCards"
 import { getSingleCategory, getSearchResults} from "../../../../../store/shopSlice"
 
 const PagePage = props => {
   const {categories, searchResults} = useSelector(state => state.shop)
+  const {recipients} = useSelector(state => state.recipients)
+  const path = usePathname()
   const dispatch = useDispatch()
   const router = useRouter()
 
   useEffect(() => {
     if(props.params.category !== 'search'){
       if(categories[props.params.category].length === 0){
-        if(props.params.category !== "Top%20Choices"){
+        if(props.params.category !== "toprecs"){
           dispatch(getSingleCategory(props.params.category))
-        } 
+        } else {
+          if(recipients.length !== 0){
+            const recipientName = path.split("/")[2].split("%20").join(" ");
+            console.log(recipientName)
+            console.log(recipients)
+            const recipient = recipients.find(recipient => recipient.name === recipientName)
+            const preferences = [...recipient.recommendations].sort((a, b) => b.score - a.score);
+            let query = ""
+            for(let i = 0; i < 3; i++){
+              if(i === 2){
+                query += `${preferences[i].columnName}`
+              } else {
+                query += `${preferences[i].columnName} AND ` 
+              }
+            }
+            dispatch(getSingleCategory(query)) 
+          }
+        }
       }
     } else {
         if(searchResults.length === 0){
@@ -23,7 +42,7 @@ const PagePage = props => {
         } 
     }
     
-  }, [])
+  }, [recipients])
 
 
   const clickHandler = (event) => {
