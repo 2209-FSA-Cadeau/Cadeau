@@ -11,7 +11,9 @@ const page = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getGifts(singleRecipient.id));
+    if (!singleRecipient.gifts) {
+      dispatch(getGifts(singleRecipient.id));
+    }
   }, [singleRecipient.id]);
 
   return (

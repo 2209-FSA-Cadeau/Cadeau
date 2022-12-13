@@ -13,7 +13,7 @@ export default function ProductContainer(props) {
 
   useEffect(() => {
     if (!singleRecipient.gifts) {
-      console.log("loading");
+      dispatch(getGifts(singleRecipient.id));
     } else {
       setGifts(singleRecipient.gifts);
     }
@@ -31,24 +31,25 @@ export default function ProductContainer(props) {
   return (
     <div>
       <div>
-        <h2>Saved Gifts</h2>
-        {gifts.length > 0
-          ? gifts.map((gift) => {
-              return (
-                <div key={gift.id}>
-                  <a href={gift.link}>
-                    <img src={gift.imageUrl} />
-                  </a>
-                  <div>Name: {gift.name}</div>
-                  <div>Description: {gift.description}</div>
-                  <br />
-                  <button onClick={() => onClickHandler(gift.id)}>
-                    Remove Gift
-                  </button>
-                </div>
-              );
-            })
-          : "no gifts"}
+        {gifts.length > 0 ? (
+          gifts.map((gift) => {
+            return (
+              <div key={gift.id}>
+                <a href={gift.link}>
+                  <img src={gift.imageUrl} />
+                </a>
+                <div>Name: {gift.name}</div>
+
+                <br />
+                <button onClick={() => onClickHandler(gift.id)}>
+                  Remove Gift
+                </button>
+              </div>
+            );
+          })
+        ) : (
+          <h2>Save some items to get started</h2>
+        )}
       </div>
     </div>
   );
