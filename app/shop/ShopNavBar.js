@@ -56,6 +56,8 @@ function SearchBar() {
       let score = [...iterable.recommendations];
       score = score.sort((a, b) => b.score - a.score);
       iterable.recommendations = score;
+      console.log(recipients[0])
+      dispatch(setSingleRecipient(recipients[0].id))
       setRecipient(iterable);
       if (!recipientURL) {
         router.push(`/shop/${iterable.name}/toprecs/1`);
