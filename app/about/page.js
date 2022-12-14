@@ -31,7 +31,7 @@ const AboutPage = () => {
         </h1>
       </div>
       {/* Features */}
-      <div className="flex justify-between w-full h-[35%] p-2">
+      <div className="flex justify-between w-full h-[45%] p-2">
         <div className="flex flex-col justify-start bg-white h-full w-[49.5%] rounded-md shadow-lg">
           <div className="flex flex-col justify-center uppercase tracking-widest px-4 py-2 bg-cblue-700 text-cwhite rounded-t-md shadow-md basis-[15%]">
             <h2>Manage your Recipients</h2>
@@ -71,9 +71,13 @@ const AboutPage = () => {
           </div>
           <div className="w-full basis-[85%] mx-auto my-auto">
           <ul className="flex flex-col justify-evenly px-4 py-2 h-full text-md">
-            <li>filler</li>
+            <li>Utilizes item-to-item collaborative filtering recommendation system</li>
             <div className="w-full border-b border-neutral-400"></div>
-            <li>filler</li>
+            <li>Takes user preferences and converts them into computable measurements</li>
+            <div className="w-full border-b border-neutral-400"></div>
+            <li>Uses measurements to identify similarities between different categories to determine recommendations</li>
+            <div className="w-full border-b border-neutral-400"></div>
+            <li>Recommendations are easily viewable through navigation bar on the Shop page</li>
           </ul>
           </div>
         </div>
