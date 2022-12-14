@@ -15,20 +15,28 @@ const ProductCards = (props) => {
     productList = props.categories || [];
   }
 
+  const skeleton = [];
+  for (let i = 0; i < 30; i++) {
+    skeleton.push(Math.round(Math.random() * 100) / 500);
+  }
+
   return (
-    <div>
+    <div className="w-full h-full">
       {productList.length === 0 ? (
         checklist.prices || checklist.ratings || checklist.reviews ? (
           "No Products Found. Try Another Search!"
         ) : (
-          <div role="status" className="max-w-sm animate-pulse">
-            <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
-            <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5"></div>
-            <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
-            <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-2.5"></div>
-            <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-2.5"></div>
-            <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
-            <span className="sr-only">Loading...</span>
+          <div role="status" className="w-full h-full animate-pulse">
+            {skeleton.map((rand, index) => {
+              // console.log(rand);
+              return (
+                <div
+                  key={index}
+                  className={`h-3 bg-gray-200 rounded-full mb-4 w-[80%]`}
+                ></div>
+              );
+            })}
+            {/* <span className="sr-only">Loading...</span> */}
           </div>
         )
       ) : (
