@@ -21,7 +21,7 @@ const page = () => {
       <div className="h-[50px] border-b-2 border-cblue-700 my-4">
         <h1 className="mx-4">Saved Gifts</h1>
       </div>
-      <div className="px-4 h-full w-full">
+      <div className="px-4 grow w-full overflow-y-auto">
         <ProductContainer
           gifts={gifts}
           saved={saved}

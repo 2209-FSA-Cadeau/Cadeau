@@ -15,13 +15,13 @@ function Stars({ rating }) {
 
   return (
     <div className="flex items-center">
-      {stars.map((star) => {
+      {stars.map((star, index) => {
         return star === "fill" ? (
-          <BsStarFill />
+          <BsStarFill key={index} />
         ) : star === "half" ? (
-          <BsStarHalf />
+          <BsStarHalf key={index} />
         ) : star === "empty" ? (
-          <BsStar />
+          <BsStar key={index} />
         ) : (
           ""
         );

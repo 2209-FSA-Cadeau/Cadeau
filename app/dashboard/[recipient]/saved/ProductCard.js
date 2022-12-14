@@ -1,15 +1,24 @@
 "use client";
 import React from "react";
 import Stars from "./Stars";
+import { useDispatch, useSelector } from "react-redux";
+import { removeItem } from "../../../../store/recipientSlice";
 
-export default function ProductCard({ gift, onClickHandler }) {
+export default function ProductCard({ gift }) {
   // const [productModalIsShown, setProductModalIsShown] = useState(false);
+  const { singleRecipient } = useSelector((store) => store.recipients);
+  const dispatch = useDispatch();
   const giftPrice = `$${gift.price}`.includes(".")
     ? `$${gift.price}`
     : `$${gift.price}.00`;
   const giftRating = `${gift.rating}`.includes(".")
     ? `${gift.rating}`
     : `${gift.rating}.0`;
+
+  const onClickHandler = (id) => {
+    dispatch(removeItem(id));
+    
+  };
 
   return (
     <div className="w-full h-full max-w-sm min-w-xs bg-white rounded-lg shadow-xl flex flex-col justify-end">
