@@ -17,6 +17,7 @@ const Card = ({ product }) => {
   const path = usePathname();
 
   useEffect(() => {
+    console.log(product)
     const newRecipient = path.split("/")[2].split("%20").join(" ");
 
     if (
@@ -43,7 +44,7 @@ const Card = ({ product }) => {
       recipientId: singleRecipient.id,
       name: product.title,
       description: product.snippet,
-      imageUrl: product.primary_image,
+      imageUrl: product.image,
       price: product.price,
       link: product.link,
       rating: product.rating,
