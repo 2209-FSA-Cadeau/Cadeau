@@ -32,7 +32,7 @@ export default function ProductContainer(props) {
   return (
     <div>
       <div>
-        {gifts.length > 0 ? (
+        {gifts !== undefined ? (
           gifts.map((gift) => {
             return (
               <ProductCard key={gift.id} gift={gift} delete={onClickHandler} />
