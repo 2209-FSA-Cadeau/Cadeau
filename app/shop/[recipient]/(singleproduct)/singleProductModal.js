@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getSingleItem, clearSingleItem } from "../../../../store/shopSlice";
 import { saveItem } from "../../../../store/recipientSlice";
@@ -10,9 +10,9 @@ const SingleProductModal = (props) => {
   const { singleProduct } = useSelector((store) => store.shop);
   const { singleRecipient } = useSelector((store) => store.recipients);
   const dispatch = useDispatch();
-  const product = singleProduct.product_results;
+
   useEffect(() => {
-    dispatch(getSingleItem(props.product.productId));
+    dispatch(getSingleItem(props.productId));
     return () => {
       dispatch(clearSingleItem());
     };
@@ -21,12 +21,12 @@ const SingleProductModal = (props) => {
   const handleSaveItem = () => {
     const saveObj = {
       recipientId: singleRecipient.id,
-      name: product.title,
-      description: product.description,
-      imageUrl: product.primary_image,
-      price: product.sellers_online[0].base_price,
-      link: product.sellers_online[0].link,
-      rating: product.rating,
+      name: singleProduct.product_results.title,
+      description: singleProduct.product_results.description,
+      imageUrl: singleProduct.product_results.primary_image,
+      price: singleProduct.product_results.sellers_online[0].base_price,
+      link: singleProduct.product_results.sellers_online[0].link,
+      rating: singleProduct.product_results.rating,
     };
     dispatch(saveItem(saveObj));
   };
@@ -49,7 +49,7 @@ const SingleProductModal = (props) => {
               </button>
               <div className="w-full h-full overflow-y-scroll">
                 <div className="flex flex-col justify-between w-full h-full p-4">
-                  {product === undefined ? (
+                  {singleProduct.product_results === undefined ? (
                     <div role="status" className="w-full h-full flex justify-center items-center">
                       <svg
                         class="inline mr-2 w-[20%] h-[20%] text-gray-200 animate-spin fill-cblue-300"
@@ -72,17 +72,22 @@ const SingleProductModal = (props) => {
                     <div>
                       <div className="flex-none w-52 relative">
                         <picture>
-                          <img src={product.primary_image} />
+                          <img src={singleProduct.product_results.primary_image} />
                         </picture>
                       </div>
-                      <div>{product.title}</div>
+                      <div>{singleProduct.product_results.title}</div>
                       <div>
                         <h3>Price:</h3>
-                        <p>${product.sellers_online[0].base_price}</p>
+                        <p>${singleProduct.product_results.sellers_online[0].base_price}</p>
+                      </div>
+                      <div>
+                        <a href={singleProduct.product_results.link} target="_blank">
+                          <h3>View in Website</h3>
+                        </a>
                       </div>
                       <div>
                         <h3>Description:</h3>
-                        <p>{product.description}</p>
+                        <p>{singleProduct.product_results.description}</p>
                       </div>
                       <button onClick={handleSaveItem}>Save This Item!</button>
                     </div>

@@ -93,7 +93,7 @@ const Card = ({ product }) => {
       </div>
       {productModalIsShown ? (
         <SingleProductModal
-          product={product}
+          productId={product.id}
           productModalIsShown={productModalIsShown}
           setProductModalIsShown={setProductModalIsShown}
         />
