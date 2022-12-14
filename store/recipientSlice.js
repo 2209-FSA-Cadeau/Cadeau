@@ -121,7 +121,7 @@ export const saveItem = createAsyncThunk(
         imageUrl,
         price,
         link,
-        rating
+        rating,
       });
       return;
     } catch (error) {
@@ -239,40 +239,38 @@ export const deleteDislike = createAsyncThunk(
 // Fetch note for a single recipient
 export const fetchNote = createAsyncThunk(
   "/fetchNotes",
-  async (requiredIds) =>{
+  async (requiredIds) => {
     try {
       const response = await axios.get("/api/notes", {
         params: {
           userId: requiredIds.userId,
           recipientId: requiredIds.recipientId,
-        }
-      })
-      return response.data
-    } catch (err) {
-      console.log(err)
-    }
-  }
-)
-
-// Update a note for a single recipient
-
-export const updateNote =  createAsyncThunk(
-  "/updateNotes",
-  async (noteObj) => {
-    try {
-      const response = await axios.put("/api/notes", noteObj)
-      return response.data
+        },
+      });
+      return response.data;
     } catch (err) {
       console.log(err);
     }
   }
 );
 
+// Update a note for a single recipient
+
+export const updateNote = createAsyncThunk("/updateNotes", async (noteObj) => {
+  try {
+    const response = await axios.put("/api/notes", noteObj);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 const initialState = {
   recipients: [],
   singleRecipient: {
     preferences: [],
     note: "",
+    gifts: [],
   },
   tab: "preferences",
   isLoading: true,
@@ -283,16 +281,20 @@ export const recipientSlice = createSlice({
   initialState,
   reducers: {
     setSingleRecipient: (state, action) => {
-      state.singleRecipient = state.recipients.find(
+      const singleRecData = state.recipients.find(
         (recipient) => recipient.id === action.payload
       );
+      state.singleRecipient = {
+        ...state.singleRecipient,
+        ...singleRecData,
+      };
     },
     setTab: (state, action) => {
       state.tab = action.payload;
     },
     fetchNotesLoading: (state, action) => {
       state.isLoading = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -350,7 +352,7 @@ export const recipientSlice = createSlice({
       .addCase(getGifts.fulfilled, (state, action) => {
         state.singleRecipient = {
           ...state.singleRecipient,
-          gifts: action.payload === undefined ? null : action.payload[0].gifts,
+          gifts: action.payload === undefined ? [] : action.payload[0].gifts,
         };
       })
       .addCase(removeItem.fulfilled, (state, action) => {
@@ -370,9 +372,9 @@ export const recipientSlice = createSlice({
       .addCase(fetchNote.fulfilled, (state, action) => {
         state.singleRecipient = {
           ...state.singleRecipient,
-          note: action.payload
-        }
-        state.isLoading = false
+          note: action.payload,
+        };
+        state.isLoading = false;
       })
       .addCase(updateNote.fulfilled, (state, action) => {
         state.singleRecipient = {
@@ -392,6 +394,7 @@ export const recipientSlice = createSlice({
   },
 });
 
-export const { setSingleRecipient, setTab, fetchNotesLoading } = recipientSlice.actions;
+export const { setSingleRecipient, setTab, fetchNotesLoading } =
+  recipientSlice.actions;
 
 export default recipientSlice.reducer;

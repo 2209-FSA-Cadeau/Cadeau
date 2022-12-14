@@ -24,18 +24,17 @@ export default function ProductContainer(props) {
     }
   }, [gifts, singleRecipient.holidays]);
 
-  const onClickHandler = async (id) => {
-    await dispatch(removeItem(id));
+  useEffect(() => {
     setGifts(singleRecipient.gifts);
-  };
+  }, [singleRecipient.gifts]);
 
   return (
-    <div>
-      <div>
+    <div className="flex flex-col justify-evenly items-center w-full overflow-y-auto">
+      <div className="grid grid-cols-3 gap-[2rem] items-center justify-center content-center self-auto">
         {gifts.length > 0 ? (
           gifts.map((gift) => {
             return (
-              <ProductCard key={gift.id} gift={gift} delete={onClickHandler} />
+              <ProductCard key={gift.id} gift={gift} />
               // <div key={gift.id}>
               //   <a href={gift.link}>
               //     <img src={gift.imageUrl} />
