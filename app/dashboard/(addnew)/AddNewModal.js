@@ -41,6 +41,7 @@ const AddNewModal = ({
   const onSubmitHandler = (event) => {
     event.preventDefault();
     setAddNewModalIsShown(false);
+    newRecipient.userId = userId
     dispatch(addRecipient(newRecipient));
     resetHandler();
     if (localStorage.getItem("new")) {

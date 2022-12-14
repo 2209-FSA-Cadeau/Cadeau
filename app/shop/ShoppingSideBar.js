@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -20,6 +20,7 @@ const ShoppingSideBar = () => {
   const router = useRouter();
   let path = usePathname();
   let searchParams = useSearchParams();
+  const form = useRef(null)
 
   const { checklist, filterType } = useSelector((state) => state.shop);
 
@@ -163,7 +164,8 @@ const ShoppingSideBar = () => {
       <div className="flex justify-center w-full h-[40px]">
         <form
           onSubmit={handleSearch}
-          className="flex items-center w-full h-full"
+          className="flex justify-center w-[100%] h-full"
+          ref={form}
         >
           <div className="relative w-full">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

@@ -45,6 +45,9 @@ const PreferenceContainer = () => {
     if (!singleRecipient.holidays) {
       dispatch(fetchHolidays(singleRecipient.id));
     }
+    if (!singleRecipient.note) {
+      fetchNote({ userId, recipientId: singleRecipient.id})
+    }
     const requiredIds = {
       userId,
       recipientId: singleRecipient.id
