@@ -31,7 +31,7 @@ export default function ProductContainer(props) {
   return (
     <div className="flex flex-col justify-evenly items-center w-full overflow-y-auto">
       <div className="grid grid-cols-3 gap-[2rem] items-center justify-center content-center self-auto">
-        {gifts.length > 0 ? (
+        {gifts !== undefined ? (
           gifts.map((gift) => {
             return (
               <ProductCard key={gift.id} gift={gift} />
