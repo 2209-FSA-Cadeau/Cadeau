@@ -691,7 +691,7 @@ const FilterPage = (props) => {
       }
     }
 
-    if (event.target.id === "back" && Number(props.params.page) > 1) {
+    if (event === "back" && Number(props.params.page) > 1) {
       if (props.params.category === "search") {
         path = `/shop/${props.params.recipient}/search/${
           Number(props.params.page) - 1
@@ -705,7 +705,7 @@ const FilterPage = (props) => {
         path += filters;
         router.push(path);
       }
-    } else if (event.target.id === "forward") {
+    } else if (event === "forward") {
       if (props.params.category === "search") {
         path = `/shop/${props.params.recipient}/search/${
           Number(props.params.page) + 1
@@ -729,25 +729,25 @@ const FilterPage = (props) => {
     <>
       <ProductCards filterView={filterView} limit={limit} offset={offset} />
       <div className="flex justify-center items-center pt-14 pb-24 gap-8">
-        <div
+        <button
           id="back"
-          className="flex items-center justify-center gap-4 rounded-md p-4 bg-cblue-500 text-white shadow-xl w-[15%] cursor-pointer"
-          onClick={clickHandler}
+          className={`${props.params.page > 1 ? "" : "hidden"} flex items-center justify-center gap-4 rounded-md p-4 bg-cblue-500 text-white shadow-xl w-[15%] cursor-pointer text-2xl`}
+          onClick={() => clickHandler("back")}
         >
           <AiOutlineLeft className="scale-150" />
           <h2>Previous Page</h2>
-        </div>
+        </button>
         <div className="rounded-md text-2xl p-4 bg-white text-cblue-700 shadow-xl w-[5%]">
           <h2 className="text-center">{props.params.page}</h2>
         </div>
-        <div
+        <button
           id="forward"
-          className="flex items-center justify-center gap-4 rounded-md p-4 bg-cblue-500 text-white shadow-xl w-[15%] cursor-pointer"
-          onClick={clickHandler}
+          className="flex items-center justify-center gap-4 rounded-md p-4 bg-cblue-500 text-white shadow-xl w-[15%] cursor-pointer text-2xl"
+          onClick={() => clickHandler("forward")}
         >
-          <h2>Next Page</h2>
+         <h2> Next Page</h2>
           <AiOutlineRight className="scale-150" />
-        </div>
+        </button>
       </div>
     </>
   );
