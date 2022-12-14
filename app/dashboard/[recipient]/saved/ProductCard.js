@@ -17,7 +17,6 @@ export default function ProductCard({ gift }) {
 
   const onClickHandler = (id) => {
     dispatch(removeItem(id));
-    
   };
 
   return (
@@ -26,10 +25,11 @@ export default function ProductCard({ gift }) {
         href={gift.link}
         className="cursor-pointer grow flex flex-col justify-center"
         // onClick={() => setProductModalIsShown(true)}
+        target="_blank"
       >
         <img
           className="p-8 rounded-t-lg"
-          src={gift.image}
+          src={gift.imageUrl}
           alt="product image"
         />
       </a>
@@ -38,9 +38,10 @@ export default function ProductCard({ gift }) {
           href={gift.link}
           className="cursor-pointer"
           // onClick={() => setProductModalIsShown(true)}
+          target="_blank"
         >
           <h5 className="text-xl font-semibold tracking-tight text-gray-900">
-            {gift.title}
+            {gift.name}
           </h5>
         </a>
         <div className="flex items-center mt-2.5 mb-5 text-cgold-500 gap-2">

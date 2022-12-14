@@ -9,16 +9,16 @@ const Gift = db.define("gift", {
     type: Sequelize.TEXT,
   },
   imageUrl: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   },
   price: {
     type: Sequelize.DECIMAL(10, 2),
   },
   link: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   },
   rating: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL(10, 1),
   },
 });
 
