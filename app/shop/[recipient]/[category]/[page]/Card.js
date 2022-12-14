@@ -1,9 +1,35 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { usePathname } from "next/navigation";
 import Stars from "./Stars";
 import SingleProductModal from "../../(singleproduct)/singleProductModal";
+import {
+  saveItem,
+  setSingleRecipient,
+} from "../../../../../store/recipientSlice";
 
 const Card = ({ product }) => {
+  const dispatch = useDispatch();
+  const { recipients, singleRecipient } = useSelector(
+    (store) => store.recipients
+  );
+  const path = usePathname();
+
+  useEffect(() => {
+    const newRecipient = path.split("/")[2].split("%20").join(" ");
+
+    if (
+      (singleRecipient && singleRecipient.id) ||
+      singleRecipient.preferences.length === 0
+    ) {
+      const found = recipients.find(
+        (recipient) => recipient.name === newRecipient
+      );
+      dispatch(setSingleRecipient(found.id));
+    }
+  }, []);
+
   const [productModalIsShown, setProductModalIsShown] = useState(false);
   const productPrice = `$${product.price}`.includes(".")
     ? `$${product.price}`
@@ -11,6 +37,19 @@ const Card = ({ product }) => {
   const productRating = `${product.rating}`.includes(".")
     ? `${product.rating}`
     : `${product.rating}.0`;
+
+  const handleSaveItem = () => {
+    const saveObj = {
+      recipientId: singleRecipient.id,
+      name: product.title,
+      description: product.snippet,
+      imageUrl: product.primary_image,
+      price: product.price,
+      link: product.link,
+      rating: product.rating,
+    };
+    dispatch(saveItem(saveObj));
+  };
 
   return (
     <div className="w-full h-full max-w-sm min-w-xs bg-white rounded-lg shadow-xl flex flex-col justify-end">
@@ -43,7 +82,10 @@ const Card = ({ product }) => {
           <span className="text-3xl font-bold text-gray-900">
             {productPrice}
           </span>
-          <button className="text-white bg-cblue-700 hover:bg-cblue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+          <button
+            className="text-white bg-cblue-700 hover:bg-cblue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            onClick={handleSaveItem}
+          >
             Save
           </button>
         </div>
