@@ -17,13 +17,18 @@ const page = () => {
   }, [singleRecipient.id]);
 
   return (
-    <div>
-      <ProductContainer
-        gifts={gifts}
-        saved={saved}
-        setGifts={setGifts}
-        setSaved={setSaved}
-      />
+    <div className="flex flex-col justify-start w-full h-full">
+      <div className="h-[50px] border-b-2 border-cblue-700 my-4">
+        <h1 className="mx-4">Saved Gifts</h1>
+      </div>
+      <div className="px-4 h-full w-full">
+        <ProductContainer
+          gifts={gifts}
+          saved={saved}
+          setGifts={setGifts}
+          setSaved={setSaved}
+        />
+      </div>
     </div>
   );
 };

@@ -107,7 +107,7 @@ export default function LikesAndDislikes(props) {
             isMulti
             instanceId={"dislikes"}
             styles={styles}
-            className="p-1 text-lg overflow-visible"
+            className="p-1 text-lg text-cblue-700 overflow-visible"
           />
         </div>
       </div>

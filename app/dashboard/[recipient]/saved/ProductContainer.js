@@ -5,6 +5,7 @@ import {
   getGifts,
   removeItem,
 } from "../../../../store/recipientSlice";
+import ProductCard from "./ProductCard";
 
 export default function ProductContainer(props) {
   const { gifts, setGifts } = props;
@@ -34,17 +35,18 @@ export default function ProductContainer(props) {
         {gifts.length > 0 ? (
           gifts.map((gift) => {
             return (
-              <div key={gift.id}>
-                <a href={gift.link}>
-                  <img src={gift.imageUrl} />
-                </a>
-                <div>Name: {gift.name}</div>
+              <ProductCard key={gift.id} gift={gift} delete={onClickHandler} />
+              // <div key={gift.id}>
+              //   <a href={gift.link}>
+              //     <img src={gift.imageUrl} />
+              //   </a>
+              //   <div>Name: {gift.name}</div>
 
-                <br />
-                <button onClick={() => onClickHandler(gift.id)}>
-                  Remove Gift
-                </button>
-              </div>
+              //   <br />
+              //   <button onClick={() => onClickHandler(gift.id)}>
+              //     Remove Gift
+              //   </button>
+              // </div>
             );
           })
         ) : (

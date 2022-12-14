@@ -6,12 +6,12 @@ import { useSelector } from "react-redux";
 const App = () => {
   const { user, isLoadingRedux } = useSelector((store) => store.user);
   const router = useRouter();
-  const [newUser, setNewUser] = useState("");
 
   useEffect(() => {
     console.log('page loaded')
+    let newUser;
     if (typeof window != undefined) {
-      setNewUser(localStorage.getItem("new"));
+      newUser = localStorage.getItem("new");
     }
 
     if (!isLoadingRedux && !newUser) {

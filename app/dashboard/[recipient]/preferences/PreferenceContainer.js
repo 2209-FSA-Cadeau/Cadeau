@@ -11,12 +11,12 @@ import {
   deleteDislike,
   fetchPreferences,
   fetchHolidays,
-  fetchNote
+  fetchNote,
 } from "../../../../store/recipientSlice";
 
 const PreferenceContainer = () => {
   const { singleRecipient } = useSelector((store) => store.recipients);
-  const { userId } = useSelector((store) => store.user)
+  const { userId } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const [options, setOptions] = useState([]);
   const [likes, setLikes] = useState([]);
@@ -46,12 +46,12 @@ const PreferenceContainer = () => {
       dispatch(fetchHolidays(singleRecipient.id));
     }
     if (!singleRecipient.note) {
-      fetchNote({ userId, recipientId: singleRecipient.id})
+      fetchNote({ userId, recipientId: singleRecipient.id });
     }
     const requiredIds = {
       userId,
-      recipientId: singleRecipient.id
-    }
+      recipientId: singleRecipient.id,
+    };
   }, [singleRecipient.preferences]);
 
   useEffect(() => {
@@ -146,54 +146,75 @@ const PreferenceContainer = () => {
         );
   };
 
+  const styles = {
+    container: (baseStyles, state) => ({
+      ...baseStyles,
+      height: "100%",
+    }),
+    control: (baseStyles, state) => ({
+      ...baseStyles,
+      borderColor: state.isFocused ? "cblue-300" : "gray-300",
+      height: "100%",
+    }),
+    valueContainer: (baseStyles, state) => ({
+      ...baseStyles,
+      height: "100%",
+      display: "flex",
+      alignItems: "flex-start",
+    }),
+    input: (baseStyles, state) => ({
+      ...baseStyles,
+      height: "100%",
+      borderColor: "transparent",
+      placeItems: "start",
+    }),
+    placeholder: (baseStyles, state) => ({
+      ...baseStyles,
+      color: "cblue-700",
+    }),
+    menu: (baseStyles, state) => ({
+      ...baseStyles,
+      color: "cblue-700",
+      zIndex: "50",
+    }),
+  };
+
   // Render
   return (
-    <div>
-      <div>
-        <h2>Things {singleRecipient.name} Likes</h2>
-        {likes.map((like, index) => {
-          return (
-            <div key={index}>
-              <PreferenceCard type={"like"} choice={like} />
-            </div>
-          );
-        })}
-        <br />
-        <Select
-          value={likes.map((like) => {
-            return { value: like.toLowerCase(), label: like };
-          })}
-          components={makeAnimated()}
-          options={options}
-          onChange={likesChangeHandler}
-          isMulti
-          instanceId={"likes"}
-        />
+    <div className="grow flex flex-col justify-start w-full h-full gap-[2%]">
+      <div className="basis-[20%] flex flex-col justify-start">
+        
+          <h2>Things {singleRecipient.name} Likes</h2>
+          <Select
+            value={likes.map((like) => {
+              return { value: like.toLowerCase(), label: like };
+            })}
+            components={makeAnimated()}
+            options={options}
+            onChange={likesChangeHandler}
+            isMulti
+            instanceId={"likes"}
+            styles={styles}
+            className="p-1 text-lg text-cblue-700 overflow-visible mt-1"
+          />
+        </div>
+        <div className="basis-[20%] flex flex-col justify-start">
+          <h2>Things {singleRecipient.name} Hates</h2>
+          <Select
+            value={dislikes.map((dislike) => {
+              return { value: dislike.toLowerCase(), label: dislike };
+            })}
+            components={makeAnimated()}
+            options={options}
+            onChange={dislikesChangeHandler}
+            isMulti
+            instanceId={"dislikes"}
+            styles={styles}
+            className="p-1 text-lg text-cblue-700 overflow-visible mt-1"
+          />
+        </div>
       </div>
-      <br />
-      <div>
-        <h2>Things {singleRecipient.name} Hates</h2>
-        {dislikes.map((dislike, index) => {
-          return (
-            <div key={index}>
-              <PreferenceCard type={"dislike"} choice={dislike} />
-            </div>
-          );
-        })}
-        <br />
-        <h3>Add Dislikes</h3>
-        <Select
-          value={dislikes.map((dislike) => {
-            return { value: dislike.toLowerCase(), label: dislike };
-          })}
-          components={makeAnimated()}
-          options={options}
-          onChange={dislikesChangeHandler}
-          isMulti
-          instanceId={"dislikes"}
-        />
-      </div>
-    </div>
+
   );
 };
 

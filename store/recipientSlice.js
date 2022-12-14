@@ -112,7 +112,7 @@ export const getGifts = createAsyncThunk(
 // save item to recipients saved gifts
 export const saveItem = createAsyncThunk(
   "/recipients/saveItem",
-  async ({ recipientId, name, description, imageUrl, price, link }) => {
+  async ({ recipientId, name, description, imageUrl, price, link, rating }) => {
     try {
       await axios.post("/api/gifts", {
         recipientId,
@@ -121,6 +121,7 @@ export const saveItem = createAsyncThunk(
         imageUrl,
         price,
         link,
+        rating
       });
       return;
     } catch (error) {
