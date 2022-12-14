@@ -46,26 +46,55 @@ function SearchBar() {
           (recipient) => recipient.name === recipientURL
         );
         Object.assign(iterable, prevRecipient);
+        console.log("path1", iterable)
       } else {
         if (singleRecipient.preferences.length !== 0) {
           Object.assign(iterable, singleRecipient);
+          console.log("path2", iterable)
         } else {
+          dispatch(setSingleRecipient(recipients[0].id))
           Object.assign(iterable, recipients[0]);
+          console.log("path3", iterable)
         }
       }
-      let score = [...iterable.recommendations];
-      score = score.sort((a, b) => b.score - a.score);
-      iterable.recommendations = score;
-      console.log(recipients[0])
-      dispatch(setSingleRecipient(recipients[0].id))
+      
+      if(!iterable.recommendations){
+        iterable.recommendations = [];
+      } else {
+        let score = [...iterable.recommendations];
+        score = score.sort((a, b) => b.score - a.score);
+        iterable.recommendations = score;
+      }
+      
       setRecipient(iterable);
+
       if (!recipientURL) {
+        dispatch(setSingleRecipient(iterable.id))
         router.push(`/shop/${iterable.name}/toprecs/1`);
       }
     } else {
       updatedRecip.current = true;
     }
   }, [recipients]);
+
+
+  useEffect(() => {
+    if(currentRecipient){
+      if(currentRecipient.recommendations.length === 0){
+        console.log("HIT USE EFFECt3")
+        let score
+        if(singleRecipient.preferences.length !== 0){
+          console.log("HIT 2 PATH 1", singleRecipient)
+          score = [...singleRecipient.recommendations];
+        } else {
+          console.log("HIT 2 PATH 2", recipients[0])
+          score = [...recipients[0].recommendations]
+        }
+        score = score.sort((a, b) => b.score - a.score);
+        setRecipient((prevRecipient) => ({...prevRecipient, recommendations: score}))
+      }
+    }
+  }, [currentRecipient])
 
   const handleRecipient = (event) => {
     const newRecipient = recipients.find(
@@ -77,7 +106,6 @@ function SearchBar() {
       (a, b) => b.score - a.score
     );
     iterable.recommendations = score;
-    console.log('RECIPIENT', newRecipient);
     dispatch(setSingleRecipient(newRecipient.id))
     setRecipient(iterable);
     dispatch(resetCategories())
